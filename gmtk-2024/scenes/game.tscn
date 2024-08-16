@@ -18,6 +18,7 @@ reflected_light_source = 2
 [node name="Game" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("2_yvolx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0331, -4.10988)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v2uxm")
