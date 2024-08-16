@@ -2,8 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://b1q3yvpt641bc" path="res://assets/models/characters/Knight.fbx" id="1_x37yl"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pfly7"]
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_whyah"]
 animation = &"Death_A"
 
@@ -106,9 +104,12 @@ states/SwordAttack/position = Vector2(238.667, -58)
 transitions = ["Start", "IdleWalkRun", SubResource("AnimationNodeStateMachineTransition_g8bws"), "IdleWalkRun", "SwordAttack", SubResource("AnimationNodeStateMachineTransition_rdrjh"), "IdleWalkRun", "NoWeaponAttack", SubResource("AnimationNodeStateMachineTransition_vc48h"), "IdleWalkRun", "Death", SubResource("AnimationNodeStateMachineTransition_r8vob"), "NoWeaponAttack", "IdleWalkRun", SubResource("AnimationNodeStateMachineTransition_54gry"), "SwordAttack", "IdleWalkRun", SubResource("AnimationNodeStateMachineTransition_u8lvo"), "IdleWalkRun", "Jump_Start", SubResource("AnimationNodeStateMachineTransition_2n0do"), "Jump_Start", "Jump_Idle", SubResource("AnimationNodeStateMachineTransition_n74jb"), "Jump_Idle", "Jump_Land", SubResource("AnimationNodeStateMachineTransition_8cjit"), "Jump_Land", "IdleWalkRun", SubResource("AnimationNodeStateMachineTransition_ritl0"), "IdleWalkRun", "Jump_Idle", SubResource("AnimationNodeStateMachineTransition_0q30d")]
 graph_offset = Vector2(-203, -215)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pfly7"]
+
 [node name="Player" instance=ExtResource("1_x37yl")]
 
 [node name="Skeleton3D" parent="." index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 bones/8/position = Vector3(-2.36658e-30, 0.392064, 0)
 bones/8/rotation = Quaternion(-1.11128e-10, 0.0431578, 2.57241e-09, 0.999068)
 bones/9/position = Vector3(-7.75391e-29, 0.191978, -1.44121e-15)
@@ -254,16 +255,16 @@ bone_idx = 30
 [node name="AnimationPlayer" parent="." index="1"]
 autoplay = "Idle"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_pfly7")
-
-[node name="Camera3D" type="Camera3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
-
-[node name="AnimationTree" type="AnimationTree" parent="." index="4"]
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 tree_root = SubResource("AnimationNodeStateMachine_jxock")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/grounded = false
 parameters/conditions/jumping = false
 parameters/IdleWalkRun/blend_position = Vector2(0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_pfly7")
+
+[node name="Camera3D" type="Camera3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
