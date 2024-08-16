@@ -5,6 +5,7 @@ class_name Player
 @export var acceleration = 4.0
 @export var jump_speed = 8.0
 @export var rotation_speed = 12.0
+@export var camera_rotation_speed = 8.0
 @export var mouse_sensitivity = 0.0015
 
 @onready var spring_arm = $SpringArm3D
@@ -23,9 +24,12 @@ func _physics_process(delta):
 	get_move_input(delta)
 	move_and_slide()
 
+	if (velocity.length() > 1.0):
+		model.rotation.y = lerp_angle(model.rotation.y, spring_arm.rotation.y + 135, rotation_speed * delta)
+
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_speed
+	#if Input.is_action_just_pressed("jump") and is_on_floor():
+		#velocity.y = jump_speed
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -48,9 +52,9 @@ func get_move_input(delta):
 	
 	# Move camera with the gamepad
 	var gamepad_input = Input.get_vector("look_left", "look_right", "look_up", "look_down")
-	spring_arm.rotation.x -= gamepad_input.y * rotation_speed * delta
+	spring_arm.rotation.x -= gamepad_input.y * camera_rotation_speed * delta
 	spring_arm.rotation_degrees.x = clamp(spring_arm.rotation_degrees.x, -90.0, 30.0)
-	spring_arm.rotation.y -= gamepad_input.x * rotation_speed * delta
+	spring_arm.rotation.y -= gamepad_input.x * camera_rotation_speed * delta
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
