@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://br1b8yk2rk0cj"]
+[gd_scene load_steps=28 format=3 uid="uid://br1b8yk2rk0cj"]
 
 [ext_resource type="PackedScene" uid="uid://b1q3yvpt641bc" path="res://assets/models/characters/Knight.fbx" id="1_x37yl"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_kxj74"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_whyah"]
 animation = &"Death_A"
@@ -107,6 +108,7 @@ graph_offset = Vector2(-203, -215)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pfly7"]
 
 [node name="Player" instance=ExtResource("1_x37yl")]
+script = ExtResource("2_kxj74")
 
 [node name="Skeleton3D" parent="." index="0"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -266,5 +268,9 @@ parameters/IdleWalkRun/blend_position = Vector2(0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_pfly7")
 
-[node name="Camera3D" type="Camera3D" parent="." index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
+[node name="SpringArm3D" type="SpringArm3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+spring_length = 5.0
+margin = 0.1
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D" index="0"]
