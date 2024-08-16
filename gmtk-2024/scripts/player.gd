@@ -45,6 +45,12 @@ func get_move_input(delta):
 	var dir = Vector3(input.x, 0, input.y).rotated(Vector3.UP, spring_arm.rotation.y)
 	velocity = lerp(velocity, dir * speed, acceleration * delta)
 	velocity.y = vy
+	
+	# Move camera with the gamepad
+	var gamepad_input = Input.get_vector("look_left", "look_right", "look_up", "look_down")
+	spring_arm.rotation.x -= gamepad_input.y * rotation_speed * delta
+	spring_arm.rotation_degrees.x = clamp(spring_arm.rotation_degrees.x, -90.0, 30.0)
+	spring_arm.rotation.y -= gamepad_input.x * rotation_speed * delta
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
