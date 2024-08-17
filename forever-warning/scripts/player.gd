@@ -1,7 +1,10 @@
 extends Area2D
 
-var speed: float = 1000
+@export var speed: float = 500
+@export var focus_factor: float = 0.5
+
 var vel := Vector2(0, 0)
+var cur_speed := speed
 
 func _process(delta):
 	pass
@@ -19,5 +22,10 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("move_right"):
 		dirVel.x = 1
 
-	vel = dirVel.normalized() * speed;
+	cur_speed = speed
+
+	if Input.is_action_pressed("focus"):
+		cur_speed = speed / 2.0
+
+	vel = dirVel.normalized() * cur_speed;
 	position += vel * delta;

@@ -4,14 +4,15 @@
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_yv0xi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m63fx"]
-radius = 25.0
+radius = 12.0
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_yv0xi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_xdjxy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 8)
+position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_m63fx")
