@@ -17,6 +17,7 @@ var min_angle = 0.0
 var max_angle = 0.0
 var rotation_speed = 0.0
 var is_rotating_clockwise;
+var weapons = []
 
 func _ready():
 	rotation_speed = base_rotation_speed
@@ -28,13 +29,16 @@ func is_flipped():
 func flip():
 	scale.x = -1
 
-func is_alive():
-	return not is_dead
-
 func setup():
 	life = base_life
+	rotation = base_angle
 	is_dead = false
 	visible = true
+	for weapon in weapons:
+		weapon.setup()
+
+func add_weapon(weapon):
+	weapons.append(weapon)
 
 func _physics_process(delta):
 	if is_dead:
@@ -66,6 +70,8 @@ func damage(amount: int):
 		visible = false
 		is_dead = true
 		died_signal.emit()
+		for weapon in weapons:
+			weapon.kill()
 
 func set_base_angle(angle: float):
 	base_angle = angle

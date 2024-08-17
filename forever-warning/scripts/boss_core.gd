@@ -19,6 +19,7 @@ var life
 var chance_to_fire: float
 var is_dead = true # dead by default
 var instanciated_boss_parts = []
+var weapon_instances = []
 
 func _ready():
 	life = base_life;
@@ -44,9 +45,6 @@ func damage(amount: int):
 		visible = false
 		is_dead = true
 		died_signal.emit()
-
-func is_alive():
-	return not is_dead
 
 func shoot():
 	# TODO: Have multiple possible attacks
@@ -74,6 +72,9 @@ func setup():
 			part[1].setup()
 		
 	spawn_new_parts()
+
+	for weapon in weapon_instances:
+		weapon.setup()
 
 func spawn_new_parts():
 	var unoccupied_slots = find_unoccupied_slots()
@@ -157,6 +158,10 @@ func spawn_new_weapons(left_part, right_part):
 				var right_weapon = random_weapon.instantiate()
 				left_slots[i].affect_weapon(left_weapon)
 				right_slots[i].affect_weapon(right_weapon)
+				left_part.add_weapon(left_weapon)
+				right_part.add_weapon(right_weapon)
+				weapon_instances.append(left_weapon)
+				weapon_instances.append(right_weapon)
 
 #endregion
 
