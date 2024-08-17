@@ -6,6 +6,6 @@ func can_be_used():
 	return not is_occupied
 
 func affect_part(part):
-	#part.get_parent().remove_child(self)
 	add_child(part)
+	part.position = Vector2.ZERO
 	is_occupied = true

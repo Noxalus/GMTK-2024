@@ -4,7 +4,7 @@ extends Area2D
 @export var speed: float = 300
 @export var shoot_frequency: float = 1.0
 @export var base_chance_to_fire: float = 0.5
-@export var boss_spawn_delay := 3.0
+@export var boss_spawn_delay := 0.5
 
 @onready var player = $"../Player"
 @onready var shoot_timer = $ShootTimer
@@ -23,8 +23,7 @@ var boss_parts_right = []
 
 func _ready():
 	chance_to_fire = base_chance_to_fire
-	if is_dead == true:
-		setup()
+	setup()
 	
 func _process(_delta):
 	if is_dead:
@@ -33,7 +32,6 @@ func _process(_delta):
 	if shoot_timer.is_stopped():
 		shoot_timer.start(shoot_frequency)
 		var rand = rng.randf()
-		print(rand)
 		if rand > chance_to_fire:
 			shoot()
 
@@ -63,10 +61,9 @@ func instantiate_bullet(dir: Vector2):
 #region Generation
 
 func setup():
-	print("START")
+	# Wait a small amount of time before to respawn the boss
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
-	print("COUCOU")
 	life = 20
 	visible = true
 	is_dead = false
@@ -83,12 +80,13 @@ func spawn_new_parts():
 	
 	var random_boss_part = game.get_random_boss_part()
 	var boss_part_right = random_boss_part.instantiate()
-	var boss_part_left = random_boss_part.instantiate().flip()
+	var boss_part_left = random_boss_part.instantiate()
+	boss_part_left.flip()
 	
 	# left
-	random_slot[0].affect_part(boss_part_right)
+	random_slot[0].affect_part(boss_part_left)
 	# right
-	random_slot[1].affect_part(boss_part_left)
+	random_slot[1].affect_part(boss_part_right)
 
 func find_unoccupied_slots():
 	var unoccupied_slots = []
