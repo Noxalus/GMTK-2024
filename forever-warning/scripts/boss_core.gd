@@ -42,9 +42,23 @@ func _process(delta):
 func damage(amount: int):
 	life -= amount
 	if life < 0:
-		visible = false
-		is_dead = true
-		died_signal.emit()
+		kill()
+
+func kill():
+	visible = false
+	is_dead = true
+	game.spawn_explosion(global_position)
+	
+	for part in instanciated_boss_parts:
+		if part[0].is_visible():
+			part[0].kill()
+		if part[1].is_visible():
+			part[1].kill()
+	
+	for weapon in weapon_instances:
+		if weapon.is_visible():
+			weapon.kill()
+	died_signal.emit()
 
 func shoot():
 	# TODO: Have multiple possible attacks
@@ -91,8 +105,14 @@ func spawn_new_parts():
 	
 	# left
 	random_slot[0].affect_part(boss_part_left)
+	var random_slot_left_parent = random_slot[0].get_related_part()
+	if random_slot_left_parent != null:
+		random_slot_left_parent.add_sub_part(boss_part_left)
 	# right
 	random_slot[1].affect_part(boss_part_right)
+	var random_slot_right_parent = random_slot[1].get_related_part()
+	if random_slot_right_parent != null:
+		random_slot_right_parent.add_sub_part(boss_part_right)
 	
 	# apply a random rotation on the new part
 	var random_rotation = game.rng().randf_range(random_slot[0].base_random_angle_min, random_slot[0].base_random_angle_max)

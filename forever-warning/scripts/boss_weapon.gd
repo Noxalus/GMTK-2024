@@ -48,6 +48,7 @@ func kill():
 	visible = false
 	is_dead = true
 	died_signal.emit()
+	game.spawn_explosion(global_position)
 
 func shoot():
 	game.instantiate_bullet(global_position, Vector2.from_angle(rotation - PI / 2.0), speed)

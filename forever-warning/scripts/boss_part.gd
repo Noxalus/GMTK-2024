@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name BossPart
+
 @export var base_rotation_speed: float = 5.0
 @export var base_life: int = 10
 
@@ -18,6 +20,7 @@ var max_angle = 0.0
 var rotation_speed = 0.0
 var is_rotating_clockwise;
 var weapons = []
+var subparts = []
 
 func _ready():
 	rotation_speed = base_rotation_speed
@@ -39,6 +42,9 @@ func setup():
 
 func add_weapon(weapon):
 	weapons.append(weapon)
+
+func add_sub_part(part):
+	subparts.append(part)
 
 func _physics_process(delta):
 	if is_dead:
@@ -67,11 +73,20 @@ func _physics_process(delta):
 func damage(amount: int):
 	life -= amount
 	if life < 0:
-		visible = false
-		is_dead = true
-		died_signal.emit()
-		for weapon in weapons:
+		kill()
+
+func kill():
+	visible = false
+	is_dead = true
+	died_signal.emit()
+	for weapon in weapons:
+		if weapon.is_visible(): 
 			weapon.kill()
+	for part in subparts:
+		if part.is_visible():
+			part.kill()
+	game.spawn_explosion(global_position)
+
 
 func set_base_angle(angle: float):
 	base_angle = angle

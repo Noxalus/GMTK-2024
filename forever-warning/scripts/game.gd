@@ -13,7 +13,9 @@ var boss_parts = [
 var boss_weapons = [
 	preload("res://scenes/boss_weapon_turret.tscn")
 ]
+
 var bullet_node := preload("res://scenes/boss_bullet.tscn")
+var explosion := preload("res://scenes/explosion.tscn")
 
 var local_rng = RandomNumberGenerator.new()
 var wave_count: int = 0
@@ -56,3 +58,10 @@ func instantiate_bullet(pos: Vector2, dir: Vector2, speed: float = 100):
 	
 func rng():
 	return local_rng
+	
+func spawn_explosion(pos: Vector2):
+	var instance = explosion.instantiate()
+	instance.position = pos
+	instance.emitting = true
+	get_tree().current_scene.add_child(instance)
+	
