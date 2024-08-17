@@ -11,6 +11,11 @@ radius = 35.0143
 [node name="BossCore" type="Area2D" groups=["damageable"]]
 z_index = 10
 script = ExtResource("1_tcfca")
+base_life = null
+speed = null
+shoot_frequency = null
+base_chance_to_fire = null
+boss_spawn_delay = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dlyuj")

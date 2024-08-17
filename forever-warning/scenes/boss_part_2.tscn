@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx0qv71r6cy1v"]
+[gd_scene load_steps=9 format=3 uid="uid://bx0qv71r6cy1v"]
 
 [ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_ffdgn"]
 [ext_resource type="Texture2D" uid="uid://bpbcphouok0j2" path="res://assets/sprites/parts/wingGreen_1.png" id="2_dybu0"]
@@ -13,6 +13,9 @@ radius = 11.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d5ad"]
 radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6dfqa"]
+radius = 5.0
 
 [node name="Part_2" type="Area2D" groups=["damageable"]]
 script = ExtResource("1_ffdgn")
@@ -33,11 +36,24 @@ shape = SubResource("CircleShape2D_5k5nc")
 position = Vector2(14, 55)
 shape = SubResource("CircleShape2D_5d5ad")
 
+[node name="CollisionShape2D_4" type="CollisionShape2D" parent="."]
+position = Vector2(7, 65)
+shape = SubResource("CircleShape2D_6dfqa")
+
 [node name="BossPartSlots" type="Node2D" parent="."]
 
 [node name="BossPartSlot1" type="Node2D" parent="BossPartSlots"]
-position = Vector2(0, 43)
+position = Vector2(12, 43)
 script = ExtResource("3_yd5g3")
+base_random_angle_min = -2.0944
+base_random_angle_max = 1.309
+
+[node name="BossPartSlot2" type="Node2D" parent="BossPartSlots"]
+visible = false
+position = Vector2(27, 21)
+script = ExtResource("3_yd5g3")
+base_random_angle_min = -2.00713
+base_random_angle_max = -0.349066
 
 [node name="BossWeaponSlots" type="Node2D" parent="."]
 

@@ -29,8 +29,17 @@ shape = SubResource("CircleShape2D_5k5nc")
 [node name="BossPartSlots" type="Node2D" parent="."]
 
 [node name="BossPartSlot1" type="Node2D" parent="BossPartSlots"]
-position = Vector2(12, 70)
+position = Vector2(24, 64)
 script = ExtResource("3_4inxu")
+base_random_angle_min = -1.309
+base_random_angle_max = 2.00713
+
+[node name="BossPartSlot2" type="Node2D" parent="BossPartSlots"]
+visible = false
+position = Vector2(30, 16)
+script = ExtResource("3_4inxu")
+base_random_angle_min = -2.96706
+base_random_angle_max = -0.349066
 
 [node name="BossWeaponSlots" type="Node2D" parent="."]
 

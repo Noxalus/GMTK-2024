@@ -70,8 +70,9 @@ func setup():
 		for part in instanciated_boss_parts:
 			part[0].setup()
 			part[1].setup()
-		
-	spawn_new_parts()
+	
+	for i in range(0, 3):
+		spawn_new_parts()
 
 	for weapon in weapon_instances:
 		weapon.setup()
@@ -94,12 +95,12 @@ func spawn_new_parts():
 	random_slot[1].affect_part(boss_part_right)
 	
 	# apply a random rotation on the new part
-	var random_rotation = game.rng().randf_range(-random_slot[0].angle_amplitude, random_slot[0].angle_amplitude)
+	var random_rotation = game.rng().randf_range(random_slot[0].base_random_angle_min, random_slot[0].base_random_angle_max)
 	var random_rotation_speed = game.rng().randf_range(0.01, 0.05)
 	# TODO: should depends on the slot instead
 	var random_angle_amplitude = game.rng().randf_range(0.0, random_slot[0].angle_amplitude)
-	boss_part_left.set_base_angle(-random_rotation)
-	boss_part_right.set_base_angle(-random_rotation)
+	boss_part_left.set_base_angle(random_rotation)
+	boss_part_right.set_base_angle(random_rotation)
 	boss_part_left.set_rotation_speed(random_rotation_speed)
 	boss_part_right.set_rotation_speed(random_rotation_speed)
 	boss_part_left.set_angle_amplitude(random_angle_amplitude)
@@ -143,6 +144,8 @@ func spawn_core_weapons():
 			var right_weapon = random_weapon.instantiate()
 			left_children[i].affect_weapon(left_weapon)
 			right_children[i].affect_weapon(right_weapon)
+			weapon_instances.append(left_weapon)
+			weapon_instances.append(right_weapon)
 
 func spawn_new_weapons(left_part, right_part):
 	var unoccupied_slots = []
