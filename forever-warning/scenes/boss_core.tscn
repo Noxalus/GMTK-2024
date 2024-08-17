@@ -31,75 +31,75 @@ position = Vector2(45, 0)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot2_L" type="Node2D" parent="BossPartSlots"]
-visible = false
 position = Vector2(-20, 45)
 scale = Vector2(-1, 1)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot2_R" type="Node2D" parent="BossPartSlots"]
-visible = false
 position = Vector2(20, 45)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot3_L" type="Node2D" parent="BossPartSlots"]
-visible = false
 position = Vector2(-20, -45)
 scale = Vector2(-1, 1)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot3_R" type="Node2D" parent="BossPartSlots"]
-visible = false
 position = Vector2(20, -45)
 script = ExtResource("3_nvacj")
 
 [node name="BossWeaponSlots" type="Node2D" parent="."]
 
-[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots"]
+[node name="Left" type="Node2D" parent="BossWeaponSlots"]
+
+[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots/Left"]
 position = Vector2(-24, -14)
 script = ExtResource("4_oslfv")
 
-[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots/Left"]
 position = Vector2(0, -28)
 script = ExtResource("4_oslfv")
 
-[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
-position = Vector2(24, -14)
-script = ExtResource("4_oslfv")
-
-[node name="BossWeaponSlot4" type="Node2D" parent="BossWeaponSlots"]
-position = Vector2(24, 14)
-script = ExtResource("4_oslfv")
-
-[node name="BossWeaponSlot5" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot5" type="Node2D" parent="BossWeaponSlots/Left"]
 position = Vector2(-24, 14)
 script = ExtResource("4_oslfv")
 
-[node name="BossWeaponSlot6" type="Node2D" parent="BossWeaponSlots"]
-position = Vector2(0, 28)
-script = ExtResource("4_oslfv")
-
-[node name="BossWeaponSlot7" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot7" type="Node2D" parent="BossWeaponSlots/Left"]
 position = Vector2(-14, -24)
 script = ExtResource("4_oslfv")
 
-[node name="BossWeaponSlot8" type="Node2D" parent="BossWeaponSlots"]
-position = Vector2(14, -24)
-script = ExtResource("4_oslfv")
-
-[node name="BossWeaponSlot9" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot9" type="Node2D" parent="BossWeaponSlots/Left"]
 position = Vector2(-14, 24)
 script = ExtResource("4_oslfv")
 
-[node name="BossWeaponSlot10" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot12" type="Node2D" parent="BossWeaponSlots/Left"]
+position = Vector2(-27, 0)
+script = ExtResource("4_oslfv")
+
+[node name="Right" type="Node2D" parent="BossWeaponSlots"]
+
+[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots/Right"]
+position = Vector2(24, -14)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot6" type="Node2D" parent="BossWeaponSlots/Right"]
+position = Vector2(0, 28)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot4" type="Node2D" parent="BossWeaponSlots/Right"]
+position = Vector2(24, 14)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot8" type="Node2D" parent="BossWeaponSlots/Right"]
+position = Vector2(14, -24)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot10" type="Node2D" parent="BossWeaponSlots/Right"]
 position = Vector2(14, 24)
 script = ExtResource("4_oslfv")
 
-[node name="BossWeaponSlot11" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot11" type="Node2D" parent="BossWeaponSlots/Right"]
 position = Vector2(27, 0)
-script = ExtResource("4_oslfv")
-
-[node name="BossWeaponSlot12" type="Node2D" parent="BossWeaponSlots"]
-position = Vector2(-27, 0)
 script = ExtResource("4_oslfv")
 
 [node name="ShootTimer" type="Timer" parent="."]

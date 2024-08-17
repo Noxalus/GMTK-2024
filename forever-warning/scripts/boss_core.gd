@@ -10,7 +10,8 @@ extends Area2D
 @onready var parts_side_slots = [$BossPartSlots/BossPartSlot1_L, $BossPartSlots/BossPartSlot1_R]
 @onready var parts_down_slots = [$BossPartSlots/BossPartSlot2_L, $BossPartSlots/BossPartSlot2_R]
 @onready var parts_up_slots = [$BossPartSlots/BossPartSlot3_L, $BossPartSlots/BossPartSlot3_R]
-@onready var weapon_slots = $BossWeaponSlots
+@onready var left_weapon_slots = $BossWeaponSlots/Left
+@onready var right_weapon_slots = $BossWeaponSlots/Right
 
 signal died_signal
 
@@ -123,11 +124,15 @@ func find_unoccupied_slots():
 	return unoccupied_slots
 
 func spawn_core_weapons():
-	for child in weapon_slots.get_children():
-		if child.is_visible() and game.rng().randf() > 0.5:
+	var left_children = left_weapon_slots.get_children()
+	var right_children = right_weapon_slots.get_children()
+	for i in left_children.size():
+		if left_children[i].is_visible() and game.rng().randf() > 0.5:
 			var random_weapon = game.get_random_boss_weapon()
-			var weapon = random_weapon.instantiate()
-			child.affect_weapon(weapon)
+			var left_weapon = random_weapon.instantiate()
+			var right_weapon = random_weapon.instantiate()
+			left_children[i].affect_weapon(left_weapon)
+			right_children[i].affect_weapon(right_weapon)
 
 func spawn_new_weapons(left_part, right_part):
 	pass

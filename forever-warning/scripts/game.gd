@@ -39,10 +39,11 @@ func get_random_boss_part():
 func get_random_boss_weapon():
 	return boss_weapons[rng().randi_range(0, boss_weapons.size() - 1)]
 	
-func instantiate_bullet(pos: Vector2, dir: Vector2):
+func instantiate_bullet(pos: Vector2, dir: Vector2, speed: float = 100):
 	var bullet = bullet_node.instantiate()
 	bullet.global_position = pos
 	bullet.set_direction(dir)
+	bullet.set_speed(speed)
 	get_tree().current_scene.add_child(bullet)
 	
 func rng():
