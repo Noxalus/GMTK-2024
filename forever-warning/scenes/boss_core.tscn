@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://uyvaybhl0san"]
+
+[ext_resource type="Texture2D" uid="uid://dtyrtwphdiji4" path="res://assets/sprites/boss_core_1.png" id="1_t2lbq"]
+[ext_resource type="Script" path="res://scripts/boss_core.gd" id="1_tcfca"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dlyuj"]
+radius = 35.0143
+
+[node name="BossCore" type="Area2D" groups=["damageable"]]
+script = ExtResource("1_tcfca")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dlyuj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_t2lbq")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
