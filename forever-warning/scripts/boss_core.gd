@@ -11,6 +11,8 @@ extends Area2D
 @onready var parts_down_slots = [$BossPartSlots/BossPartSlot2_L, $BossPartSlots/BossPartSlot2_R]
 @onready var parts_up_slots = [$BossPartSlots/BossPartSlot3_L, $BossPartSlots/BossPartSlot3_R]
 
+signal died_signal
+
 var bullet_node := preload("res://scenes/boss_bullet.tscn")
 var rng = RandomNumberGenerator.new()
 var chance_to_fire: float
@@ -35,6 +37,7 @@ func damage(amount: int):
 	if life < 0:
 		visible = false
 		is_dead = true
+		died_signal.emit()
 
 func is_alive():
 	return not is_dead
