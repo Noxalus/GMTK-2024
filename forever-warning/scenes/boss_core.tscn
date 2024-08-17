@@ -22,6 +22,7 @@ texture = ExtResource("1_t2lbq")
 
 [node name="BossPartSlot1_L" type="Node2D" parent="BossPartSlots"]
 position = Vector2(-45, 0)
+scale = Vector2(-1, 1)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot1_R" type="Node2D" parent="BossPartSlots"]
@@ -29,18 +30,24 @@ position = Vector2(45, 0)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot2_L" type="Node2D" parent="BossPartSlots"]
+visible = false
 position = Vector2(-20, 45)
+scale = Vector2(-1, 1)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot2_R" type="Node2D" parent="BossPartSlots"]
+visible = false
 position = Vector2(20, 45)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot3_L" type="Node2D" parent="BossPartSlots"]
+visible = false
 position = Vector2(-20, -45)
+scale = Vector2(-1, 1)
 script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot3_R" type="Node2D" parent="BossPartSlots"]
+visible = false
 position = Vector2(20, -45)
 script = ExtResource("3_nvacj")
 

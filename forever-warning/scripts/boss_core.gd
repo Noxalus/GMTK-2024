@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var life: int = 20
+@export var base_life: int = 5
 @export var speed: float = 300
 @export var shoot_frequency: float = 1.0
 @export var base_chance_to_fire: float = 0.5
@@ -14,25 +14,30 @@ extends Area2D
 
 signal died_signal
 
+var life
 var bullet_node := preload("res://scenes/boss_bullet.tscn")
 var rng = RandomNumberGenerator.new()
 var chance_to_fire: float
 var is_dead = true # dead by default
-var boss_parts = []
+var instanciated_boss_parts = []
 
 func _ready():
+	life = base_life;
 	chance_to_fire = base_chance_to_fire
 	setup()
 	
-func _process(_delta):
+func _process(delta):
 	if is_dead:
 		return
 		 
 	if shoot_timer.is_stopped():
 		shoot_timer.start(shoot_frequency)
 		var rand = rng.randf()
-		if rand > chance_to_fire:
+		if rand <= chance_to_fire:
 			shoot()
+			
+	# TODO: Handle rotation here
+	#rotate(0.5 * delta)
 
 func damage(amount: int):
 	life -= amount
@@ -63,7 +68,7 @@ func setup():
 	# Wait a small amount of time before to respawn the boss
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
-	life = 20
+	life = base_life
 	visible = true
 	is_dead = false
 	spawn_new_parts()
@@ -80,7 +85,6 @@ func spawn_new_parts():
 	var random_boss_part = game.get_random_boss_part()
 	var boss_part_right = random_boss_part.instantiate()
 	var boss_part_left = random_boss_part.instantiate()
-	boss_part_left.flip()
 	
 	# left
 	random_slot[0].affect_part(boss_part_left)
@@ -88,31 +92,37 @@ func spawn_new_parts():
 	random_slot[1].affect_part(boss_part_right)
 	
 	# apply a random rotation on the new part
-	var random_rotation = rng.randf_range(0.0, PI)
+	var random_rotation = rng.randf_range(-random_slot[0].angle_amplitude, random_slot[0].angle_amplitude)
 	var random_rotation_speed = rng.randf_range(0.1, 0.5)
 	# TODO: should depends on the slot instead
-	var random_angle_amplitude = rng.randf_range(0.0, boss_part_right.angle_amplitude)
-	boss_part_left.set_base_angle(random_rotation)
+	var random_angle_amplitude = rng.randf_range(0.0, random_slot[0].angle_amplitude)
+	boss_part_left.set_base_angle(-random_rotation)
 	boss_part_right.set_base_angle(-random_rotation)
 	boss_part_left.set_rotation_speed(random_rotation_speed)
 	boss_part_right.set_rotation_speed(random_rotation_speed)
 	boss_part_left.set_angle_amplitude(random_angle_amplitude)
 	boss_part_right.set_angle_amplitude(random_angle_amplitude)
 
-	boss_parts.append([boss_part_left, boss_part_right])
+	instanciated_boss_parts.append([boss_part_left, boss_part_right])
 
 func find_unoccupied_slots():
 	var unoccupied_slots = []
 	# Find unocuppied boss part slots in the core first
-	if not parts_side_slots[0].is_occupied:
+	if parts_side_slots[0].is_visible() and not parts_side_slots[0].is_occupied:
 		unoccupied_slots.append([parts_side_slots[0], parts_side_slots[1]])
-	if not parts_up_slots[0].is_occupied:
+	if parts_up_slots[0].is_visible() and not parts_up_slots[0].is_occupied:
 		unoccupied_slots.append([parts_up_slots[0], parts_up_slots[1]])
-	if not parts_down_slots[0].is_occupied:
+	if parts_down_slots[0].is_visible() and not parts_down_slots[0].is_occupied:
 		unoccupied_slots.append([parts_down_slots[0], parts_down_slots[1]])
 		
-	# TODO: Look on all boss parts
-		
+	for part in instanciated_boss_parts:
+		var left_slots = part[0].find_unoccupied_slots()
+		if left_slots.size() > 0:
+			# Get the same slots for the right part
+			var right_slots = part[1].find_unoccupied_slots()
+			for i in left_slots.size():
+				unoccupied_slots.append([left_slots[i], right_slots[i]])
+				
 	return unoccupied_slots
 	
 func spawn_new_weapons():
