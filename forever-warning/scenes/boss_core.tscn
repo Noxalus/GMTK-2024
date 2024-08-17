@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://uyvaybhl0san"]
+[gd_scene load_steps=6 format=3 uid="uid://uyvaybhl0san"]
 
 [ext_resource type="Texture2D" uid="uid://dtyrtwphdiji4" path="res://assets/sprites/boss_core_1.png" id="1_t2lbq"]
 [ext_resource type="Script" path="res://scripts/boss_core.gd" id="1_tcfca"]
 [ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_nvacj"]
+[ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_oslfv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dlyuj"]
 radius = 35.0143
@@ -50,6 +51,56 @@ script = ExtResource("3_nvacj")
 visible = false
 position = Vector2(20, -45)
 script = ExtResource("3_nvacj")
+
+[node name="BossWeaponSlots" type="Node2D" parent="."]
+
+[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(-24, -14)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(0, -28)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(24, -14)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot4" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(24, 14)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot5" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(-24, 14)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot6" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(0, 28)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot7" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(-14, -24)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot8" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(14, -24)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot9" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(-14, 24)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot10" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(14, 24)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot11" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(27, 0)
+script = ExtResource("4_oslfv")
+
+[node name="BossWeaponSlot12" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(-27, 0)
+script = ExtResource("4_oslfv")
 
 [node name="ShootTimer" type="Timer" parent="."]
 one_shot = true

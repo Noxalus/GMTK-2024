@@ -4,7 +4,6 @@ extends Area2D
 
 @onready var boss_parts_slots = $BossPartSlots
 
-var rng = RandomNumberGenerator.new()
 var base_angle = 0.0
 var base_min_angle = 0.0
 var base_max_angle = 0.0

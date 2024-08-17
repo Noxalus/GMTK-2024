@@ -6,17 +6,15 @@ extends Area2D
 @export var base_chance_to_fire: float = 0.5
 @export var boss_spawn_delay := 0.5
 
-@onready var player = $"../Player"
 @onready var shoot_timer = $ShootTimer
 @onready var parts_side_slots = [$BossPartSlots/BossPartSlot1_L, $BossPartSlots/BossPartSlot1_R]
 @onready var parts_down_slots = [$BossPartSlots/BossPartSlot2_L, $BossPartSlots/BossPartSlot2_R]
 @onready var parts_up_slots = [$BossPartSlots/BossPartSlot3_L, $BossPartSlots/BossPartSlot3_R]
+@onready var weapon_slots = $BossWeaponSlots
 
 signal died_signal
 
 var life
-var bullet_node := preload("res://scenes/boss_bullet.tscn")
-var rng = RandomNumberGenerator.new()
 var chance_to_fire: float
 var is_dead = true # dead by default
 var instanciated_boss_parts = []
@@ -32,7 +30,7 @@ func _process(delta):
 		 
 	if shoot_timer.is_stopped():
 		shoot_timer.start(shoot_frequency)
-		var rand = rng.randf()
+		var rand = game.rng().randf()
 		if rand <= chance_to_fire:
 			shoot()
 			
@@ -51,16 +49,10 @@ func is_alive():
 
 func shoot():
 	# TODO: Have multiple possible attacks
-	if rng.randf() > 0.5:
+	if game.rng().randf() > 0.5:
 		shoot_one_bullet_toward_player()
 	else:
 		shoot_bullets_in_circle(10)
-
-func instantiate_bullet(dir: Vector2):
-	var bullet = bullet_node.instantiate()
-	bullet.global_position = global_position
-	bullet.set_direction(dir)
-	get_tree().current_scene.add_child(bullet)
 
 #region Generation
 
@@ -71,8 +63,11 @@ func setup():
 	life = base_life
 	visible = true
 	is_dead = false
+	
+	if instanciated_boss_parts.size() == 0:
+		spawn_core_weapons()
+		
 	spawn_new_parts()
-	spawn_new_weapons()
 
 func spawn_new_parts():
 	var unoccupied_slots = find_unoccupied_slots()
@@ -80,7 +75,7 @@ func spawn_new_parts():
 	if unoccupied_slots.size() == 0:
 		return
 	
-	var random_slot = unoccupied_slots[rng.randi_range(0, unoccupied_slots.size() - 1)]
+	var random_slot = unoccupied_slots[game.rng().randi_range(0, unoccupied_slots.size() - 1)]
 	
 	var random_boss_part = game.get_random_boss_part()
 	var boss_part_right = random_boss_part.instantiate()
@@ -92,16 +87,18 @@ func spawn_new_parts():
 	random_slot[1].affect_part(boss_part_right)
 	
 	# apply a random rotation on the new part
-	var random_rotation = rng.randf_range(-random_slot[0].angle_amplitude, random_slot[0].angle_amplitude)
-	var random_rotation_speed = rng.randf_range(0.1, 0.5)
+	var random_rotation = game.rng().randf_range(-random_slot[0].angle_amplitude, random_slot[0].angle_amplitude)
+	var random_rotation_speed = game.rng().randf_range(0.1, 0.5)
 	# TODO: should depends on the slot instead
-	var random_angle_amplitude = rng.randf_range(0.0, random_slot[0].angle_amplitude)
+	var random_angle_amplitude = game.rng().randf_range(0.0, random_slot[0].angle_amplitude)
 	boss_part_left.set_base_angle(-random_rotation)
 	boss_part_right.set_base_angle(-random_rotation)
 	boss_part_left.set_rotation_speed(random_rotation_speed)
 	boss_part_right.set_rotation_speed(random_rotation_speed)
 	boss_part_left.set_angle_amplitude(random_angle_amplitude)
 	boss_part_right.set_angle_amplitude(random_angle_amplitude)
+
+	spawn_new_weapons(boss_part_left, boss_part_right)
 
 	instanciated_boss_parts.append([boss_part_left, boss_part_right])
 
@@ -124,8 +121,15 @@ func find_unoccupied_slots():
 				unoccupied_slots.append([left_slots[i], right_slots[i]])
 				
 	return unoccupied_slots
-	
-func spawn_new_weapons():
+
+func spawn_core_weapons():
+	for child in weapon_slots.get_children():
+		if child.is_visible() and game.rng().randf() > 0.5:
+			var random_weapon = game.get_random_boss_weapon()
+			var weapon = random_weapon.instantiate()
+			child.affect_weapon(weapon)
+
+func spawn_new_weapons(left_part, right_part):
 	pass
 
 #endregion
@@ -134,15 +138,15 @@ func spawn_new_weapons():
 
 func shoot_one_bullet_toward_player():
 	# Shoot bullet toward player
-	if player != null:
-		var direction = (player.global_position - global_position).normalized()
-		instantiate_bullet(direction)
+	if game.player != null:
+		var direction = (game.player.global_position - global_position).normalized()
+		game.instantiate_bullet(global_position, direction)
 	pass
 
 func shoot_bullets_in_circle(count: int):
 	for i:float in count:
 		var angle = ((i / count) * 360) * (PI/180.0)
 		var direction = Vector2(sin(angle), cos(angle))
-		instantiate_bullet(direction)
+		game.instantiate_bullet(global_position, direction)
 		
 #endregion
