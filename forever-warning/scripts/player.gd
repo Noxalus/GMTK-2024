@@ -3,19 +3,26 @@ extends Area2D
 @export var speed: float = 500
 @export var focus_factor: float = 0.5
 @export var rotation_speed: float = 1
+@export var fire_delay: float = 0.1
 
-var bullet_node = preload("res://scenes/bullet.tscn")
+@onready var fire_delay_timer = $FireDelayTimer
+@onready var bullet_spawners = $BulletSpawners
+
+var bullet_node := preload("res://scenes/bullet.tscn")
 var vel := Vector2(0, 0)
-var cur_speed := speed
+var cur_speed
 var previous_mouse_position
 
 func _process(_delta):
 	# Shoot
-	if Input.is_action_pressed("shoot"):
-		var bullet = bullet_node.instantiate()
-		bullet.position = position
-		bullet.set_direction(Vector2.from_angle(rotation - PI / 2.0))
-		get_tree().current_scene.add_child(bullet)
+	if Input.is_action_pressed("shoot") and fire_delay_timer.is_stopped():
+		fire_delay_timer.start(fire_delay)
+		for child in bullet_spawners.get_children():
+			if child.is_visible():
+				var bullet = bullet_node.instantiate()
+				bullet.global_position = child.global_position
+				bullet.set_direction(Vector2.from_angle(rotation - PI / 2.0))
+				get_tree().current_scene.add_child(bullet)
 
 func _physics_process(delta):
 	# Update position

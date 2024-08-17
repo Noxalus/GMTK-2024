@@ -1,13 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://pkr3ksnu1qgh"]
+[gd_scene load_steps=2 format=3 uid="uid://pkr3ksnu1qgh"]
 
 [ext_resource type="PackedScene" uid="uid://55hgfllu4oyd" path="res://scenes/player.tscn" id="1_thu6u"]
-[ext_resource type="PackedScene" uid="uid://cdyedqbe1i8ii" path="res://scenes/bullet.tscn" id="2_tnfjs"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("1_thu6u")]
-
-[node name="Bullet" parent="." instance=ExtResource("2_tnfjs")]
-position = Vector2(-14, 263)
