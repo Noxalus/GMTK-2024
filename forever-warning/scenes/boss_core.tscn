@@ -7,6 +7,7 @@
 radius = 35.0143
 
 [node name="BossCore" type="Area2D" groups=["damageable"]]
+z_index = 10
 script = ExtResource("1_tcfca")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -15,5 +16,28 @@ shape = SubResource("CircleShape2D_dlyuj")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_t2lbq")
+
+[node name="BossPartSlots" type="Node2D" parent="."]
+
+[node name="BossPartSlot1_L" type="Node2D" parent="BossPartSlots"]
+position = Vector2(-45, 0)
+
+[node name="BossPartSlot1_R" type="Node2D" parent="BossPartSlots"]
+position = Vector2(45, 0)
+
+[node name="BossPartSlot2_L" type="Node2D" parent="BossPartSlots"]
+position = Vector2(-20, 45)
+
+[node name="BossPartSlot2_R" type="Node2D" parent="BossPartSlots"]
+position = Vector2(20, 45)
+
+[node name="BossPartSlot3_L" type="Node2D" parent="BossPartSlots"]
+position = Vector2(-20, -45)
+
+[node name="BossPartSlot3_R" type="Node2D" parent="BossPartSlots"]
+position = Vector2(20, -45)
+
+[node name="ShootTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

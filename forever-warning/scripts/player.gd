@@ -8,7 +8,7 @@ extends Area2D
 @onready var fire_delay_timer = $FireDelayTimer
 @onready var bullet_spawners = $BulletSpawners
 
-var bullet_node := preload("res://scenes/bullet.tscn")
+var bullet_node := preload("res://scenes/player_bullet.tscn")
 var vel := Vector2(0, 0)
 var cur_speed
 var previous_mouse_position

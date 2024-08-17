@@ -1,0 +1,85 @@
+[gd_scene load_steps=14 format=3 uid="uid://yv0jst01fp0d"]
+
+[ext_resource type="Texture2D" uid="uid://cmxg48xl8334t" path="res://assets/sprites/parts/beam0.png" id="1_o1rs6"]
+[ext_resource type="Texture2D" uid="uid://com4rviasac7b" path="res://assets/sprites/parts/beam4.png" id="2_gi4sd"]
+[ext_resource type="Texture2D" uid="uid://dnhlqobg21621" path="res://assets/sprites/parts/cockpitBlue_0.png" id="3_4wb62"]
+[ext_resource type="Texture2D" uid="uid://cw04wmc8jolw5" path="res://assets/sprites/parts/wingRed_6.png" id="4_iw8xo"]
+[ext_resource type="Texture2D" uid="uid://dyce4wkxclcnp" path="res://assets/sprites/parts/wingRed_5.png" id="5_u6dyt"]
+[ext_resource type="Texture2D" uid="uid://boyae11dq46k4" path="res://assets/sprites/parts/wingRed_3.png" id="6_5jyud"]
+[ext_resource type="Texture2D" uid="uid://dgnybyxigi4se" path="res://assets/sprites/parts/wingRed_1.png" id="7_4h5a0"]
+[ext_resource type="Texture2D" uid="uid://b1jkkx7706es7" path="res://assets/sprites/parts/wingRed_2.png" id="8_vysxu"]
+[ext_resource type="Texture2D" uid="uid://bffhfqb4cs5v2" path="res://assets/sprites/parts/wingRed_7.png" id="9_elcdy"]
+[ext_resource type="Texture2D" uid="uid://bxtah6ysb5u6e" path="res://assets/sprites/parts/wingRed_0.png" id="10_b473d"]
+[ext_resource type="Texture2D" uid="uid://ghttqhddwt06" path="res://assets/sprites/parts/cockpitRed_2.png" id="11_n26t3"]
+[ext_resource type="Texture2D" uid="uid://dwjpioesjv1w7" path="res://assets/sprites/parts/beamLong2.png" id="12_nsphi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3u2l3"]
+
+[node name="Area2D" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(125, -138)
+texture = ExtResource("1_o1rs6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3u2l3")
+
+[node name="Beam4" type="Sprite2D" parent="."]
+position = Vector2(38, -172)
+texture = ExtResource("2_gi4sd")
+
+[node name="CockpitBlue0" type="Sprite2D" parent="."]
+position = Vector2(-84, -110)
+texture = ExtResource("3_4wb62")
+
+[node name="WingRed6" type="Sprite2D" parent="."]
+position = Vector2(85, 48)
+rotation = 2.61799
+texture = ExtResource("4_iw8xo")
+flip_h = true
+
+[node name="WingRed7" type="Sprite2D" parent="."]
+position = Vector2(-145, -15)
+scale = Vector2(-1, 1)
+texture = ExtResource("4_iw8xo")
+
+[node name="WingRed5" type="Sprite2D" parent="."]
+position = Vector2(-354, 73)
+texture = ExtResource("5_u6dyt")
+
+[node name="WingRed3" type="Sprite2D" parent="."]
+position = Vector2(51, 0)
+rotation = 3.14159
+texture = ExtResource("6_5jyud")
+
+[node name="WingRed1" type="Sprite2D" parent="."]
+position = Vector2(-450, 31)
+texture = ExtResource("7_4h5a0")
+
+[node name="WingRed2" type="Sprite2D" parent="."]
+position = Vector2(-389, -54)
+texture = ExtResource("8_vysxu")
+
+[node name="WingRed8" type="Sprite2D" parent="."]
+position = Vector2(-297, -32)
+texture = ExtResource("4_iw8xo")
+
+[node name="WingRed9" type="Sprite2D" parent="."]
+position = Vector2(-488, -69)
+texture = ExtResource("9_elcdy")
+
+[node name="WingRed0" type="Sprite2D" parent="."]
+position = Vector2(-335, -125)
+texture = ExtResource("10_b473d")
+
+[node name="CockpitRed2" type="Sprite2D" parent="."]
+position = Vector2(-117, 73)
+texture = ExtResource("11_n26t3")
+
+[node name="CockpitBlue1" type="Sprite2D" parent="."]
+position = Vector2(-46, 101)
+texture = ExtResource("3_4wb62")
+
+[node name="BeamLong2" type="Sprite2D" parent="."]
+position = Vector2(-265, 112)
+texture = ExtResource("12_nsphi")
