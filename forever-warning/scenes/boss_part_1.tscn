@@ -11,7 +11,7 @@ radius = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_5k5nc"]
 radius = 19.2
 
-[node name="Part_1" type="Area2D"]
+[node name="Part_1" type="Area2D" groups=["damageable"]]
 script = ExtResource("1_defys")
 
 [node name="WingGreen0" type="Sprite2D" parent="."]

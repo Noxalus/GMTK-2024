@@ -1,10 +1,15 @@
 extends Area2D
 
 @export var base_rotation_speed: float = 5.0
+@export var base_life: int = 10
 
 @onready var boss_parts_slots = $BossPartSlots
 @onready var boss_weapons_slots = $BossWeaponSlots
 
+signal died_signal
+
+var life
+var is_dead = true # dead by default
 var base_angle = 0.0
 var base_min_angle = 0.0
 var base_max_angle = 0.0
@@ -15,6 +20,7 @@ var is_rotating_clockwise;
 
 func _ready():
 	rotation_speed = base_rotation_speed
+	life = base_life
 
 func is_flipped():
 	return scale.x == -1
@@ -22,8 +28,18 @@ func is_flipped():
 func flip():
 	scale.x = -1
 
+func is_alive():
+	return not is_dead
+
+func setup():
+	life = base_life
+	is_dead = false
+	visible = true
+
 func _physics_process(delta):
-	
+	if is_dead:
+		return
+		
 	if base_min_angle < 0.0 and base_max_angle > 0.0:
 		var flip_factor = 1
 		
@@ -44,6 +60,13 @@ func _physics_process(delta):
 		
 		rotate(rotation_speed * flip_factor * clockwise_factor * delta)
 
+func damage(amount: int):
+	life -= amount
+	if life < 0:
+		visible = false
+		is_dead = true
+		died_signal.emit()
+
 func set_base_angle(angle: float):
 	base_angle = angle
 	rotation = base_angle
@@ -61,7 +84,7 @@ func set_angle_amplitude(amplitude: float):
 		is_rotating_clockwise = true
 
 func set_rotation_speed(speed: float):
-	rotation_speed = 5
+	rotation_speed = speed
 
 func find_unoccupied_part_slots():
 	var parts = []

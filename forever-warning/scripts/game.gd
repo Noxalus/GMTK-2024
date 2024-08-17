@@ -19,6 +19,10 @@ var player = null
 func _ready():
 	spawn_new_boss()
 
+func _process(delta):
+	if Input.is_action_just_pressed("next_boss") and boss != null:
+		boss.damage(9999)
+
 func spawn_new_boss():
 	if boss == null:
 		boss = boss_core.instantiate()

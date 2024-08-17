@@ -65,6 +65,7 @@ func _physics_process(delta):
 	previous_mouse_position = mouse_position
 	
 func damage(amount: int):
-	life -= amount
-	if life < 0:
-		queue_free()
+	pass
+	#life -= amount
+	#if life < 0:
+		#queue_free()

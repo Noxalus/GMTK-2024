@@ -67,6 +67,11 @@ func setup():
 	
 	if instanciated_boss_parts.size() == 0:
 		spawn_core_weapons()
+	else:
+		# reset all boss parts
+		for part in instanciated_boss_parts:
+			part[0].setup()
+			part[1].setup()
 		
 	spawn_new_parts()
 
@@ -89,7 +94,7 @@ func spawn_new_parts():
 	
 	# apply a random rotation on the new part
 	var random_rotation = game.rng().randf_range(-random_slot[0].angle_amplitude, random_slot[0].angle_amplitude)
-	var random_rotation_speed = game.rng().randf_range(0.1, 0.5)
+	var random_rotation_speed = game.rng().randf_range(0.01, 0.05)
 	# TODO: should depends on the slot instead
 	var random_angle_amplitude = game.rng().randf_range(0.0, random_slot[0].angle_amplitude)
 	boss_part_left.set_base_angle(-random_rotation)
@@ -98,6 +103,9 @@ func spawn_new_parts():
 	boss_part_right.set_rotation_speed(random_rotation_speed)
 	boss_part_left.set_angle_amplitude(random_angle_amplitude)
 	boss_part_right.set_angle_amplitude(random_angle_amplitude)
+
+	boss_part_left.setup()
+	boss_part_right.setup()
 
 	spawn_new_weapons(boss_part_left, boss_part_right)
 
