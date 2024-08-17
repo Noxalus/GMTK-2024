@@ -8,8 +8,10 @@ radius = 12.0
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_yv0xi")
+fire_delay = 0.001
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_xdjxy")
 
@@ -23,27 +25,21 @@ shape = SubResource("CircleShape2D_m63fx")
 position = Vector2(0, -18)
 
 [node name="Spawner2" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(22, 11)
 
 [node name="Spawner3" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-23, 11)
 
 [node name="Spawner4" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-14, 0)
 
 [node name="Spawner5" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(13, 0)
 
 [node name="Spawner6" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(6, -10)
 
 [node name="Spawner7" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-6, -10)
 
 [node name="FireDelayTimer" type="Timer" parent="."]

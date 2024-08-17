@@ -10,3 +10,7 @@ func _physics_process(delta):
 func set_direction(dir: Vector2):
 	direction = dir
 	rotation = direction.angle() + PI / 2.0
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()
