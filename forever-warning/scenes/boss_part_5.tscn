@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://cthjtad21d5ib"]
+
+[ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_a7eqv"]
+[ext_resource type="Texture2D" uid="uid://bws8eim3nguyx" path="res://assets/sprites/parts/wingGreen_4.png" id="2_jc8nt"]
+[ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_1fpxh"]
+[ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_imnj8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kjq0j"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uyf1h"]
+radius = 11.0454
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3pwme"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_77dqd"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1fste"]
+radius = 7.0
+
+[node name="Part_5" type="Area2D" groups=["damageable"]]
+script = ExtResource("1_a7eqv")
+
+[node name="WingGreen4" type="Sprite2D" parent="."]
+position = Vector2(14, 40)
+texture = ExtResource("2_jc8nt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9, 8)
+shape = SubResource("CircleShape2D_kjq0j")
+
+[node name="CollisionShape2D_2" type="CollisionShape2D" parent="."]
+position = Vector2(12, 27)
+shape = SubResource("CircleShape2D_uyf1h")
+
+[node name="CollisionShape2D_3" type="CollisionShape2D" parent="."]
+position = Vector2(22, 53)
+shape = SubResource("CircleShape2D_3pwme")
+
+[node name="CollisionShape2D_4" type="CollisionShape2D" parent="."]
+position = Vector2(14, 68)
+shape = SubResource("CircleShape2D_77dqd")
+
+[node name="CollisionShape2D_5" type="CollisionShape2D" parent="."]
+position = Vector2(27, 17)
+shape = SubResource("CircleShape2D_1fste")
+
+[node name="CollisionShape2D_6" type="CollisionShape2D" parent="."]
+position = Vector2(29, 34)
+shape = SubResource("CircleShape2D_1fste")
+
+[node name="BossPartSlots" type="Node2D" parent="."]
+
+[node name="BossPartSlot1" type="Node2D" parent="BossPartSlots"]
+position = Vector2(9, 54)
+script = ExtResource("3_1fpxh")
+base_random_angle_min = 1.5708
+base_random_angle_max = 3.14159
+
+[node name="BossWeaponSlots" type="Node2D" parent="."]
+
+[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(4, 75)
+script = ExtResource("4_imnj8")
+
+[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(18, 14)
+script = ExtResource("4_imnj8")
+
+[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(19, 38)
+script = ExtResource("4_imnj8")

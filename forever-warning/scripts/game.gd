@@ -4,7 +4,11 @@ extends Node2D
 var boss_core = preload("res://scenes/boss_core.tscn")
 var boss_parts = [
 	preload("res://scenes/boss_part_1.tscn"),
-	preload("res://scenes/boss_part_2.tscn")
+	preload("res://scenes/boss_part_2.tscn"),
+	preload("res://scenes/boss_part_3.tscn"),
+	preload("res://scenes/boss_part_4.tscn"),
+	preload("res://scenes/boss_part_5.tscn"),
+	preload("res://scenes/boss_part_6.tscn"),
 ]
 var boss_weapons = [
 	preload("res://scenes/boss_weapon_turret.tscn")
