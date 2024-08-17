@@ -4,17 +4,22 @@ extends Area2D
 @export var focus_factor: float = 0.5
 @export var rotation_speed: float = 1
 
-@onready var sprite = $Sprite2D
-
+var bullet_node = preload("res://scenes/bullet.tscn")
 var vel := Vector2(0, 0)
 var cur_speed := speed
 var previous_mouse_position
 
-func _process(delta):
-	pass
+func _process(_delta):
+	# Shoot
+	if Input.is_action_pressed("shoot"):
+		var bullet = bullet_node.instantiate()
+		bullet.position = position
+		bullet.set_direction(Vector2.from_angle(rotation - PI / 2.0))
+		get_tree().current_scene.add_child(bullet)
 
 func _physics_process(delta):
 	# Update position
+	
 	var dirVel := Vector2(0, 0)
 	
 	if Input.is_action_pressed("move_up"):
@@ -41,10 +46,10 @@ func _physics_process(delta):
 	var mouse_position = get_global_mouse_position()
 	
 	if gamepad_input.length() > 0.0:
-		sprite.rotation = gamepad_input.angle()
+		rotation = gamepad_input.angle()
 	elif previous_mouse_position != mouse_position:
-		sprite.look_at(mouse_position)
-		sprite.rotate(PI / 2.0)
+		look_at(mouse_position)
+		rotate(PI / 2.0)
 	
 	previous_mouse_position = mouse_position
 	
