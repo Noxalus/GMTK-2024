@@ -3,6 +3,7 @@ extends Area2D
 @export var base_rotation_speed: float = 5.0
 
 @onready var boss_parts_slots = $BossPartSlots
+@onready var boss_weapons_slots = $BossWeaponSlots
 
 var base_angle = 0.0
 var base_min_angle = 0.0
@@ -62,10 +63,18 @@ func set_angle_amplitude(amplitude: float):
 func set_rotation_speed(speed: float):
 	rotation_speed = 5
 
-func find_unoccupied_slots():
+func find_unoccupied_part_slots():
 	var parts = []
 	if boss_parts_slots != null:
 		for part in boss_parts_slots.get_children():
 			if part.is_visible() and not part.is_occupied:
 				parts.append(part)
 	return parts
+	
+func find_unoccupied_weapon_slots():
+	var weapon_slots = []
+	if boss_weapons_slots != null:
+		for weapon_slot in boss_weapons_slots.get_children():
+			if weapon_slot.is_visible() and not weapon_slot.is_occupied:
+				weapon_slots.append(weapon_slot)
+	return weapon_slots

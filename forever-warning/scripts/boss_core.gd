@@ -112,12 +112,13 @@ func find_unoccupied_slots():
 		unoccupied_slots.append([parts_up_slots[0], parts_up_slots[1]])
 	if parts_down_slots[0].is_visible() and not parts_down_slots[0].is_occupied:
 		unoccupied_slots.append([parts_down_slots[0], parts_down_slots[1]])
-		
+	
+	# Find unoccupied boss part slots on the already instanciated boss parts
 	for part in instanciated_boss_parts:
-		var left_slots = part[0].find_unoccupied_slots()
+		var left_slots = part[0].find_unoccupied_part_slots()
 		if left_slots.size() > 0:
 			# Get the same slots for the right part
-			var right_slots = part[1].find_unoccupied_slots()
+			var right_slots = part[1].find_unoccupied_part_slots()
 			for i in left_slots.size():
 				unoccupied_slots.append([left_slots[i], right_slots[i]])
 				
@@ -135,7 +136,19 @@ func spawn_core_weapons():
 			right_children[i].affect_weapon(right_weapon)
 
 func spawn_new_weapons(left_part, right_part):
-	pass
+	var unoccupied_slots = []
+	var left_slots = left_part.find_unoccupied_weapon_slots()
+	if left_slots.size() > 0:
+		# Get the same slots for the right part
+		var right_slots = right_part.find_unoccupied_weapon_slots()
+		for i in left_slots.size():
+			# Chance to spawn a weapon
+			if (game.rng().randf() > 0.5):
+				var random_weapon = game.get_random_boss_weapon()
+				var left_weapon = random_weapon.instantiate()
+				var right_weapon = random_weapon.instantiate()
+				left_slots[i].affect_weapon(left_weapon)
+				right_slots[i].affect_weapon(right_weapon)
 
 #endregion
 

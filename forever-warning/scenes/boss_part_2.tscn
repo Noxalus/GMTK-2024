@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx0qv71r6cy1v"]
+[gd_scene load_steps=8 format=3 uid="uid://bx0qv71r6cy1v"]
 
 [ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_ffdgn"]
 [ext_resource type="Texture2D" uid="uid://bpbcphouok0j2" path="res://assets/sprites/parts/wingGreen_1.png" id="2_dybu0"]
 [ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_yd5g3"]
+[ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_epqud"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3u2l3"]
 radius = 11.0
@@ -37,3 +38,17 @@ shape = SubResource("CircleShape2D_5d5ad")
 [node name="BossPartSlot1" type="Node2D" parent="BossPartSlots"]
 position = Vector2(0, 43)
 script = ExtResource("3_yd5g3")
+
+[node name="BossWeaponSlots" type="Node2D" parent="."]
+
+[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(32, 41)
+script = ExtResource("4_epqud")
+
+[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(16, 6)
+script = ExtResource("4_epqud")
+
+[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
+position = Vector2(5, 67)
+script = ExtResource("4_epqud")
