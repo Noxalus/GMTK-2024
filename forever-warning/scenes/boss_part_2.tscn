@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bx0qv71r6cy1v"]
+
+[ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_ffdgn"]
+[ext_resource type="Texture2D" uid="uid://bpbcphouok0j2" path="res://assets/sprites/parts/wingGreen_1.png" id="2_dybu0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3u2l3"]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5k5nc"]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5d5ad"]
+radius = 7.0
+
+[node name="Part_2" type="Area2D"]
+script = ExtResource("1_ffdgn")
+
+[node name="WingGreen0" type="Sprite2D" parent="."]
+texture = ExtResource("2_dybu0")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(14, 19)
+shape = SubResource("CircleShape2D_3u2l3")
+
+[node name="CollisionShape2D_2" type="CollisionShape2D" parent="."]
+position = Vector2(23, 39)
+shape = SubResource("CircleShape2D_5k5nc")
+
+[node name="CollisionShape2D_3" type="CollisionShape2D" parent="."]
+position = Vector2(14, 55)
+shape = SubResource("CircleShape2D_5d5ad")

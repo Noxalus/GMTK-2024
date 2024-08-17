@@ -4,6 +4,7 @@ extends Area2D
 @export var speed: float = 300
 @export var shoot_frequency: float = 1.0
 @export var base_chance_to_fire: float = 0.5
+@export var boss_spawn_delay := 3.0
 
 @onready var player = $"../Player"
 @onready var shoot_timer = $ShootTimer
@@ -16,10 +17,14 @@ signal died_signal
 var bullet_node := preload("res://scenes/boss_bullet.tscn")
 var rng = RandomNumberGenerator.new()
 var chance_to_fire: float
-var is_dead = false
+var is_dead = true
+var boss_parts_left = []
+var boss_parts_right = []
 
 func _ready():
 	chance_to_fire = base_chance_to_fire
+	if is_dead == true:
+		setup()
 	
 func _process(_delta):
 	if is_dead:
@@ -57,7 +62,11 @@ func instantiate_bullet(dir: Vector2):
 
 #region Generation
 
-func setup(wave_count: int):
+func setup():
+	print("START")
+	var timer := get_tree().create_timer(boss_spawn_delay)
+	await timer.timeout
+	print("COUCOU")
 	life = 20
 	visible = true
 	is_dead = false
@@ -65,8 +74,33 @@ func setup(wave_count: int):
 	spawn_new_weapons()
 
 func spawn_new_parts():
-	pass
+	var unoccupied_slots = find_unoccupied_slots()
+	
+	if unoccupied_slots.size() == 0:
+		return
+	
+	var random_slot = unoccupied_slots[rng.randi_range(0, unoccupied_slots.size() - 1)]
+	
+	var random_boss_part = game.get_random_boss_part()
+	var boss_part_right = random_boss_part.instantiate()
+	var boss_part_left = random_boss_part.instantiate().flip()
+	
+	# left
+	random_slot[0].affect_part(boss_part_right)
+	# right
+	random_slot[1].affect_part(boss_part_left)
 
+func find_unoccupied_slots():
+	var unoccupied_slots = []
+	# Find unocuppied boss part slots in the core first
+	if not parts_side_slots[0].is_occupied:
+		unoccupied_slots.append([parts_side_slots[0], parts_side_slots[1]])
+	if not parts_up_slots[0].is_occupied:
+		unoccupied_slots.append([parts_up_slots[0], parts_up_slots[1]])
+	if not parts_down_slots[0].is_occupied:
+		unoccupied_slots.append([parts_down_slots[0], parts_down_slots[1]])	
+	return unoccupied_slots
+	
 func spawn_new_weapons():
 	pass
 

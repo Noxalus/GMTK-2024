@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://uyvaybhl0san"]
+[gd_scene load_steps=5 format=3 uid="uid://uyvaybhl0san"]
 
 [ext_resource type="Texture2D" uid="uid://dtyrtwphdiji4" path="res://assets/sprites/boss_core_1.png" id="1_t2lbq"]
 [ext_resource type="Script" path="res://scripts/boss_core.gd" id="1_tcfca"]
+[ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_nvacj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dlyuj"]
 radius = 35.0143
@@ -21,21 +22,27 @@ texture = ExtResource("1_t2lbq")
 
 [node name="BossPartSlot1_L" type="Node2D" parent="BossPartSlots"]
 position = Vector2(-45, 0)
+script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot1_R" type="Node2D" parent="BossPartSlots"]
 position = Vector2(45, 0)
+script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot2_L" type="Node2D" parent="BossPartSlots"]
 position = Vector2(-20, 45)
+script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot2_R" type="Node2D" parent="BossPartSlots"]
 position = Vector2(20, 45)
+script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot3_L" type="Node2D" parent="BossPartSlots"]
 position = Vector2(-20, -45)
+script = ExtResource("3_nvacj")
 
 [node name="BossPartSlot3_R" type="Node2D" parent="BossPartSlots"]
 position = Vector2(20, -45)
+script = ExtResource("3_nvacj")
 
 [node name="ShootTimer" type="Timer" parent="."]
 one_shot = true
