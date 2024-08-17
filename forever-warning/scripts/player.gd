@@ -4,6 +4,7 @@ extends Area2D
 @export var focus_factor: float = 0.5
 @export var rotation_speed: float = 1
 @export var fire_delay: float = 0.1
+@export var life: int = 5
 
 @onready var fire_delay_timer = $FireDelayTimer
 @onready var bullet_spawners = $BulletSpawners
@@ -60,3 +61,7 @@ func _physics_process(delta):
 	
 	previous_mouse_position = mouse_position
 	
+func damage(amount: int):
+	life -= amount
+	if life < 0:
+		queue_free()

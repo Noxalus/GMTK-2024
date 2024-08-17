@@ -11,4 +11,4 @@
 position = Vector2(0, 255)
 
 [node name="BossCore" parent="." instance=ExtResource("2_wap0u")]
-position = Vector2(-68, -177)
+position = Vector2(0, -175)
