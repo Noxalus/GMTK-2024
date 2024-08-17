@@ -17,9 +17,8 @@ signal died_signal
 var bullet_node := preload("res://scenes/boss_bullet.tscn")
 var rng = RandomNumberGenerator.new()
 var chance_to_fire: float
-var is_dead = true
-var boss_parts_left = []
-var boss_parts_right = []
+var is_dead = true # dead by default
+var boss_parts = []
 
 func _ready():
 	chance_to_fire = base_chance_to_fire
@@ -87,6 +86,20 @@ func spawn_new_parts():
 	random_slot[0].affect_part(boss_part_left)
 	# right
 	random_slot[1].affect_part(boss_part_right)
+	
+	# apply a random rotation on the new part
+	var random_rotation = rng.randf_range(0.0, PI)
+	var random_rotation_speed = rng.randf_range(0.1, 0.5)
+	# TODO: should depends on the slot instead
+	var random_angle_amplitude = rng.randf_range(0.0, boss_part_right.angle_amplitude)
+	boss_part_left.set_base_angle(random_rotation)
+	boss_part_right.set_base_angle(-random_rotation)
+	boss_part_left.set_rotation_speed(random_rotation_speed)
+	boss_part_right.set_rotation_speed(random_rotation_speed)
+	boss_part_left.set_angle_amplitude(random_angle_amplitude)
+	boss_part_right.set_angle_amplitude(random_angle_amplitude)
+
+	boss_parts.append([boss_part_left, boss_part_right])
 
 func find_unoccupied_slots():
 	var unoccupied_slots = []
@@ -96,7 +109,10 @@ func find_unoccupied_slots():
 	if not parts_up_slots[0].is_occupied:
 		unoccupied_slots.append([parts_up_slots[0], parts_up_slots[1]])
 	if not parts_down_slots[0].is_occupied:
-		unoccupied_slots.append([parts_down_slots[0], parts_down_slots[1]])	
+		unoccupied_slots.append([parts_down_slots[0], parts_down_slots[1]])
+		
+	# TODO: Look on all boss parts
+		
 	return unoccupied_slots
 	
 func spawn_new_weapons():
