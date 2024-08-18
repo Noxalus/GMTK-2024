@@ -102,7 +102,7 @@ func spawn_explosion(pos: Vector2):
 	instance.position = pos
 	instance.emitting = true
 	get_tree().current_scene.add_child(instance)
-	game.camera.shake(20)
+	game.camera.shake(7.5)
 	return instance
 
 func set_player(p):

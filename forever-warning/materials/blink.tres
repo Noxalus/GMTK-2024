@@ -4,4 +4,4 @@
 
 [resource]
 shader = ExtResource("1_ufsaa")
-shader_parameter/hit_opacity = 1.0
+shader_parameter/hit_opacity = 0.0
