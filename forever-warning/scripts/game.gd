@@ -124,5 +124,7 @@ func _on_player_died():
 		hud.show_game_over()
 		player.kill()
 	else:
+		var timer := get_tree().create_timer(1.5)
+		await timer.timeout
 		player.respawn()
 	pass

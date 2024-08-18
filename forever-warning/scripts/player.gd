@@ -9,6 +9,7 @@ extends Area2D
 @onready var invicibility_timer = $InvincibilityTimer
 @onready var bullet_spawners = $BulletSpawners
 @onready var player_spawn = $"../PlayerSpawn"
+@onready var sprite: Sprite2D = $Sprite2D
 
 signal died_signal
 
@@ -25,7 +26,7 @@ func _ready():
 	reset()
 
 func reset():
-	visible = true
+	sprite.visible = true
 	is_dead = false
 	is_invincible = false
 
@@ -87,22 +88,27 @@ func _physics_process(delta):
 	previous_mouse_position = mouse_position
 	
 func damage(amount: int):
-	pass
-	#if not is_invincible:
-		#died_signal.emit()
+	if not is_invincible:
+		kill()
 
 func kill():
-	visible = false
+	if is_dead:
+		return
+		
+	sprite.visible = false
 	is_dead = true
+	died_signal.emit()
 
 func set_invincibility(time: float):
 	is_invincible = true
 	invicibility_timer.start(time)
 	
 func respawn():
+	sprite.visible = true
+	is_dead = false
+	set_invincibility(3.0)
 	global_position = player_spawn.global_position
 	global_rotation = player_spawn.global_rotation
-	set_invincibility(3.0)
 	
 func play_hit_sound(): 
 	$HitSound.play()
