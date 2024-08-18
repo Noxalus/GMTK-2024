@@ -238,3 +238,8 @@ func shoot_bullets_in_circle(count: int):
 		game.instantiate_bullet(global_position, direction)
 		
 #endregion
+
+func _on_area_entered(area):
+	# kill player on contact
+	if area.is_in_group("player") and not area.is_dead:
+		area.damage(1)

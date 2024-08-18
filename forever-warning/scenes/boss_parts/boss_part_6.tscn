@@ -67,3 +67,5 @@ script = ExtResource("4_thlfb")
 [node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
 position = Vector2(12, 31)
 script = ExtResource("4_thlfb")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

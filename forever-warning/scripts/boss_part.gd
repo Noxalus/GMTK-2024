@@ -123,3 +123,8 @@ func find_unoccupied_weapon_slots():
 			if weapon_slot.is_visible() and not weapon_slot.is_occupied:
 				weapon_slots.append(weapon_slot)
 	return weapon_slots
+
+func _on_area_entered(area):
+	# kill player on contact
+	if area.is_in_group("player") and not area.is_dead:
+		area.damage(1)
