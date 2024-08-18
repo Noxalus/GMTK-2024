@@ -80,7 +80,9 @@ func _on_player_died():
 	instance.emitting = true
 	get_tree().current_scene.add_child(instance)
 	
-	#player_lives -= 1
+	player_lives -= 1
+	hud.set_lives(player_lives)
+	
 	if (player_lives <= 0):
 		# game over
 		pass
