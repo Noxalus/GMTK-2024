@@ -52,7 +52,7 @@ func add_sub_part(part):
 	subparts.append(part)
 
 func _physics_process(delta):
-	if is_dead or is_dying or game.player.is_dead or game.is_paused:
+	if is_dead or is_dying or game.player.is_dead or game.is_paused or game.boss.is_spawning:
 		return
 		
 	if base_min_angle < 0.0 and base_max_angle > 0.0:
@@ -76,6 +76,9 @@ func _physics_process(delta):
 		rotate(rotation_speed * flip_factor * clockwise_factor * delta)
 
 func damage(amount: int):
+	if game.boss.is_invincible:
+		return
+	
 	life -= amount
 	game.boss.damage(amount)
 	animation.play("hit")

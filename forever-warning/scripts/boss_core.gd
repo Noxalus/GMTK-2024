@@ -16,6 +16,7 @@ class_name BossCore
 @onready var right_weapon_slots = $BossWeaponSlots/Right
 @onready var boss_spawn = $"../BossSpawn"
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var animation: AnimationPlayer = $AnimationPlayer
 
 signal died_signal
 
@@ -24,6 +25,8 @@ var total_life: int
 var chance_to_fire: float
 var is_dead = true # dead by default
 var is_dying = false
+var is_spawning = false
+var is_invincible = false
 var core_parts_instances = []
 var parts_instances = []
 var weapon_instances = []
@@ -34,7 +37,7 @@ func _ready():
 	setup()
 
 func _process(delta):
-	if is_dead or is_dying or game.player.is_dead or game.is_paused:
+	if is_dead or is_dying or game.player.is_dead or game.is_paused or is_spawning:
 		return
 		 
 	if shoot_timer.is_stopped():
@@ -47,6 +50,9 @@ func _process(delta):
 	#rotate(0.5 * delta)
 
 func damage(amount: int):
+	if is_invincible:
+		return
+		
 	life -= amount
 	game.hud.set_boss_life(life)
 	if life <= 0 and not is_dead:
@@ -111,12 +117,7 @@ func setup():
 	# Wait a small amount of time before to respawn the boss
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
-	life = base_life
-	sprite.visible = true
-	is_dead = false
-	is_dying = false
-	visible = true
-
+	
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
 	
@@ -133,10 +134,26 @@ func setup():
 
 	for weapon in weapon_instances:
 		weapon.setup()
+	
+	sprite.visible = true
+	is_dead = false
+	is_dying = false
 		
 	compute_life()
 	life = total_life
 	refresh_hud_boss_life()
+	
+	animation.play("spawn")
+	
+	is_spawning = true
+	is_invincible = true
+	
+	# wait for the spawn animation
+	var spawn_timer := get_tree().create_timer(1.0)
+	await spawn_timer.timeout
+	
+	is_spawning = false
+	is_invincible = false
 
 # boss core life depends of all its members
 func compute_life():

@@ -26,7 +26,7 @@ func setup():
 	is_dead = false
 
 func _process(delta):
-	if is_dead or game.player.is_dead or game.is_paused:
+	if is_dead or game.player.is_dead or game.is_paused or game.boss.is_spawning:
 		return
 		
 	if game.player != null:
