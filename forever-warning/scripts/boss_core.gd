@@ -28,19 +28,6 @@ func _ready():
 	chance_to_fire = base_chance_to_fire
 	setup()
 
-func reset():
-	is_dead = false
-	visible = true
-	
-	for instance in parts_instances:
-		instance[0].queue_free()
-		instance[1].queue_free()
-	for instance in weapon_instances:
-		instance.queue_free()
-	
-	parts_instances.clear()
-	weapon_instances.clear()
-
 func _process(delta):
 	if is_dead or game.player.is_dead:
 		return

@@ -48,11 +48,12 @@ func restart():
 	bullets.clear()
 	
 	# reset main entities
-	boss.reset()
 	player.reset()
 	hud.reset()
 	
 	# respawn entities
+	boss.queue_free()
+	boss = null
 	spawn_new_boss()
 	player.respawn()
 
