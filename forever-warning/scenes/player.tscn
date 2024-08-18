@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://55hgfllu4oyd"]
+[gd_scene load_steps=13 format=3 uid="uid://55hgfllu4oyd"]
 
 [ext_resource type="Texture2D" uid="uid://d3uerrrmy6kcm" path="res://assets/sprites/player_ship.png" id="1_xdjxy"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_yv0xi"]
@@ -17,6 +17,68 @@ stream_0/stream = ExtResource("3_061m7")
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pb35m"]
 streams_count = 1
 stream_0/stream = ExtResource("3_l5qrk")
+
+[sub_resource type="Animation" id="Animation_v0y0s"]
+resource_name = "invincible"
+length = 0.25
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.423529)]
+}
+
+[sub_resource type="Animation" id="Animation_rvf3x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fx4y3"]
+_data = {
+"RESET": SubResource("Animation_rvf3x"),
+"invincible": SubResource("Animation_v0y0s")
+}
 
 [node name="Player" type="Area2D" groups=["player"]]
 script = ExtResource("1_yv0xi")
@@ -83,5 +145,10 @@ script = ExtResource("5_8fr2p")
 self_modulate = Color(1, 1, 1, 0.376471)
 lifetime = 10.0
 preprocess = 10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fx4y3")
+}
 
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

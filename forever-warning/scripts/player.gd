@@ -10,6 +10,8 @@ extends Area2D
 @onready var bullet_spawners = $BulletSpawners
 @onready var player_spawn = $"../PlayerSpawn"
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var animation: AnimationPlayer = $AnimationPlayer
+
 
 signal died_signal
 
@@ -102,6 +104,7 @@ func kill():
 func set_invincibility(time: float):
 	is_invincible = true
 	invicibility_timer.start(time)
+	animation.play("invincible")
 	
 func respawn():
 	sprite.visible = true
@@ -115,3 +118,4 @@ func play_hit_sound():
 
 func _on_invincibility_timer_timeout():
 	is_invincible = false
+	animation.play("RESET")
