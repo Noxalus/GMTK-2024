@@ -84,7 +84,8 @@ func _on_part_died():
 func are_all_parts_dead():
 	for part in core_parts_instances:
 		if not part.is_dead:
-			return
+			return false
+	return true
 
 func true_kill():
 	is_dying = false

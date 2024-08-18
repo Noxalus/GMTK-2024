@@ -35,7 +35,11 @@ func _ready():
 func _process(delta):
 	# debug to test boss generation quickly
 	if Input.is_action_just_pressed("next_boss") and boss != null:
-		boss.damage(9999)
+		spawn_new_boss()
+	if Input.is_action_just_pressed("kill_boss") and boss != null:
+		boss.damage(999999)
+	if Input.is_action_just_pressed("restart") and boss != null:
+		restart()
 
 func restart():
 	# reset gameplay values
