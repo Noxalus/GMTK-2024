@@ -201,7 +201,7 @@ func _on_player_died():
 func can_show_upgrades():
 	# should we limit this every X wave?
 	# easy to do with a module on the wave_count
-	return true
+	return wave_count % 5 == 0
 
 func pause():
 	is_paused = true
