@@ -70,7 +70,6 @@ func spawn_new_boss():
 		boss = boss_core.instantiate()
 		get_tree().current_scene.add_child(boss)
 		boss.died_signal.connect(_on_boss_death)
-		boss.visible = false
 	else:
 		boss.setup()
 
@@ -100,6 +99,7 @@ func spawn_explosion(pos: Vector2):
 	instance.emitting = true
 	get_tree().current_scene.add_child(instance)
 	game.camera.shake(20)
+	return instance
 
 func set_player(p):
 	player = p

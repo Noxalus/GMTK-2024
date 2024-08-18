@@ -1,71 +1,64 @@
-[gd_scene load_steps=10 format=3 uid="uid://04s3x3ybimy0"]
+[gd_scene load_steps=10 format=3 uid="uid://b5pv82ai88l4s"]
 
-[ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_02q0i"]
+[ext_resource type="PackedScene" uid="uid://00bkmvppa4wt" path="res://scenes/boss_parts/base_boss_part.tscn" id="1_g1pst"]
 [ext_resource type="Texture2D" uid="uid://vou2ccbnub24" path="res://assets/sprites/parts/wingGreen_5.png" id="2_ds44o"]
 [ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_1gwbv"]
 [ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_thlfb"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kjq0j"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ltkbh"]
 radius = 8.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6t55c"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_5a30o"]
 radius = 14.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0iqmg"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ffqd"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_77dqd"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3nurw"]
 radius = 5.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_22at7"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_a7t15"]
 radius = 9.0
 
-[node name="Part_6" type="Area2D" groups=["damageable"]]
-script = ExtResource("1_02q0i")
+[node name="BaseBossPart" instance=ExtResource("1_g1pst")]
 
-[node name="WingGreen5" type="Sprite2D" parent="."]
-position = Vector2(16, 35)
+[node name="Sprite" parent="." index="0"]
+position = Vector2(-9, 0)
 texture = ExtResource("2_ds44o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 position = Vector2(10, 9)
-shape = SubResource("CircleShape2D_kjq0j")
+shape = SubResource("CircleShape2D_ltkbh")
 
-[node name="CollisionShape2D_2" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_2" type="CollisionShape2D" parent="." index="2"]
 position = Vector2(12, 27)
-shape = SubResource("CircleShape2D_6t55c")
+shape = SubResource("CircleShape2D_5a30o")
 
-[node name="CollisionShape2D_3" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_3" type="CollisionShape2D" parent="." index="3"]
 position = Vector2(4, 49)
-shape = SubResource("CircleShape2D_0iqmg")
+shape = SubResource("CircleShape2D_4ffqd")
 
-[node name="CollisionShape2D_4" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_4" type="CollisionShape2D" parent="." index="4"]
 position = Vector2(-2, 63)
-shape = SubResource("CircleShape2D_77dqd")
+shape = SubResource("CircleShape2D_3nurw")
 
-[node name="CollisionShape2D_6" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_6" type="CollisionShape2D" parent="." index="5"]
 position = Vector2(27, 11)
-shape = SubResource("CircleShape2D_22at7")
+shape = SubResource("CircleShape2D_a7t15")
 
-[node name="BossPartSlots" type="Node2D" parent="."]
-
-[node name="BossPartSlot1" type="Node2D" parent="BossPartSlots"]
+[node name="BossPartSlot1" type="Node2D" parent="BossPartSlots" index="0"]
 position = Vector2(2, 64)
 script = ExtResource("3_1gwbv")
 base_random_angle_min = -1.39626
 base_random_angle_max = 1.5708
 
-[node name="BossWeaponSlots" type="Node2D" parent="."]
-
-[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots" index="0"]
 position = Vector2(4, 50)
 script = ExtResource("4_thlfb")
 
-[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots" index="1"]
 position = Vector2(18, 14)
 script = ExtResource("4_thlfb")
 
-[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots" index="2"]
 position = Vector2(12, 31)
 script = ExtResource("4_thlfb")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]

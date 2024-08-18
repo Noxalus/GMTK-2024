@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://00bkmvppa4wt"]
+
+[ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_x1ho2"]
+[ext_resource type="Texture2D" uid="uid://dvlec6qhm6q1c" path="res://icon.svg" id="3_yxnyg"]
+
+[sub_resource type="Shader" id="Shader_i2fx5"]
+code = "shader_type canvas_item;
+
+uniform float hit_opacity = 0;
+
+void fragment() {
+	COLOR.rgb = texture(TEXTURE, UV).rgb * (1.0 - hit_opacity) + vec3(1,1,1) * hit_opacity;
+	COLOR.a = texture(TEXTURE, UV).a;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mna6l"]
+resource_local_to_scene = true
+shader = SubResource("Shader_i2fx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="Animation" id="Animation_icnrn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_h2shu"]
+resource_name = "hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:material:shader_parameter/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hmmw4"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_huej2"]
+_data = {
+"RESET": SubResource("Animation_icnrn"),
+"hit": SubResource("Animation_h2shu"),
+"idle": SubResource("Animation_hmmw4")
+}
+
+[node name="BaseBossPart" type="Area2D" groups=["damageable"]]
+script = ExtResource("1_x1ho2")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_mna6l")
+texture = ExtResource("3_yxnyg")
+centered = false
+
+[node name="BossPartSlots" type="Node2D" parent="."]
+
+[node name="BossWeaponSlots" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_huej2")
+}
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

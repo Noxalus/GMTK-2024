@@ -7,11 +7,14 @@ class_name BossPart
 
 @onready var boss_parts_slots = $BossPartSlots
 @onready var boss_weapons_slots = $BossWeaponSlots
+@onready var animation = $AnimationPlayer
+@onready var sprite: Sprite2D = $Sprite
 
 signal died_signal
 
 var life
 var is_dead := true # dead by default
+var is_dying := false
 var base_angle := 0.0
 var base_min_angle := 0.0
 var base_max_angle := 0.0
@@ -37,7 +40,8 @@ func setup():
 	life = base_life
 	rotation = base_angle
 	is_dead = false
-	visible = true
+	is_dying = false
+	sprite.visible = true
 	for weapon in weapons:
 		weapon.setup()
 
@@ -48,7 +52,7 @@ func add_sub_part(part):
 	subparts.append(part)
 
 func _physics_process(delta):
-	if is_dead or game.player.is_dead:
+	if is_dead or is_dying or game.player.is_dead:
 		return
 		
 	if base_min_angle < 0.0 and base_max_angle > 0.0:
@@ -74,24 +78,57 @@ func _physics_process(delta):
 func damage(amount: int):
 	life -= amount
 	game.boss.damage(amount)
+	animation.play("hit")
 	if life < 0:
 		kill()
 
 func kill():
-	# try to delay destruction
-	#if life > 0:
-		#var timer := get_tree().create_timer(game.rng().randf_range(0.1, 0.5))
-		#await timer.timeout
-	game.boss.damage(life)
-	visible = false
-	is_dead = true
+	if is_dying or is_dead:
+		return
+	
+	is_dying = true
+	sprite.visible = false
+	
 	for weapon in weapons:
 		if weapon.is_visible(): 
 			weapon.kill()
-	for part in subparts:
-		if part.is_visible():
-			part.kill()
+
+	game.boss.damage(life)
 	game.spawn_explosion(global_position)
+
+	# to delay destruction
+	var timer := get_tree().create_timer(game.rng().randf_range(0.1, 0.1))
+	await timer.timeout
+
+	#var explosion = game.spawn_explosion(global_position)
+	#await explosion.tree_exited
+	
+	for part in subparts:
+		if not part.is_dead:
+			part.kill()
+			part.died_signal.connect(_on_subpart_died)
+	
+	var are_all_subparts_destroyed = true
+	for part in subparts:
+		if not part.is_dead:
+			are_all_subparts_destroyed = false
+			break
+	
+	if are_all_subparts_destroyed:
+		true_kill()
+
+func _on_subpart_died():
+	for part in subparts:
+		if not part.is_dead:
+			return
+	true_kill()
+
+func true_kill():
+	is_dying = false
+	is_dead = true
+	for part in subparts:
+		if part.died_signal.is_connected(_on_subpart_died):
+			part.died_signal.disconnect(_on_subpart_died)
 	died_signal.emit()
 
 func set_base_angle(angle: float):

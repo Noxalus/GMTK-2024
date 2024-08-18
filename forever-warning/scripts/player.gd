@@ -87,8 +87,9 @@ func _physics_process(delta):
 	previous_mouse_position = mouse_position
 	
 func damage(amount: int):
-	if not is_invincible:
-		died_signal.emit()
+	pass
+	#if not is_invincible:
+		#died_signal.emit()
 
 func kill():
 	visible = false
@@ -103,7 +104,7 @@ func respawn():
 	global_rotation = player_spawn.global_rotation
 	set_invincibility(3.0)
 	
-func play_hit_sound():
+func play_hit_sound(): 
 	$HitSound.play()
 
 func _on_invincibility_timer_timeout():

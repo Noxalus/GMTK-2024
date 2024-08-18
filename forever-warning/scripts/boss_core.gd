@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name BossCore
+
 @export var base_life: int = 5
 @export var speed: float = 300
 @export var shoot_frequency: float = 1.0
@@ -13,6 +15,7 @@ extends Area2D
 @onready var left_weapon_slots = $BossWeaponSlots/Left
 @onready var right_weapon_slots = $BossWeaponSlots/Right
 @onready var boss_spawn = $"../BossSpawn"
+@onready var sprite: Sprite2D = $Sprite2D
 
 signal died_signal
 
@@ -20,6 +23,8 @@ var life: int
 var total_life: int
 var chance_to_fire: float
 var is_dead = true # dead by default
+var is_dying = false
+var core_parts_instances = []
 var parts_instances = []
 var weapon_instances = []
 
@@ -29,7 +34,7 @@ func _ready():
 	setup()
 
 func _process(delta):
-	if is_dead or game.player.is_dead:
+	if is_dead or is_dying or game.player.is_dead:
 		return
 		 
 	if shoot_timer.is_stopped():
@@ -48,20 +53,49 @@ func damage(amount: int):
 		kill()
 
 func kill():
-	visible = false
-	is_dead = true
-	game.spawn_explosion(global_position)
+	if is_dead or is_dying:
+		return
 	
-	for part in parts_instances:
-		if part[0].is_visible():
-			part[0].kill()
-		if part[1].is_visible():
-			part[1].kill()
+	is_dying = true
+	sprite.visible = false
 	
 	for weapon in weapon_instances:
 		if weapon.is_visible():
 			weapon.kill()
-	died_signal.emit()
+	
+	game.spawn_explosion(global_position)
+	
+	# to delay destruction
+	var timer := get_tree().create_timer(game.rng().randf_range(0.3, 0.3))
+	await timer.timeout
+	
+	for part in core_parts_instances:
+		part.kill()
+		part.died_signal.connect(_on_part_died)
+	
+	if are_all_parts_dead():
+		true_kill()
+
+func _on_part_died():
+	if not are_all_parts_dead():
+		return
+	true_kill()
+
+func are_all_parts_dead():
+	for part in core_parts_instances:
+		if not part.is_dead:
+			return
+
+func true_kill():
+	is_dying = false
+	is_dead = true
+	for part in parts_instances:
+		if part[0].died_signal.is_connected(_on_part_died):
+			part[0].died_signal.disconnect(_on_part_died)
+		if part[1].died_signal.is_connected(_on_part_died):
+			part[1].died_signal.disconnect(_on_part_died)
+		
+	died_signal.emit()	
 
 func shoot():
 	# TODO: Have multiple possible attacks
@@ -77,8 +111,9 @@ func setup():
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	life = base_life
-	visible = true
+	sprite.visible = true
 	is_dead = false
+	is_dying = false
 
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
@@ -91,7 +126,7 @@ func setup():
 			part[0].setup()
 			part[1].setup()
 	
-	for i in range(0, 3):
+	for i in range(0, 30):
 		spawn_new_parts()
 
 	for weapon in weapon_instances:
@@ -152,6 +187,11 @@ func spawn_new_parts():
 
 	spawn_new_weapons(boss_part_left, boss_part_right)
 
+	if random_slot[0].get_related_part() == null:
+		core_parts_instances.append(boss_part_left)
+	if random_slot[1].get_related_part() == null:
+		core_parts_instances.append(boss_part_right)
+
 	parts_instances.append([boss_part_left, boss_part_right])
 
 func find_unoccupied_slots():
@@ -204,8 +244,6 @@ func spawn_new_weapons(left_part, right_part):
 				right_slots[i].affect_weapon(right_weapon)
 				left_part.add_weapon(left_weapon)
 				right_part.add_weapon(right_weapon)
-				weapon_instances.append(left_weapon)
-				weapon_instances.append(right_weapon)
 
 #endregion
 

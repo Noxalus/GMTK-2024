@@ -1,73 +1,66 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqpggekcs5mtk"]
+[gd_scene load_steps=9 format=3 uid="uid://b7ra81cd0gfvh"]
 
-[ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_6wqnq"]
+[ext_resource type="PackedScene" uid="uid://00bkmvppa4wt" path="res://scenes/boss_parts/base_boss_part.tscn" id="1_8xacd"]
 [ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_hyl3t"]
 [ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_2qmr0"]
 [ext_resource type="Texture2D" uid="uid://bwwhqm8nsccpt" path="res://assets/sprites/parts/wingGreen_3.png" id="5_4dpia"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kjq0j"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qvd6b"]
 radius = 8.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_uyf1h"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_gjkmc"]
 radius = 11.0454
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3pwme"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_c0drg"]
 radius = 12.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1fste"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_7sryu"]
 radius = 7.0
 
-[node name="Part_4" type="Area2D" groups=["damageable"]]
-script = ExtResource("1_6wqnq")
+[node name="BaseBossPart" instance=ExtResource("1_8xacd")]
 
-[node name="WingGreen3" type="Sprite2D" parent="."]
-position = Vector2(18, 38)
+[node name="Sprite" parent="." index="0"]
+position = Vector2(-8, 0)
 texture = ExtResource("5_4dpia")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 position = Vector2(4, 10)
-shape = SubResource("CircleShape2D_kjq0j")
+shape = SubResource("CircleShape2D_qvd6b")
 
-[node name="CollisionShape2D_2" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_2" type="CollisionShape2D" parent="." index="2"]
 position = Vector2(16, 26)
-shape = SubResource("CircleShape2D_uyf1h")
+shape = SubResource("CircleShape2D_gjkmc")
 
-[node name="CollisionShape2D_3" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_3" type="CollisionShape2D" parent="." index="3"]
 position = Vector2(15, 49)
-shape = SubResource("CircleShape2D_3pwme")
+shape = SubResource("CircleShape2D_c0drg")
 
-[node name="CollisionShape2D_4" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_4" type="CollisionShape2D" parent="." index="4"]
 position = Vector2(7, 66)
-shape = SubResource("CircleShape2D_1fste")
+shape = SubResource("CircleShape2D_7sryu")
 
-[node name="CollisionShape2D_5" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_5" type="CollisionShape2D" parent="." index="5"]
 position = Vector2(34, 25)
-shape = SubResource("CircleShape2D_1fste")
+shape = SubResource("CircleShape2D_7sryu")
 
-[node name="CollisionShape2D_6" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D_6" type="CollisionShape2D" parent="." index="6"]
 position = Vector2(28, 37)
-shape = SubResource("CircleShape2D_1fste")
+shape = SubResource("CircleShape2D_7sryu")
 
-[node name="BossPartSlots" type="Node2D" parent="."]
-
-[node name="BossPartSlot1" type="Node2D" parent="BossPartSlots"]
+[node name="BossPartSlot1" type="Node2D" parent="BossPartSlots" index="0"]
 position = Vector2(40, 22)
 script = ExtResource("3_hyl3t")
 base_random_angle_min = -2.0944
 base_random_angle_max = 1.309
 
-[node name="BossWeaponSlots" type="Node2D" parent="."]
-
-[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots" index="0"]
 position = Vector2(7, 74)
 script = ExtResource("4_2qmr0")
 
-[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots" index="1"]
 position = Vector2(-1, 2)
 script = ExtResource("4_2qmr0")
 
-[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
+[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots" index="2"]
 position = Vector2(8, 37)
 script = ExtResource("4_2qmr0")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
