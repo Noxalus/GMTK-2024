@@ -12,6 +12,7 @@ extends Area2D
 @onready var parts_up_slots = [$BossPartSlots/BossPartSlot3_L, $BossPartSlots/BossPartSlot3_R]
 @onready var left_weapon_slots = $BossWeaponSlots/Left
 @onready var right_weapon_slots = $BossWeaponSlots/Right
+@onready var boss_spawn = $"../BossSpawn"
 
 signal died_signal
 
@@ -76,6 +77,9 @@ func setup():
 	life = base_life
 	visible = true
 	is_dead = false
+
+	global_position = boss_spawn.global_position
+	global_rotation = boss_spawn.global_rotation
 	
 	if instanciated_boss_parts.size() == 0:
 		spawn_core_weapons()

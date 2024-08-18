@@ -16,6 +16,7 @@ var boss_weapons = [
 
 var bullet_node := preload("res://scenes/bullets/boss_bullet.tscn")
 var explosion := preload("res://scenes/fx/explosion.tscn")
+var player_explosion := preload("res://scenes/fx/player_explosion.tscn")
 
 var local_rng = RandomNumberGenerator.new()
 var wave_count: int = 0
@@ -41,8 +42,6 @@ func spawn_new_boss():
 		boss.visible = false
 	else:
 		boss.setup()
-	
-	boss.position = Vector2(0, -175)
 
 func _on_boss_death():
 	spawn_new_boss()
@@ -69,3 +68,22 @@ func spawn_explosion(pos: Vector2):
 	instance.emitting = true
 	get_tree().current_scene.add_child(instance)
 	
+func set_player(p):
+	player = p
+	player.died_signal.connect(_on_player_died)
+
+func _on_player_died():
+	# player explosion
+	var instance = player_explosion.instantiate()
+	instance.global_position = player.global_position
+	instance.global_rotation = player.global_rotation
+	instance.emitting = true
+	get_tree().current_scene.add_child(instance)
+	
+	#player_lives -= 1
+	if (player_lives <= 0):
+		# game over
+		pass
+	else:
+		player.respawn()
+	pass

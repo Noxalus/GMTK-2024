@@ -4,10 +4,12 @@ extends Area2D
 @export var focus_factor: float = 0.5
 @export var rotation_speed: float = 1
 @export var fire_delay: float = 0.1
-@export var life: int = 5
 
 @onready var fire_delay_timer = $FireDelayTimer
 @onready var bullet_spawners = $BulletSpawners
+@onready var player_spawn = $"../PlayerSpawn"
+
+signal died_signal
 
 var bullet_node := preload("res://scenes/bullets/player_bullet.tscn")
 var vel := Vector2(0, 0)
@@ -16,7 +18,7 @@ var previous_mouse_position
 var is_using_gamepad = true
 
 func _ready():
-	game.player = self
+	game.set_player(self)
 
 func _process(_delta):
 	# Shoot
@@ -68,7 +70,13 @@ func _physics_process(delta):
 	previous_mouse_position = mouse_position
 	
 func damage(amount: int):
+	died_signal.emit()
+
+func set_invincibility(time: float):
+	# TODO: Implement this
 	pass
-	#life -= amount
-	#if life < 0:
-		#queue_free()
+
+func respawn():
+	global_position = player_spawn.global_position
+	global_rotation = player_spawn.global_rotation
+	set_invincibility(3.0)
