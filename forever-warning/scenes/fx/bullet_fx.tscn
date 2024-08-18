@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b5shqas102q38"]
+[gd_scene load_steps=12 format=3 uid="uid://b5shqas102q38"]
 
 [ext_resource type="Script" path="res://scripts/particle.gd" id="1_eiuvc"]
 
@@ -19,7 +19,14 @@ point_count = 2
 curve_y = SubResource("Curve_yxgco")
 curve_z = SubResource("Curve_kr3oq")
 
+[sub_resource type="Curve" id="Curve_g1ktb"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="CurveTexture" id="CurveTexture_r4w2x"]
+curve = SubResource("Curve_g1ktb")
 
 [sub_resource type="Curve" id="Curve_ks445"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

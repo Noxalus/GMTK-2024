@@ -22,6 +22,7 @@ var local_rng = RandomNumberGenerator.new()
 
 const base_player_lives = 3
 var player_lives = base_player_lives
+var camera = null
 var boss = null
 var player = null
 var hud = null
