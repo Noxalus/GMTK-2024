@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c07xp0rpn0hhn"]
+[gd_scene load_steps=9 format=3 uid="uid://c07xp0rpn0hhn"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_0rcip"]
 [ext_resource type="PackedScene" uid="uid://dpjuvbjnqks5r" path="res://scenes/hud/life_icon.tscn" id="1_16ty7"]
 [ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="3_j6bfj"]
+[ext_resource type="PackedScene" uid="uid://drrmy673ho5yv" path="res://scenes/hud/game_over.tscn" id="4_m2csm"]
 
 [sub_resource type="Theme" id="Theme_wyq1t"]
 default_font = ExtResource("3_j6bfj")
@@ -73,3 +74,7 @@ shortcut_keys_enabled = false
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("CanvasTexture_x3yhx")
+
+[node name="GameOver" parent="." instance=ExtResource("4_m2csm")]
+visible = false
+layout_mode = 1

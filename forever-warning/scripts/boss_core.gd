@@ -19,16 +19,29 @@ signal died_signal
 var life
 var chance_to_fire: float
 var is_dead = true # dead by default
-var instanciated_boss_parts = []
+var parts_instances = []
 var weapon_instances = []
 
 func _ready():
 	life = base_life;
 	chance_to_fire = base_chance_to_fire
 	setup()
+
+func reset():
+	is_dead = false
+	visible = true
 	
+	for instance in parts_instances:
+		instance[0].queue_free()
+		instance[1].queue_free()
+	for instance in weapon_instances:
+		instance.queue_free()
+	
+	parts_instances.clear()
+	weapon_instances.clear()
+
 func _process(delta):
-	if is_dead:
+	if is_dead or game.player.is_dead:
 		return
 		 
 	if shoot_timer.is_stopped():
@@ -50,7 +63,7 @@ func kill():
 	is_dead = true
 	game.spawn_explosion(global_position)
 	
-	for part in instanciated_boss_parts:
+	for part in parts_instances:
 		if part[0].is_visible():
 			part[0].kill()
 		if part[1].is_visible():
@@ -81,11 +94,11 @@ func setup():
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
 	
-	if instanciated_boss_parts.size() == 0:
+	if parts_instances.size() == 0:
 		spawn_core_weapons()
 	else:
 		# reset all boss parts
-		for part in instanciated_boss_parts:
+		for part in parts_instances:
 			part[0].setup()
 			part[1].setup()
 	
@@ -135,7 +148,7 @@ func spawn_new_parts():
 
 	spawn_new_weapons(boss_part_left, boss_part_right)
 
-	instanciated_boss_parts.append([boss_part_left, boss_part_right])
+	parts_instances.append([boss_part_left, boss_part_right])
 
 func find_unoccupied_slots():
 	var unoccupied_slots = []
@@ -148,7 +161,7 @@ func find_unoccupied_slots():
 		unoccupied_slots.append([parts_down_slots[0], parts_down_slots[1]])
 	
 	# Find unoccupied boss part slots on the already instanciated boss parts
-	for part in instanciated_boss_parts:
+	for part in parts_instances:
 		var left_slots = part[0].find_unoccupied_part_slots()
 		if left_slots.size() > 0:
 			# Get the same slots for the right part

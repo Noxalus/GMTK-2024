@@ -47,7 +47,7 @@ func add_sub_part(part):
 	subparts.append(part)
 
 func _physics_process(delta):
-	if is_dead:
+	if is_dead or game.player.is_dead:
 		return
 		
 	if base_min_angle < 0.0 and base_max_angle > 0.0:

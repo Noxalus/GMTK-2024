@@ -16,11 +16,20 @@ var vel := Vector2(0, 0)
 var cur_speed
 var previous_mouse_position
 var is_using_gamepad = true
+var is_dead = false
 
 func _ready():
 	game.set_player(self)
+	reset()
+
+func reset():
+	visible = true
+	is_dead = false
 
 func _process(_delta):
+	if is_dead:
+		return
+	
 	# Shoot
 	if Input.is_action_pressed("shoot") and fire_delay_timer.is_stopped():
 		is_using_gamepad = false
@@ -33,6 +42,9 @@ func _process(_delta):
 				get_tree().current_scene.add_child(bullet)
 
 func _physics_process(delta):
+	if is_dead:
+		return
+		
 	# Update position
 	
 	var dirVel := Vector2(0, 0)
@@ -71,6 +83,10 @@ func _physics_process(delta):
 	
 func damage(amount: int):
 	died_signal.emit()
+
+func kill():
+	visible = false
+	is_dead = true
 
 func set_invincibility(time: float):
 	# TODO: Implement this

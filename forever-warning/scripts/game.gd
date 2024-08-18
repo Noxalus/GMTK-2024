@@ -19,12 +19,13 @@ var explosion := preload("res://scenes/fx/explosion.tscn")
 var player_explosion := preload("res://scenes/fx/player_explosion.tscn")
 
 var local_rng = RandomNumberGenerator.new()
-var wave_count: int = 0
 
+const base_player_lives = 3
+var player_lives = base_player_lives
 var boss = null
 var player = null
 var hud = null
-var player_lives = 3
+var wave_count: int = 0
 
 func _ready():
 	spawn_new_boss()
@@ -33,6 +34,20 @@ func _process(delta):
 	# debug to test boss generation quickly
 	if Input.is_action_just_pressed("next_boss") and boss != null:
 		boss.damage(9999)
+
+func restart():
+	# reset gameplay values
+	wave_count = 0
+	player_lives = base_player_lives
+	
+	# reset main entities
+	boss.reset()
+	player.reset()
+	hud.reset()
+	
+	# respawn entities
+	spawn_new_boss()
+	player.respawn()
 
 func spawn_new_boss():
 	if boss == null:
@@ -84,8 +99,8 @@ func _on_player_died():
 	hud.set_lives(player_lives)
 	
 	if (player_lives <= 0):
-		# game over
-		pass
+		hud.show_game_over()
+		player.kill()
 	else:
 		player.respawn()
 	pass
