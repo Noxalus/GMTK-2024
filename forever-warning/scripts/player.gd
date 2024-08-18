@@ -9,10 +9,11 @@ extends Area2D
 @onready var fire_delay_timer = $FireDelayTimer
 @onready var bullet_spawners = $BulletSpawners
 
-var bullet_node := preload("res://scenes/player_bullet.tscn")
+var bullet_node := preload("res://scenes/bullets/player_bullet.tscn")
 var vel := Vector2(0, 0)
 var cur_speed
 var previous_mouse_position
+var is_using_gamepad = true
 
 func _ready():
 	game.player = self
@@ -20,6 +21,7 @@ func _ready():
 func _process(_delta):
 	# Shoot
 	if Input.is_action_pressed("shoot") and fire_delay_timer.is_stopped():
+		is_using_gamepad = false
 		fire_delay_timer.start(fire_delay)
 		for child in bullet_spawners.get_children():
 			if child.is_visible():
@@ -57,8 +59,9 @@ func _physics_process(delta):
 	var mouse_position = get_global_mouse_position()
 	
 	if gamepad_input.length() > 0.0:
+		is_using_gamepad = true
 		rotation = gamepad_input.angle()
-	elif previous_mouse_position != mouse_position:
+	elif not is_using_gamepad:
 		look_at(mouse_position)
 		rotate(PI / 2.0)
 	
