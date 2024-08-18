@@ -2,6 +2,7 @@ extends Control
 
 @onready var boss_life_gauge := $MarginContainer/BossLifeContainer/Control/BossLifeGauge
 @onready var boss_life_text := $MarginContainer/BossLifeContainer/Control/BossLifeLabel
+@onready var boss_label := $MarginContainer/BossLifeContainer/BossLabel
 @onready var life_container := $LifeContainer
 @onready var game_over := $GameOver
 
@@ -14,6 +15,7 @@ func _ready():
 func reset():
 	game_over.visible = false
 	set_lives(game.player_lives)
+	set_wave_count(game.wave_count)
 	
 func clear_lives():
 	for life in life_container.get_children():
@@ -35,3 +37,6 @@ func set_boss_life(life: int):
 	var boss_life_str = str(clamp(game.boss.life, 0, game.boss.total_life))
 	var boss_total_life_str = str(game.boss.total_life)
 	boss_life_text.text = life_format_str % [boss_life_str, boss_total_life_str]
+
+func set_wave_count(count: int):
+	boss_label.text = "BOSS\n#%s" % count

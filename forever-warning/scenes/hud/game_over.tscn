@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://drrmy673ho5yv"]
+[gd_scene load_steps=5 format=3 uid="uid://drrmy673ho5yv"]
 
 [ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="1_8t3mg"]
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_le5fx"]
@@ -6,6 +6,10 @@
 [sub_resource type="Theme" id="Theme_xjtv4"]
 default_font = ExtResource("1_8t3mg")
 default_font_size = 150
+
+[sub_resource type="Theme" id="Theme_e0b0v"]
+default_font = ExtResource("1_8t3mg")
+default_font_size = 50
 
 [node name="GameOver" type="Control"]
 layout_mode = 3
@@ -36,6 +40,7 @@ custom_minimum_size = Vector2(350, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = SubResource("Theme_e0b0v")
 text = "RESTART"
 
 [connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]

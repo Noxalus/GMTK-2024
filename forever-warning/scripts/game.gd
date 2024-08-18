@@ -61,6 +61,10 @@ func clear_boss_bullets():
 	
 func spawn_new_boss():
 	clear_boss_bullets()
+	wave_count += 1
+	
+	if hud != null: 
+		hud.set_wave_count(wave_count)
 	
 	if boss == null:
 		boss = boss_core.instantiate()
