@@ -150,4 +150,10 @@ func add_turret():
 			child.visible = true
 			break
 
+func can_add_turret():
+	for child in bullet_spawners.get_children():
+		if not child.is_visible():
+			return true
+	return false
+
 #endregion

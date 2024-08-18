@@ -25,37 +25,43 @@ var upgrades = [
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_lives.png"), 
 		"LIFE + 1", 
-		increase_player_life
+		increase_player_life,
+		func(): return true
 	),
 	# SHOOT FREQUENCY x1.5
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_shoot_frequency.png"), 
 		"SHOOT FREQUENCY x1.5", 
-		func(): 	player.increase_shoot_frequency()
+		func(): 	player.increase_shoot_frequency(),
+		func(): return true
 	),
 	# DAMAGE INCREASE x1.25
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_damage.png"), 
 		"DAMAGE INCREASE x2", 
-		func(): 	player.increase_damage()
+		func(): 	player.increase_damage(),
+		func(): return true
 	),
 	# TURRET + 1
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_turret.png"), 
 		"TURRET + 1", 
-		func(): 	player.add_turret()
+		func(): 	player.add_turret(),
+		func(): return player.can_add_turret()
 	),
 	# CORE DAMAGE x1.5
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_core_damage.png"), 
 		"CORE DAMAGE x2", 
-		increase_core_damage
+		increase_core_damage,
+		func(): return true
 	),
 	# MOVE SPEED x1.25
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_move_speed.png"), 
 		"MOVE SPEED x1.25", 
-		func(): 	player.increase_move_speed()
+		func(): 	player.increase_move_speed(),
+		func(): return true
 	),
 ]
 
@@ -217,6 +223,16 @@ func active_bonus(up: Upgrade):
 
 func get_random_upgrades(count: int):
 	var available_upgrades = upgrades.duplicate()
+
+	# remove unavailable upgrades
+	var index_to_remove = []
+	for i in available_upgrades.size():
+		if not available_upgrades[i].check_is_available():
+			index_to_remove.append(i)
+
+	for i in index_to_remove:
+		available_upgrades.remove_at(i)
+	
 	var random_upgrades = []
 	
 	for i in count:

@@ -98,43 +98,33 @@ shape = SubResource("CircleShape2D_m63fx")
 position = Vector2(0, -18)
 
 [node name="Spawner2" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(22, 9)
 
 [node name="Spawner3" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-23, 9)
 
 [node name="Spawner4" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-14, 0)
 
 [node name="Spawner5" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(13, 0)
 
 [node name="Spawner6" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(6, -10)
 
 [node name="Spawner7" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-6, -10)
 
 [node name="Spawner8" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-9, -3)
 
 [node name="Spawner9" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(9, -3)
 
 [node name="Spawner10" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(16, 5)
 
 [node name="Spawner11" type="Node2D" parent="BulletSpawners"]
-visible = false
 position = Vector2(-16, 5)
 
 [node name="FireDelayTimer" type="Timer" parent="."]
