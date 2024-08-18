@@ -23,15 +23,39 @@ const upgrade_class = preload("res://scripts/upgrade.gd")
 var upgrades = [
 	# LIFE + 1
 	upgrade_class.new(
-		preload("res://assets/sprites/boss_core_1.png"), 
+		preload("res://assets/sprites/upgrades/increase_lives.png"), 
 		"LIFE + 1", 
 		increase_player_life
 	),
-	# SHOOT FREQUENCY * 1.5
+	# SHOOT FREQUENCY x1.5
 	upgrade_class.new(
-		preload("res://assets/sprites/player_bullet.png"), 
+		preload("res://assets/sprites/upgrades/increase_shoot_frequency.png"), 
 		"SHOOT FREQUENCY x1.5", 
 		func(): 	player.increase_shoot_frequency()
+	),
+	# DAMAGE INCREASE x1.25
+	upgrade_class.new(
+		preload("res://assets/sprites/upgrades/increase_damage.png"), 
+		"DAMAGE INCREASE x1.25", 
+		func(): 	player.increase_damage()
+	),
+	# TURRET + 1
+	upgrade_class.new(
+		preload("res://assets/sprites/upgrades/increase_turret.png"), 
+		"TURRET + 1", 
+		func(): 	player.add_turret()
+	),
+	# CORE DAMAGE x1.5
+	upgrade_class.new(
+		preload("res://assets/sprites/upgrades/increase_core_damage.png"), 
+		"CORE DAMAGE x1.5", 
+		func(): 	player.increase_core_damage()
+	),
+	# MOVE SPEED x1.25
+	upgrade_class.new(
+		preload("res://assets/sprites/upgrades/increase_move_speed.png"), 
+		"MOVE SPEED x1.25", 
+		func(): 	player.increase_move_speed()
 	),
 ]
 
@@ -62,6 +86,8 @@ func _process(delta):
 		boss.damage(999999)
 	if Input.is_action_just_pressed("restart") and boss != null:
 		restart()
+	if Input.is_action_just_pressed("choose_upgrade"):
+		hud.show_upgrades()
 
 func restart():
 	# reset gameplay values
@@ -158,6 +184,8 @@ func _on_player_died():
 		player.respawn()
 
 func can_show_upgrades():
+	# should we limit this every X wave?
+	# easy to do with a module on the wave_count
 	return true
 
 func pause():

@@ -120,5 +120,21 @@ func _on_invincibility_timer_timeout():
 	is_invincible = false
 	animation.play("RESET")
 
+#region Upgrades
+
 func increase_shoot_frequency():
 	print("SHOOT FREQ")
+
+func increase_move_speed():
+	pass
+
+func increase_core_damage():
+	pass
+
+func add_turret():
+	pass
+
+func increase_damage():
+	pass
+
+#endregion

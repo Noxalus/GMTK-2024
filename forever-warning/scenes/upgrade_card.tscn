@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b6xjx4v88jng3"]
 
-[ext_resource type="Texture2D" uid="uid://d3uerrrmy6kcm" path="res://assets/sprites/player_ship.png" id="1_hhtwo"]
 [ext_resource type="Script" path="res://scripts/upgrade_card.gd" id="1_x3hcw"]
+[ext_resource type="Texture2D" uid="uid://cjsn7gvovxq25" path="res://assets/sprites/upgrades/increase_turret.png" id="2_gvbd6"]
 [ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="2_y12s1"]
 
 [sub_resource type="Gradient" id="Gradient_yp75w"]
@@ -34,24 +34,30 @@ grow_vertical = 2
 texture = SubResource("GradientTexture1D_iucuw")
 expand_mode = 1
 
-[node name="Content" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Content" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Icon" type="TextureRect" parent="Content"]
+[node name="Icon" type="TextureRect" parent="MarginContainer/Content"]
 layout_mode = 2
-texture = ExtResource("1_hhtwo")
-stretch_mode = 3
+texture = ExtResource("2_gvbd6")
+expand_mode = 4
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="Content"]
+[node name="Label" type="Label" parent="MarginContainer/Content"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme = SubResource("Theme_y4cyv")

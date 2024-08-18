@@ -1,12 +1,9 @@
 extends Button
 
-@onready var ico: TextureRect = $Content/Icon
-@onready var label: Label = $Content/Label
+@onready var ico: TextureRect = $MarginContainer/Content/Icon
+@onready var label: Label = $MarginContainer/Content/Label
 
 var upgrade: Upgrade
-
-func _ready() -> void:
-	print("COUCOU")
 
 func initialize(up: Upgrade):
 	upgrade = up
