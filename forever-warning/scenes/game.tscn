@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://pkr3ksnu1qgh"]
+[gd_scene load_steps=4 format=3 uid="uid://pkr3ksnu1qgh"]
 
 [ext_resource type="PackedScene" uid="uid://55hgfllu4oyd" path="res://scenes/player.tscn" id="1_thu6u"]
-[ext_resource type="PackedScene" uid="uid://dk3qfnhyguxpu" path="res://scenes/fx/stars_fx.tscn" id="2_348gd"]
 [ext_resource type="PackedScene" uid="uid://c07xp0rpn0hhn" path="res://scenes/hud/hud.tscn" id="3_0165h"]
 
 [sub_resource type="Environment" id="Environment_e34oq"]
@@ -18,17 +17,6 @@ environment = SubResource("Environment_e34oq")
 
 [node name="Player" parent="." instance=ExtResource("1_thu6u")]
 position = Vector2(0, 255)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(1, -256)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-rotation_smoothing_enabled = true
-
-[node name="GPUParticles2D" parent="Player/Camera2D" instance=ExtResource("2_348gd")]
-self_modulate = Color(1, 1, 1, 0.376471)
-lifetime = 10.0
-preprocess = 10.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -11,14 +11,15 @@ class_name BossPart
 signal died_signal
 
 var life
-var is_dead = true # dead by default
-var base_angle = 0.0
-var base_min_angle = 0.0
-var base_max_angle = 0.0
-var min_angle = 0.0
-var max_angle = 0.0
-var rotation_speed = 0.0
+var is_dead := true # dead by default
+var base_angle := 0.0
+var base_min_angle := 0.0
+var base_max_angle := 0.0
+var min_angle := 0.0
+var max_angle := 0.0
+var rotation_speed := 0.0
 var is_rotating_clockwise;
+
 var weapons = []
 var subparts = []
 
@@ -77,6 +78,10 @@ func damage(amount: int):
 		kill()
 
 func kill():
+	# try to delay destruction
+	#if life > 0:
+		#var timer := get_tree().create_timer(game.rng().randf_range(0.1, 0.5))
+		#await timer.timeout
 	game.boss.damage(life)
 	visible = false
 	is_dead = true

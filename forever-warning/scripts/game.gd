@@ -41,12 +41,6 @@ func restart():
 	wave_count = 0
 	player_lives = base_player_lives
 	
-	# clean all existing bullets
-	for bullet in bullets:
-		if bullet != null:
-			bullet.queue_free()
-	bullets.clear()
-	
 	# reset main entities
 	player.reset()
 	hud.reset()
@@ -57,7 +51,16 @@ func restart():
 	spawn_new_boss()
 	player.respawn()
 
+func clear_boss_bullets():
+		# clean all existing bullets
+	for bullet in bullets:
+		if bullet != null:
+			bullet.queue_free()
+	bullets.clear()
+	
 func spawn_new_boss():
+	clear_boss_bullets()
+	
 	if boss == null:
 		boss = boss_core.instantiate()
 		get_tree().current_scene.add_child(boss)

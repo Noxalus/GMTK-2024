@@ -52,3 +52,4 @@ func kill():
 
 func shoot():
 	game.instantiate_bullet(global_position, Vector2.from_angle(rotation - PI / 2.0), speed)
+	$ShootSound.play()

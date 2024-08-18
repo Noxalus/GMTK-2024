@@ -6,6 +6,7 @@ extends Area2D
 @export var fire_delay: float = 0.1
 
 @onready var fire_delay_timer = $FireDelayTimer
+@onready var invicibility_timer = $InvincibilityTimer
 @onready var bullet_spawners = $BulletSpawners
 @onready var player_spawn = $"../PlayerSpawn"
 
@@ -13,10 +14,11 @@ signal died_signal
 
 var bullet_node := preload("res://scenes/bullets/player_bullet.tscn")
 var vel := Vector2(0, 0)
+var is_using_gamepad := true
+var is_dead := false
+var is_invincible := false
 var cur_speed
 var previous_mouse_position
-var is_using_gamepad = true
-var is_dead = false
 
 func _ready():
 	game.set_player(self)
@@ -25,6 +27,7 @@ func _ready():
 func reset():
 	visible = true
 	is_dead = false
+	is_invincible = false
 
 func _process(_delta):
 	if is_dead:
@@ -34,12 +37,14 @@ func _process(_delta):
 	if Input.is_action_pressed("shoot") and fire_delay_timer.is_stopped():
 		is_using_gamepad = false
 		fire_delay_timer.start(fire_delay)
+		$ShootSound.play()
 		for child in bullet_spawners.get_children():
 			if child.is_visible():
 				var bullet = bullet_node.instantiate()
 				bullet.global_position = child.global_position
 				bullet.set_direction(Vector2.from_angle(rotation - PI / 2.0))
 				get_tree().current_scene.add_child(bullet)
+				$ShootSound.play()
 
 func _physics_process(delta):
 	if is_dead:
@@ -82,17 +87,24 @@ func _physics_process(delta):
 	previous_mouse_position = mouse_position
 	
 func damage(amount: int):
-	died_signal.emit()
+	if not is_invincible:
+		died_signal.emit()
 
 func kill():
 	visible = false
 	is_dead = true
 
 func set_invincibility(time: float):
-	# TODO: Implement this
-	pass
-
+	is_invincible = true
+	invicibility_timer.start(time)
+	
 func respawn():
 	global_position = player_spawn.global_position
 	global_rotation = player_spawn.global_rotation
 	set_invincibility(3.0)
+	
+func play_hit_sound():
+	$HitSound.play()
+
+func _on_invincibility_timer_timeout():
+	is_invincible = false

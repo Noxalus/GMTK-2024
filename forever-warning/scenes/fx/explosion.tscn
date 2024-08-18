@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://6mjn57qvxate"]
+[gd_scene load_steps=11 format=3 uid="uid://6mjn57qvxate"]
 
 [ext_resource type="Script" path="res://scripts/particle.gd" id="1_5qqcu"]
 [ext_resource type="Texture2D" uid="uid://dvqv3rlfr45em" path="res://assets/sprites/fx/smoke_atlas.png" id="1_540yq"]
+[ext_resource type="AudioStream" uid="uid://ds66xki8rtcc5" path="res://assets/audio/sfx/explosion.wav" id="3_eepd7"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iknc4"]
 particles_animation = true
@@ -42,6 +43,10 @@ anim_speed_max = 1.0
 anim_offset_max = 1.0
 turbulence_noise_strength = 0.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5avcc"]
+streams_count = 1
+stream_0/stream = ExtResource("3_eepd7")
+
 [node name="GPUParticles2D" type="GPUParticles2D"]
 z_index = 10
 material = SubResource("CanvasItemMaterial_iknc4")
@@ -53,3 +58,8 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 script = ExtResource("1_5qqcu")
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_5avcc")
+volume_db = -20.0
+autoplay = true

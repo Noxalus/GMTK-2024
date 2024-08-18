@@ -25,4 +25,5 @@ func _on_area_entered(area):
 			instance.emitting = true
 			get_tree().current_scene.add_child(instance)
 			area.damage(1)
+			game.player.play_hit_sound()
 			queue_free()
