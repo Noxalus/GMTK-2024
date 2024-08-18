@@ -33,7 +33,7 @@ func reset():
 	is_invincible = false
 
 func _process(_delta):
-	if is_dead:
+	if is_dead or game.is_paused:
 		return
 	
 	# Shoot
@@ -50,7 +50,7 @@ func _process(_delta):
 				$ShootSound.play()
 
 func _physics_process(delta):
-	if is_dead:
+	if is_dead or game.is_paused:
 		return
 		
 	# Update position
@@ -119,3 +119,6 @@ func play_hit_sound():
 func _on_invincibility_timer_timeout():
 	is_invincible = false
 	animation.play("RESET")
+
+func increase_shoot_frequency():
+	print("SHOOT FREQ")

@@ -14,6 +14,9 @@ func _ready():
 	game.camera = self
 
 func _process(delta):
+	if game.is_paused:
+		return
+		
 	if shake_amount > 0:
 		position.x = base_position.x + randf_range(-shake_base_amount, shake_base_amount) * shake_amount
 		position.y = base_position.y + randf_range(-shake_base_amount, shake_base_amount) * shake_amount

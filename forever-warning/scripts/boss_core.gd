@@ -34,7 +34,7 @@ func _ready():
 	setup()
 
 func _process(delta):
-	if is_dead or is_dying or game.player.is_dead:
+	if is_dead or is_dying or game.player.is_dead or game.is_paused:
 		return
 		 
 	if shoot_timer.is_stopped():

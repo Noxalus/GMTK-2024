@@ -5,6 +5,10 @@ extends Control
 @onready var boss_label := $MarginContainer/BossLifeContainer/BossLabel
 @onready var life_container := $LifeContainer
 @onready var game_over := $GameOver
+@onready var upgrades: Control = $Upgrades
+@onready var upgrades_container: HBoxContainer = $Upgrades/UpgradesContainer
+
+const UPGRADE_CARD = preload("res://scenes/upgrade_card.tscn")
 
 var life_icon := preload("res://scenes/hud/life_icon.tscn")
 
@@ -14,12 +18,16 @@ func _ready():
 	
 func reset():
 	game_over.visible = false
-	set_lives(game.player_lives)
+	upgrades.visible = false
+	refresh_player_lives()
 	set_wave_count(game.wave_count)
 	
 func clear_lives():
 	for life in life_container.get_children():
 		life.queue_free()
+
+func refresh_player_lives():
+	set_lives(game.player_lives)
 
 func set_lives(amount: int):
 	clear_lives()
@@ -29,6 +37,25 @@ func set_lives(amount: int):
 
 func show_game_over():
 	game_over.visible = true
+
+func clear_upgrades():
+	for upgrade in upgrades_container.get_children():
+		upgrade.queue_free()
+
+func show_upgrades():
+	game.pause()
+	clear_upgrades()
+	upgrades.visible = true
+	
+	var random_upgrades = game.get_random_upgrades(2)
+	for upgrade in random_upgrades:
+		var instance = UPGRADE_CARD.instantiate()
+		upgrades_container.add_child(instance)
+		instance.initialize(upgrade)
+
+func hide_upgrades():
+	game.unpause()
+	upgrades.visible = false
 
 func set_boss_life(life: int):
 	boss_life_gauge.max_value = game.boss.total_life

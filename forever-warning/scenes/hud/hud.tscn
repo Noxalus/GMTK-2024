@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c07xp0rpn0hhn"]
+[gd_scene load_steps=13 format=3 uid="uid://c07xp0rpn0hhn"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_0rcip"]
 [ext_resource type="PackedScene" uid="uid://dpjuvbjnqks5r" path="res://scenes/hud/life_icon.tscn" id="1_16ty7"]
 [ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="3_j6bfj"]
 [ext_resource type="PackedScene" uid="uid://drrmy673ho5yv" path="res://scenes/hud/game_over.tscn" id="4_m2csm"]
+[ext_resource type="PackedScene" uid="uid://b6xjx4v88jng3" path="res://scenes/upgrade_card.tscn" id="5_4yabr"]
 
 [sub_resource type="Theme" id="Theme_wyq1t"]
 default_font = ExtResource("3_j6bfj")
@@ -31,6 +32,17 @@ corner_radius_bottom_left = 5
 [sub_resource type="Theme" id="Theme_twhq7"]
 default_font = ExtResource("3_j6bfj")
 
+[sub_resource type="Gradient" id="Gradient_54kjy"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d0yus"]
+gradient = SubResource("Gradient_54kjy")
+
+[sub_resource type="Theme" id="Theme_poo5i"]
+default_font = ExtResource("3_j6bfj")
+default_font_size = 50
+
 [node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -57,6 +69,9 @@ theme_override_constants/separation = 10
 layout_mode = 2
 
 [node name="LifeIcon2" parent="LifeContainer" instance=ExtResource("1_16ty7")]
+layout_mode = 2
+
+[node name="LifeIcon3" parent="LifeContainer" instance=ExtResource("1_16ty7")]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -115,3 +130,51 @@ vertical_alignment = 1
 [node name="GameOver" parent="." instance=ExtResource("4_m2csm")]
 visible = false
 layout_mode = 1
+
+[node name="Upgrades" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Upgrades"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_d0yus")
+
+[node name="SelectUpgradeText" type="Label" parent="Upgrades"]
+layout_mode = 2
+offset_top = 131.0
+offset_right = 1152.0
+offset_bottom = 188.0
+theme = SubResource("Theme_poo5i")
+theme_override_constants/outline_size = 20
+text = "PLEASE SELECT 1 UPGRADE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradesContainer" type="HBoxContainer" parent="Upgrades"]
+layout_mode = 2
+offset_left = 301.0
+offset_top = 242.0
+offset_right = 851.0
+offset_bottom = 542.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="Upgrade" parent="Upgrades/UpgradesContainer" instance=ExtResource("5_4yabr")]
+layout_mode = 2
+
+[node name="Upgrade2" parent="Upgrades/UpgradesContainer" instance=ExtResource("5_4yabr")]
+layout_mode = 2

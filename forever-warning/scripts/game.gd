@@ -18,6 +18,27 @@ var bullet_node := preload("res://scenes/bullets/boss_bullet.tscn")
 var explosion := preload("res://scenes/fx/explosion.tscn")
 var player_explosion := preload("res://scenes/fx/player_explosion.tscn")
 
+const upgrade_class = preload("res://scripts/upgrade.gd")
+
+var upgrades = [
+	# LIFE + 1
+	upgrade_class.new(
+		preload("res://assets/sprites/boss_core_1.png"), 
+		"LIFE + 1", 
+		increase_player_life
+	),
+	# SHOOT FREQUENCY * 1.5
+	upgrade_class.new(
+		preload("res://assets/sprites/player_bullet.png"), 
+		"SHOOT FREQUENCY x1.5", 
+		func(): 	player.increase_shoot_frequency()
+	),
+]
+
+func increase_player_life():
+	player_lives += 1
+	hud.refresh_player_lives()
+
 var local_rng = RandomNumberGenerator.new()
 
 const base_player_lives = 3
@@ -28,6 +49,7 @@ var player = null
 var hud = null
 var wave_count: int = 0
 var bullets = []
+var is_paused = false
 
 func _ready():
 	spawn_new_boss()
@@ -45,6 +67,7 @@ func restart():
 	# reset gameplay values
 	wave_count = 0
 	player_lives = base_player_lives
+	is_paused = false
 	
 	# reset main entities
 	player.reset()
@@ -78,7 +101,13 @@ func spawn_new_boss():
 		boss.setup()
 
 func _on_boss_death():
-	spawn_new_boss()
+	if player.is_dead and player_lives <= 0:
+		return
+		
+	if can_show_upgrades():
+		hud.show_upgrades()
+	else:
+		spawn_new_boss()
 
 func get_random_boss_part():
 	return boss_parts[rng().randi_range(0, boss_parts.size() - 1)]
@@ -127,4 +156,29 @@ func _on_player_died():
 		var timer := get_tree().create_timer(1.5)
 		await timer.timeout
 		player.respawn()
-	pass
+
+func can_show_upgrades():
+	return true
+
+func pause():
+	is_paused = true
+
+func unpause():
+	is_paused = false
+
+func active_bonus(up: Upgrade):
+	# active the bonus
+	up.execute_effect()
+	hud.hide_upgrades()
+	spawn_new_boss()
+
+func get_random_upgrades(count: int):
+	var available_upgrades = upgrades.duplicate()
+	var random_upgrades = []
+	
+	for i in count:
+		var random_index = rng().randi_range(0, available_upgrades.size() - 1)
+		random_upgrades.append(available_upgrades[random_index])
+		available_upgrades.remove_at(random_index)
+	
+	return random_upgrades
