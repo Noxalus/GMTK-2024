@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://c07xp0rpn0hhn"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_0rcip"]
+[ext_resource type="PackedScene" uid="uid://dpjuvbjnqks5r" path="res://scenes/hud/life_icon.tscn" id="1_16ty7"]
+[ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="3_j6bfj"]
+
+[sub_resource type="Theme" id="Theme_wyq1t"]
+default_font = ExtResource("3_j6bfj")
+
+[sub_resource type="Gradient" id="Gradient_35j3i"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yi66x"]
+gradient = SubResource("Gradient_35j3i")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_x3yhx"]
+diffuse_texture = SubResource("GradientTexture1D_yi66x")
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0rcip")
+
+[node name="LifeContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -26.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="LifeIcon" parent="LifeContainer" instance=ExtResource("1_16ty7")]
+layout_mode = 2
+
+[node name="LifeIcon2" parent="LifeContainer" instance=ExtResource("1_16ty7")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="BossLifeContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/BossLifeContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme = SubResource("Theme_wyq1t")
+bbcode_enabled = true
+text = "[b]BOSS:[/b]"
+fit_content = true
+shortcut_keys_enabled = false
+
+[node name="BossLifeGauge" type="TextureRect" parent="MarginContainer/BossLifeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("CanvasTexture_x3yhx")

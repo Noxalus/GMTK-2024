@@ -2,7 +2,7 @@ extends Area2D
 
 @export var speed: float = 800
 
-var bullet_fx := preload("res://scenes/bullet_fx.tscn")
+var bullet_fx := preload("res://scenes/fx/bullet_fx.tscn")
 
 var direction: Vector2 = Vector2(0, 0)
 

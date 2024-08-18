@@ -3,29 +3,33 @@ extends Node2D
 # Assets preloading
 var boss_core = preload("res://scenes/boss_core.tscn")
 var boss_parts = [
-	preload("res://scenes/boss_part_1.tscn"),
-	preload("res://scenes/boss_part_2.tscn"),
-	preload("res://scenes/boss_part_3.tscn"),
-	preload("res://scenes/boss_part_4.tscn"),
-	preload("res://scenes/boss_part_5.tscn"),
-	preload("res://scenes/boss_part_6.tscn"),
+	preload("res://scenes/boss_parts/boss_part_1.tscn"),
+	preload("res://scenes/boss_parts/boss_part_2.tscn"),
+	preload("res://scenes/boss_parts/boss_part_3.tscn"),
+	preload("res://scenes/boss_parts/boss_part_4.tscn"),
+	preload("res://scenes/boss_parts/boss_part_5.tscn"),
+	preload("res://scenes/boss_parts/boss_part_6.tscn"),
 ]
 var boss_weapons = [
-	preload("res://scenes/boss_weapon_turret.tscn")
+	preload("res://scenes/boss_weapons/boss_weapon_turret.tscn")
 ]
 
-var bullet_node := preload("res://scenes/boss_bullet.tscn")
-var explosion := preload("res://scenes/explosion.tscn")
+var bullet_node := preload("res://scenes/bullets/boss_bullet.tscn")
+var explosion := preload("res://scenes/fx/explosion.tscn")
 
 var local_rng = RandomNumberGenerator.new()
 var wave_count: int = 0
+
 var boss = null
 var player = null
+var hud = null
+var player_lives = 3
 
 func _ready():
 	spawn_new_boss()
 
 func _process(delta):
+	# debug to test boss generation quickly
 	if Input.is_action_just_pressed("next_boss") and boss != null:
 		boss.damage(9999)
 

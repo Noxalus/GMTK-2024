@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpjuvbjnqks5r"]
+
+[ext_resource type="Texture2D" uid="uid://cvchb77yj50xi" path="res://assets/sprites/hud/playerLife2_red.png" id="1_hwd8f"]
+
+[node name="LifeIcon" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_hwd8f")

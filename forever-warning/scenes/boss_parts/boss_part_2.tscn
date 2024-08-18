@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://bx0qv71r6cy1v"]
 
-[ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_ffdgn"]
-[ext_resource type="Texture2D" uid="uid://bpbcphouok0j2" path="res://assets/sprites/parts/wingGreen_1.png" id="2_dybu0"]
-[ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_yd5g3"]
-[ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_epqud"]
+[ext_resource type="Script" path="res://scripts/boss_part.gd" id="1_7xw4d"]
+[ext_resource type="Texture2D" uid="uid://bpbcphouok0j2" path="res://assets/sprites/parts/wingGreen_1.png" id="2_0e8e6"]
+[ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_c88jg"]
+[ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_wocny"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3u2l3"]
 radius = 11.0
@@ -18,10 +18,10 @@ radius = 7.0
 radius = 5.0
 
 [node name="Part_2" type="Area2D" groups=["damageable"]]
-script = ExtResource("1_ffdgn")
+script = ExtResource("1_7xw4d")
 
 [node name="WingGreen0" type="Sprite2D" parent="."]
-texture = ExtResource("2_dybu0")
+texture = ExtResource("2_0e8e6")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -44,14 +44,14 @@ shape = SubResource("CircleShape2D_6dfqa")
 
 [node name="BossPartSlot1" type="Node2D" parent="BossPartSlots"]
 position = Vector2(12, 43)
-script = ExtResource("3_yd5g3")
+script = ExtResource("3_c88jg")
 base_random_angle_min = -2.0944
 base_random_angle_max = 1.309
 
 [node name="BossPartSlot2" type="Node2D" parent="BossPartSlots"]
 visible = false
 position = Vector2(27, 21)
-script = ExtResource("3_yd5g3")
+script = ExtResource("3_c88jg")
 base_random_angle_min = -2.00713
 base_random_angle_max = -0.349066
 
@@ -59,12 +59,12 @@ base_random_angle_max = -0.349066
 
 [node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots"]
 position = Vector2(32, 41)
-script = ExtResource("4_epqud")
+script = ExtResource("4_wocny")
 
 [node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots"]
 position = Vector2(16, 6)
-script = ExtResource("4_epqud")
+script = ExtResource("4_wocny")
 
 [node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots"]
 position = Vector2(5, 67)
-script = ExtResource("4_epqud")
+script = ExtResource("4_wocny")

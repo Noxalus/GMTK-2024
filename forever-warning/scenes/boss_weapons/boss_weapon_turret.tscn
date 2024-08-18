@@ -1,22 +1,22 @@
 [gd_scene load_steps=5 format=3 uid="uid://d0q1eegilkwdr"]
 
-[ext_resource type="Script" path="res://scripts/boss_weapon_turret.gd" id="1_qo100"]
-[ext_resource type="Texture2D" uid="uid://xafi1bdlq6de" path="res://assets/sprites/parts/turretBase_small.png" id="4_0kj4k"]
-[ext_resource type="Texture2D" uid="uid://boq7k3u800f6u" path="res://assets/sprites/spaceParts_091.png" id="5_gau53"]
+[ext_resource type="Script" path="res://scripts/boss_weapon_turret.gd" id="1_gfiwf"]
+[ext_resource type="Texture2D" uid="uid://xafi1bdlq6de" path="res://assets/sprites/parts/turretBase_small.png" id="2_5g0p8"]
+[ext_resource type="Texture2D" uid="uid://boq7k3u800f6u" path="res://assets/sprites/spaceParts_091.png" id="3_qj58q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7m3vi"]
 radius = 7.0
 
 [node name="BossWeaponTurret" type="Area2D"]
-script = ExtResource("1_qo100")
+script = ExtResource("1_gfiwf")
 
 [node name="TurretBaseSmall" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_0kj4k")
+texture = ExtResource("2_5g0p8")
 
 [node name="SpaceParts091" type="Sprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("5_gau53")
+texture = ExtResource("3_qj58q")
 centered = false
 offset = Vector2(-11, -62)
 
