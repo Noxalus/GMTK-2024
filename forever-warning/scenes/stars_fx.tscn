@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://dk3qfnhyguxpu"]
+
+[ext_resource type="Texture2D" uid="uid://cdyl856y810ur" path="res://assets/sprites/backgrounds/star1.png" id="1_uopus"]
+
+[sub_resource type="Gradient" id="Gradient_up4fk"]
+offsets = PackedFloat32Array(0, 0.455951, 0.669243, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_01xpc"]
+gradient = SubResource("Gradient_up4fk")
+
+[sub_resource type="Curve" id="Curve_n4wvl"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.165939, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_hgu4f"]
+curve = SubResource("Curve_n4wvl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pjxmm"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(960, 500, 1)
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+angular_velocity_min = -50.0
+angular_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = -2.23517e-06
+scale_min = 0.2
+scale_curve = SubResource("CurveTexture_hgu4f")
+color_ramp = SubResource("GradientTexture1D_01xpc")
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_pjxmm")
+texture = ExtResource("1_uopus")
+lifetime = 5.0

@@ -1,10 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://pkr3ksnu1qgh"]
+[gd_scene load_steps=4 format=3 uid="uid://pkr3ksnu1qgh"]
 
 [ext_resource type="PackedScene" uid="uid://55hgfllu4oyd" path="res://scenes/player.tscn" id="1_thu6u"]
+[ext_resource type="PackedScene" uid="uid://dk3qfnhyguxpu" path="res://scenes/stars_fx.tscn" id="2_348gd"]
+
+[sub_resource type="Environment" id="Environment_e34oq"]
+background_mode = 3
+background_color = Color(1, 0, 1, 1)
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
 
 [node name="Game" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_e34oq")
 
 [node name="Player" parent="." instance=ExtResource("1_thu6u")]
 position = Vector2(0, 255)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -255)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+rotation_smoothing_enabled = true
+
+[node name="GPUParticles2D" parent="Player/Camera2D" instance=ExtResource("2_348gd")]
+self_modulate = Color(1, 1, 1, 0.376471)
+lifetime = 10.0
+preprocess = 10.0
