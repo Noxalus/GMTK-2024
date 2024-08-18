@@ -16,7 +16,8 @@ extends Area2D
 
 signal died_signal
 
-var life
+var life: int
+var total_life: int
 var chance_to_fire: float
 var is_dead = true # dead by default
 var parts_instances = []
@@ -55,7 +56,8 @@ func _process(delta):
 
 func damage(amount: int):
 	life -= amount
-	if life < 0:
+	game.hud.set_boss_life(life)
+	if life <= 0 and not is_dead:
 		kill()
 
 func kill():
@@ -107,6 +109,21 @@ func setup():
 
 	for weapon in weapon_instances:
 		weapon.setup()
+		
+	compute_life()
+	life = total_life
+	refresh_hud_boss_life()
+
+# boss core life depends of all its members
+func compute_life():
+	total_life = base_life
+	
+	for instance in parts_instances:
+		total_life += instance[0].base_life
+		total_life += instance[1].base_life
+	
+func refresh_hud_boss_life():
+	game.hud.set_boss_life(life)
 
 func spawn_new_parts():
 	var unoccupied_slots = find_unoccupied_slots()

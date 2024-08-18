@@ -26,6 +26,7 @@ var boss = null
 var player = null
 var hud = null
 var wave_count: int = 0
+var bullets = []
 
 func _ready():
 	spawn_new_boss()
@@ -39,6 +40,12 @@ func restart():
 	# reset gameplay values
 	wave_count = 0
 	player_lives = base_player_lives
+	
+	# clean all existing bullets
+	for bullet in bullets:
+		if bullet != null:
+			bullet.queue_free()
+	bullets.clear()
 	
 	# reset main entities
 	boss.reset()
@@ -73,6 +80,7 @@ func instantiate_bullet(pos: Vector2, dir: Vector2, speed: float = 100):
 	bullet.set_direction(dir)
 	bullet.set_speed(speed)
 	get_tree().current_scene.add_child(bullet)
+	bullets.append(bullet)
 	
 func rng():
 	return local_rng

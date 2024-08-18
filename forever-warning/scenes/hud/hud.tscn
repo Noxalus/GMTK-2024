@@ -8,15 +8,28 @@
 [sub_resource type="Theme" id="Theme_wyq1t"]
 default_font = ExtResource("3_j6bfj")
 
-[sub_resource type="Gradient" id="Gradient_35j3i"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npls4"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(1, 0.964706, 0.176471, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_yi66x"]
-gradient = SubResource("Gradient_35j3i")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b40b7"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.528, 0.99, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_x3yhx"]
-diffuse_texture = SubResource("GradientTexture1D_yi66x")
+[sub_resource type="Theme" id="Theme_twhq7"]
+default_font = ExtResource("3_j6bfj")
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -52,7 +65,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 20.0
 grow_horizontal = 2
-theme_override_constants/margin_left = 0
+theme_override_constants/margin_left = 7
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
@@ -65,15 +78,40 @@ theme_override_constants/separation = 0
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme = SubResource("Theme_wyq1t")
+theme_override_constants/outline_size = 10
 bbcode_enabled = true
 text = "[b]BOSS:[/b]"
 fit_content = true
 shortcut_keys_enabled = false
 
-[node name="BossLifeGauge" type="TextureRect" parent="MarginContainer/BossLifeContainer"]
+[node name="Control" type="Control" parent="MarginContainer/BossLifeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = SubResource("CanvasTexture_x3yhx")
+
+[node name="BossLifeGauge" type="ProgressBar" parent="MarginContainer/BossLifeContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_npls4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b40b7")
+value = 50.0
+show_percentage = false
+
+[node name="BossLifeLabel" type="Label" parent="MarginContainer/BossLifeContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_twhq7")
+theme_override_constants/outline_size = 10
+text = "0000/0000"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GameOver" parent="." instance=ExtResource("4_m2csm")]
 visible = false

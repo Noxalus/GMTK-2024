@@ -72,13 +72,14 @@ func _physics_process(delta):
 
 func damage(amount: int):
 	life -= amount
+	game.boss.damage(amount)
 	if life < 0:
 		kill()
 
 func kill():
+	game.boss.damage(life)
 	visible = false
 	is_dead = true
-	died_signal.emit()
 	for weapon in weapons:
 		if weapon.is_visible(): 
 			weapon.kill()
@@ -86,7 +87,7 @@ func kill():
 		if part.is_visible():
 			part.kill()
 	game.spawn_explosion(global_position)
-
+	died_signal.emit()
 
 func set_base_angle(angle: float):
 	base_angle = angle
