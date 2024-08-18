@@ -8,14 +8,18 @@ var shake_amount := 0.0
 
 func _init():
 	base_position = position
+	print(base_position)
+	
+func _ready():
 	game.camera = self
 
 func _process(delta):
 	if shake_amount > 0:
-		position.x = randf_range(-shake_base_amount, shake_base_amount) * shake_amount
-		position.y = randf_range(-shake_base_amount, shake_base_amount) * shake_amount
+		position.x = base_position.x + randf_range(-shake_base_amount, shake_base_amount) * shake_amount
+		position.y = base_position.y + randf_range(-shake_base_amount, shake_base_amount) * shake_amount
+		shake_amount = lerp(shake_amount, 0.0, shake_dampening)
 	else:
 		position = base_position
 	
 func shake(amount: float):
-	shake_amount = amount
+	shake_amount += amount

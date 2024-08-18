@@ -26,5 +26,5 @@ func _on_area_entered(area):
 			get_tree().current_scene.add_child(instance)
 			area.damage(1)
 			game.player.play_hit_sound()
-			#game.camera.shake(10)
+			game.camera.shake(5)
 			queue_free()

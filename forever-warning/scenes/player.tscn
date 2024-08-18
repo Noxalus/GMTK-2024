@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://55hgfllu4oyd"]
+[gd_scene load_steps=10 format=3 uid="uid://55hgfllu4oyd"]
 
 [ext_resource type="Texture2D" uid="uid://d3uerrrmy6kcm" path="res://assets/sprites/player_ship.png" id="1_xdjxy"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_yv0xi"]
 [ext_resource type="AudioStream" uid="uid://5u2pveb441c1" path="res://assets/audio/sfx/hit.wav" id="3_061m7"]
 [ext_resource type="AudioStream" uid="uid://cmnxytjdtq36i" path="res://assets/audio/sfx/shoot.wav" id="3_l5qrk"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="5_8fr2p"]
 [ext_resource type="PackedScene" uid="uid://dk3qfnhyguxpu" path="res://scenes/fx/stars_fx.tscn" id="5_j1dpa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m63fx"]
@@ -72,10 +73,11 @@ volume_db = -20.0
 stream = SubResource("AudioStreamRandomizer_pb35m")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(1, -256)
+position = Vector2(0, -256)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 rotation_smoothing_enabled = true
+script = ExtResource("5_8fr2p")
 
 [node name="GPUParticles2D" parent="Camera2D" instance=ExtResource("5_j1dpa")]
 self_modulate = Color(1, 1, 1, 0.376471)
