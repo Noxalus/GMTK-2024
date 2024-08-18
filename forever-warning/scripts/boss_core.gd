@@ -115,6 +115,7 @@ func setup():
 	sprite.visible = true
 	is_dead = false
 	is_dying = false
+	visible = true
 
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation

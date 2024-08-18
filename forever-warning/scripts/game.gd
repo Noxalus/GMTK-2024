@@ -94,6 +94,7 @@ var core_damage_factor: float
 func _ready():
 	reset()
 	spawn_new_boss()
+	boss.visible = false
 
 func _process(delta):
 	# debug to test boss generation quickly
@@ -146,7 +147,7 @@ func spawn_new_boss():
 		boss.died_signal.connect(_on_boss_death)
 	else:
 		boss.setup()
-
+		
 func _on_boss_death():
 	if player.is_dead and player_lives <= 0:
 		return
