@@ -24,7 +24,13 @@ func _on_area_entered(area):
 			instance.global_rotation = global_rotation
 			instance.emitting = true
 			get_tree().current_scene.add_child(instance)
-			area.damage(1)
+			if area is BossCore:
+				print("DAMAGING THE CORE")
+				print("SHOOT DAMAGE %s" % game.player.shoot_damage)
+				print("CORE DAMAGE FACTOR %s" % game.core_damage_factor)
+				area.damage(game.player.shoot_damage * game.core_damage_factor)
+			else:
+				area.damage(game.player.shoot_damage)
 			game.player.play_hit_sound()
 			game.camera.shake(2.5)
 			queue_free()

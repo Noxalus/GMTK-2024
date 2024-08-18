@@ -127,7 +127,7 @@ func setup():
 			part[0].setup()
 			part[1].setup()
 	
-	for i in range(0, 30):
+	for i in range(0, 3):
 		spawn_new_parts()
 
 	for weapon in weapon_instances:

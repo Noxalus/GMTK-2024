@@ -55,6 +55,7 @@ func show_upgrades():
 
 func hide_upgrades():
 	game.unpause()
+	clear_upgrades()
 	upgrades.visible = false
 
 func set_boss_life(life: int):

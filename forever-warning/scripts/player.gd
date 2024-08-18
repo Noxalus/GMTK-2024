@@ -1,9 +1,10 @@
 extends Area2D
 
-@export var speed: float = 500
+@export var base_speed: float = 500
+@export var base_damage: float = 1
 @export var focus_factor: float = 0.5
 @export var rotation_speed: float = 1
-@export var fire_delay: float = 0.1
+@export var base_fire_delay: float = 0.1
 
 @onready var fire_delay_timer = $FireDelayTimer
 @onready var invicibility_timer = $InvincibilityTimer
@@ -11,7 +12,6 @@ extends Area2D
 @onready var player_spawn = $"../PlayerSpawn"
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation: AnimationPlayer = $AnimationPlayer
-
 
 signal died_signal
 
@@ -22,6 +22,9 @@ var is_dead := false
 var is_invincible := false
 var cur_speed
 var previous_mouse_position
+var speed: float
+var fire_delay: float
+var shoot_damage: float
 
 func _ready():
 	game.set_player(self)
@@ -31,6 +34,9 @@ func reset():
 	sprite.visible = true
 	is_dead = false
 	is_invincible = false
+	speed = base_speed
+	fire_delay = base_fire_delay
+	shoot_damage = base_damage
 
 func _process(_delta):
 	if is_dead or game.is_paused:
@@ -123,18 +129,25 @@ func _on_invincibility_timer_timeout():
 #region Upgrades
 
 func increase_shoot_frequency():
-	print("SHOOT FREQ")
+	print("FIRE DELAY BEFORE UPGRADE: %s" % fire_delay)
+	fire_delay /= 1.5
+	print("FIRE DELAY AFTER UPGRADE: %s" % fire_delay)
 
 func increase_move_speed():
-	pass
-
-func increase_core_damage():
-	pass
-
-func add_turret():
-	pass
+	print("SPEED BEFORE UPGRADE: %s" % speed)
+	speed *= 1.25
+	print("SPEED AFTER UPGRADE: %s" % speed)
 
 func increase_damage():
-	pass
+	print("DAMAGE BEFORE UPGRADE: %s" % shoot_damage)
+	shoot_damage *= 2
+	print("DAMAGE AFTER UPGRADE: %s" % shoot_damage)
+
+func add_turret():
+	for child in bullet_spawners.get_children():
+		if not child.is_visible():
+			print("ENABLE TURRET %s" % child.name)
+			child.visible = true
+			break
 
 #endregion

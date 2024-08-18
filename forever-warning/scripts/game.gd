@@ -36,7 +36,7 @@ var upgrades = [
 	# DAMAGE INCREASE x1.25
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_damage.png"), 
-		"DAMAGE INCREASE x1.25", 
+		"DAMAGE INCREASE x2", 
 		func(): 	player.increase_damage()
 	),
 	# TURRET + 1
@@ -48,8 +48,8 @@ var upgrades = [
 	# CORE DAMAGE x1.5
 	upgrade_class.new(
 		preload("res://assets/sprites/upgrades/increase_core_damage.png"), 
-		"CORE DAMAGE x1.5", 
-		func(): 	player.increase_core_damage()
+		"CORE DAMAGE x2", 
+		increase_core_damage
 	),
 	# MOVE SPEED x1.25
 	upgrade_class.new(
@@ -60,12 +60,21 @@ var upgrades = [
 ]
 
 func increase_player_life():
+	print("PLAYER LIVES BEFORE UPDATE %s" % player_lives)
 	player_lives += 1
+	print("PLAYER LIVE AFTER UPDATE %s" % player_lives)
 	hud.refresh_player_lives()
+
+func increase_core_damage():
+	print("CORE DAMAGE BEFORE UPDATE %s" % core_damage_factor)
+	core_damage_factor *= 2
+	print("CORE DAMAGE AFTER UPDATE %s" % core_damage_factor)
 
 var local_rng = RandomNumberGenerator.new()
 
-const base_player_lives = 3
+const base_player_lives := 3
+const base_core_damage_factor := 1.0
+
 var player_lives = base_player_lives
 var camera = null
 var boss = null
@@ -74,8 +83,10 @@ var hud = null
 var wave_count: int = 0
 var bullets = []
 var is_paused = false
+var core_damage_factor: float
 
 func _ready():
+	reset()
 	spawn_new_boss()
 
 func _process(delta):
@@ -89,11 +100,15 @@ func _process(delta):
 	if Input.is_action_just_pressed("choose_upgrade"):
 		hud.show_upgrades()
 
-func restart():
+func reset() -> void:
 	# reset gameplay values
 	wave_count = 0
 	player_lives = base_player_lives
+	core_damage_factor = base_core_damage_factor
 	is_paused = false
+
+func restart():
+	reset()
 	
 	# reset main entities
 	player.reset()
