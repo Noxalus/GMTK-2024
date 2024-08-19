@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://c07xp0rpn0hhn"]
+[gd_scene load_steps=18 format=3 uid="uid://c07xp0rpn0hhn"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_0rcip"]
 [ext_resource type="PackedScene" uid="uid://dpjuvbjnqks5r" path="res://scenes/hud/life_icon.tscn" id="1_16ty7"]
 [ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="3_j6bfj"]
 [ext_resource type="PackedScene" uid="uid://drrmy673ho5yv" path="res://scenes/hud/game_over.tscn" id="4_m2csm"]
+[ext_resource type="AudioStream" uid="uid://cs15rguwbajum" path="res://assets/audio/sfx/warning.mp3" id="4_xfeyr"]
 [ext_resource type="PackedScene" uid="uid://b6xjx4v88jng3" path="res://scenes/upgrade_card.tscn" id="5_4yabr"]
 
 [sub_resource type="Theme" id="Theme_wyq1t"]
@@ -38,7 +39,7 @@ default_font_size = 50
 
 [sub_resource type="Animation" id="Animation_vf7qm"]
 resource_name = "warning"
-length = 3.0
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -70,7 +71,7 @@ tracks/2/path = NodePath("Control/WarningContainer:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 3),
+"times": PackedFloat32Array(0, 4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(2333, 111), Vector2(-1145, 111)]
@@ -82,7 +83,7 @@ tracks/3/path = NodePath("Control/WarningContainer2:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 3),
+"times": PackedFloat32Array(0, 4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-2326, 482), Vector2(1166, 482)]
@@ -94,7 +95,7 @@ tracks/4/path = NodePath("Control/WarningContainer/Label:self_modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.73333, 2, 2.23333, 2.5, 2.73333, 3),
+"times": PackedFloat32Array(0, 0.3335, 0.667, 1.0005, 1.334, 1.6675, 2.001, 2.31227, 2.668, 2.97927, 3.335, 3.64627, 3.96667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -118,7 +119,7 @@ tracks/6/path = NodePath("Control/WarningContainer/Label/ColorRect:color")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.233333, 2.73333, 3),
+"times": PackedFloat32Array(0, 0.311267, 3.64627, 3.96867),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -130,7 +131,7 @@ tracks/7/path = NodePath("Control/WarningContainer/Label/ColorRect2:color")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.233333, 2.73333, 3),
+"times": PackedFloat32Array(0, 0.311267, 3.64627, 3.96867),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -142,7 +143,7 @@ tracks/8/path = NodePath("Control/WarningContainer2/Label:self_modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.73333, 2, 2.23333, 2.5, 2.73333, 3),
+"times": PackedFloat32Array(0, 0.3335, 0.667, 1.0005, 1.334, 1.6675, 2.001, 2.31227, 2.668, 2.97927, 3.335, 3.64627, 3.96867),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -154,7 +155,7 @@ tracks/9/path = NodePath("Control/WarningContainer2/Label/ColorRect:color")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.233333, 2.73333, 3),
+"times": PackedFloat32Array(0, 0.311267, 3.64627, 3.96867),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -166,10 +167,22 @@ tracks/10/path = NodePath("Control/WarningContainer2/Label/ColorRect2:color")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.233333, 2.73333, 3),
+"times": PackedFloat32Array(0, 0.311267, 3.64627, 3.96867),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("WarningSound:playing")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_mebjt"]
@@ -305,6 +318,18 @@ tracks/10/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("WarningSound:playing")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pw1aq"]
@@ -515,6 +540,9 @@ grow_vertical = 0
 libraries = {
 "": SubResource("AnimationLibrary_pw1aq")
 }
+
+[node name="WarningSound" type="AudioStreamPlayer" parent="Warning"]
+stream = ExtResource("4_xfeyr")
 
 [node name="GameOver" parent="." instance=ExtResource("4_m2csm")]
 visible = false

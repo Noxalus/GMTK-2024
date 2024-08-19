@@ -121,7 +121,7 @@ func setup(parts_count: int = 1):
 	game.hud.show_warning_animation()	
 	
 	# Wait for the warning animation
-	var warning_animation_timer := get_tree().create_timer(3.0)
+	var warning_animation_timer := get_tree().create_timer(4.5)
 	await warning_animation_timer.timeout
 	
 	global_position = boss_spawn.global_position
