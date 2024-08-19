@@ -6,6 +6,7 @@ class_name BossWeapon
 @export var base_chance_to_fire: float = 0.5
 @export var base_bullet_speed: float = 500
 @export var base_life: int = 10
+@onready var bullet_spawn: Node2D = $BulletSpawn
 
 signal died_signal
 
@@ -14,7 +15,7 @@ var life
 @onready var shoot_timer = $ShootTimer
 
 var speed: float
-var is_dead = true # dead by default
+var is_dead = false # dead by default
 
 func _ready():
 	speed = base_bullet_speed
@@ -51,5 +52,5 @@ func kill():
 	game.spawn_explosion(global_position)
 
 func shoot():
-	game.instantiate_bullet(global_position, Vector2.from_angle(rotation - PI / 2.0), speed)
+	game.instantiate_bullet(bullet_spawn.global_position, Vector2.from_angle(rotation - PI / 2.0), speed)
 	$ShootSound.play()

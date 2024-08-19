@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://pkr3ksnu1qgh"]
+[gd_scene load_steps=6 format=3 uid="uid://pkr3ksnu1qgh"]
 
 [ext_resource type="PackedScene" uid="uid://55hgfllu4oyd" path="res://scenes/player.tscn" id="1_thu6u"]
+[ext_resource type="PackedScene" uid="uid://dubbi7lbihs60" path="res://scenes/boss_weapons/boss_weapon_shotgun.tscn" id="3_8lcgj"]
 [ext_resource type="PackedScene" uid="uid://c07xp0rpn0hhn" path="res://scenes/hud/hud.tscn" id="3_0165h"]
 
 [sub_resource type="Environment" id="Environment_rekqa"]
@@ -36,3 +37,5 @@ position = Vector2(0, -179)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_eejtx")
+
+[node name="BossWeaponTurret" parent="." instance=ExtResource("3_8lcgj")]
