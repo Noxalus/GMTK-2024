@@ -118,7 +118,7 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	
-	#show_warnings = false
+	show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
@@ -161,10 +161,9 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	self.rotation = 0
 	self.scale = Vector2.ZERO
 	
-	var spawn_time = 0.5
+	var spawn_time = 1
 	var tween = create_tween()
-	tween.tween_property(self, "rotation", 4 * PI, spawn_time).set_ease(Tween.EASE_IN)
-	tween.parallel().tween_property(self, "scale", Vector2.ONE, spawn_time).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(self, "scale", Vector2.ONE, spawn_time).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	
 	# wait for the spawn animation
 	var spawn_timer := get_tree().create_timer(spawn_time)
