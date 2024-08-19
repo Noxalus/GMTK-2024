@@ -113,16 +113,19 @@ func shoot():
 
 #region Generation
 
-func setup(parts_count: int = 1):
+func setup(parts_count: int = 1, show_warnings: bool = true):
 	# Wait a small amount of time before to respawn the boss
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	
-	game.hud.show_warning_animation()	
+	#show_warnings = false
 	
-	# Wait for the warning animation
-	var warning_animation_timer := get_tree().create_timer(4.5)
-	await warning_animation_timer.timeout
+	if show_warnings:
+		game.hud.show_warning_animation()	
+		
+		# Wait for the warning animation
+		var warning_animation_timer := get_tree().create_timer(4.5)
+		await warning_animation_timer.timeout
 	
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
@@ -149,13 +152,22 @@ func setup(parts_count: int = 1):
 	life = total_life
 	refresh_hud_boss_life()
 	
-	animation.play("spawn")
-	
 	is_spawning = true
 	is_invincible = true
 	
+	#animation.play("spawn")
+	
+	self.visible = true
+	self.rotation = 0
+	self.scale = Vector2.ZERO
+	
+	var spawn_time = 0.5
+	var tween = create_tween()
+	tween.tween_property(self, "rotation", 4 * PI, spawn_time).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(self, "scale", Vector2.ONE, spawn_time).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
+	
 	# wait for the spawn animation
-	var spawn_timer := get_tree().create_timer(1.0)
+	var spawn_timer := get_tree().create_timer(spawn_time)
 	await spawn_timer.timeout
 	
 	is_spawning = false

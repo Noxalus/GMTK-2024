@@ -7,6 +7,7 @@ extends Control
 @onready var game_over := $GameOver
 @onready var upgrades: Control = $Upgrades
 @onready var upgrades_container: HBoxContainer = $Upgrades/UpgradesContainer
+@onready var boss_life_container: HBoxContainer = $TopBar/BossLifeContainer
 
 const UPGRADE_CARD = preload("res://scenes/upgrade_card.tscn")
 
@@ -15,6 +16,9 @@ var life_icon := preload("res://scenes/hud/life_icon.tscn")
 func _ready():
 	game.hud = self
 	reset()
+	boss_life_container.visible = false
+	game_over.visible = false
+	upgrades.visible = false
 	
 func reset():
 	game_over.visible = false
@@ -62,6 +66,7 @@ func hide_upgrades():
 	upgrades.visible = false
 
 func set_boss_life(life: int):
+	boss_life_container.visible = true
 	boss_life_gauge.max_value = game.boss.total_life
 	boss_life_gauge.value = game.boss.life
 	var life_format_str = "%s/%s"
