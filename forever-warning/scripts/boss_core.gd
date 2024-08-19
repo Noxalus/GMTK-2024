@@ -3,10 +3,12 @@ extends Area2D
 class_name BossCore
 
 @export var base_life: int = 5
-@export var speed: float = 300
+@export var speed: float = 50.0
 @export var shoot_frequency: float = 10.0
 @export var base_chance_to_fire: float = 0.5
 @export var boss_spawn_delay := 0.5
+@export var move_frequency_min := 2.0
+@export var move_frequency_max := 2.0
 
 @onready var shoot_timer = $ShootTimer
 @onready var parts_side_slots = [$BossPartSlots/BossPartSlot1_L, $BossPartSlots/BossPartSlot1_R]
@@ -17,6 +19,7 @@ class_name BossCore
 @onready var boss_spawn = $"../BossSpawn"
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation: AnimationPlayer = $AnimationPlayer
+@onready var move_timer: Timer = $MoveTimer
 
 signal died_signal
 
@@ -30,6 +33,8 @@ var is_invincible = false
 var core_parts_instances = []
 var parts_instances = []
 var weapon_instances = []
+var target_position: Vector2
+var move_tween: Tween
 
 func _ready():
 	life = base_life;
@@ -45,9 +50,34 @@ func _process(delta):
 		var rand = game.rng().randf()
 		if rand <= chance_to_fire:
 			shoot()
-			
+	
+	if move_timer.is_stopped() and ((move_tween != null and not move_tween.is_running()) or move_tween == null):
+		#target_position = get_random_position_around(100.0)
+		print("MOVE RANDOMLY")
+		move_randomly()
+	
+	#position = lerp(position, target_position, 0.5 * delta)
+	
 	# TODO: Handle rotation here
 	#rotate(0.5 * delta)
+
+func get_random_position_around(range: float):
+	return global_position + _random_inside_unit_circle() * range
+
+func move_randomly():
+	var random_position = get_random_position_around(game.rng().randi_range(50, 1000.0))
+	var random_rotation = game.rng().randf_range(0.0, PI)
+	if move_tween != null:
+		move_tween.kill()
+	var tween_duration = global_position.distance_to(random_position) / speed
+	move_tween = create_tween()
+	move_tween.tween_property(self, "position", random_position, tween_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	move_tween.parallel().tween_property(self, "rotation", random_rotation, tween_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	move_tween.tween_callback(func(): move_timer.start(game.rng().randf_range(move_frequency_min, move_frequency_max)))
+
+func _random_inside_unit_circle() -> Vector2:
+	var theta : float = game.rng().randf() * 2 * PI
+	return Vector2(cos(theta), sin(theta)) * sqrt(game.rng().randf())
 
 func damage(amount: int, is_direct_hit: bool = true):
 	if is_invincible:
@@ -84,6 +114,7 @@ func kill():
 	
 	if are_all_parts_dead():
 		true_kill()
+	move_tween.kill()
 
 func _on_part_died():
 	if not are_all_parts_dead():
@@ -160,9 +191,8 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	is_spawning = true
 	is_invincible = true
 	
-	self.visible = true
-	self.rotation = 0
-	self.scale = Vector2.ZERO
+	visible = true
+	scale = Vector2.ZERO
 	
 	var spawn_time = 1
 	var tween = create_tween()
@@ -172,6 +202,7 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	var spawn_timer := get_tree().create_timer(spawn_time)
 	await spawn_timer.timeout
 	
+	target_position = position
 	is_spawning = false
 	is_invincible = false
 
