@@ -140,3 +140,4 @@ libraries = {
 
 [node name="WarningSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_4i4q8")
+volume_db = -5.0

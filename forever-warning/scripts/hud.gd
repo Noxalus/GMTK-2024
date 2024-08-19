@@ -8,6 +8,7 @@ extends Control
 @onready var upgrades: Control = $Upgrades
 @onready var upgrades_container: HBoxContainer = $Upgrades/VBoxContainer/UpgradesContainer
 @onready var boss_life_container: HBoxContainer = $TopBar/BossLifeContainer
+@onready var warning_animation: AnimationPlayer = $Warning/WarningAnimationPlayer
 
 const UPGRADE_CARD = preload("res://scenes/hud/upgrade_card.tscn")
 
@@ -47,7 +48,7 @@ func clear_upgrades():
 		upgrade.queue_free()
 
 func show_warning_animation():
-	$Warning/WarningAnimationPlayer.play("warning")
+	warning_animation.play("warning", -1.0, 1.5)
 
 func show_upgrades():
 	game.pause()

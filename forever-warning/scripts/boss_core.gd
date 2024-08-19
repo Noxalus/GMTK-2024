@@ -107,7 +107,8 @@ func kill():
 	
 	if are_all_parts_dead():
 		true_kill()
-	move_tween.kill()
+	if move_tween != null:
+		move_tween.kill()
 
 func _on_part_died():
 	if not are_all_parts_dead():
@@ -147,13 +148,13 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	
-	show_warnings = false
+	#show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
 		
 		# Wait for the warning animation
-		var warning_animation_timer := get_tree().create_timer(4.5)
+		var warning_animation_timer := get_tree().create_timer(4.5 / 1.5)
 		await warning_animation_timer.timeout
 	
 	global_position = boss_spawn.global_position
