@@ -134,6 +134,7 @@ func clear_boss_bullets():
 	bullets.clear()
 	
 func spawn_new_boss():
+	return
 	clear_boss_bullets()
 	wave_count += 1
 	

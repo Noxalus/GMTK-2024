@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://55hgfllu4oyd"]
+[gd_scene load_steps=14 format=3 uid="uid://55hgfllu4oyd"]
 
 [ext_resource type="Texture2D" uid="uid://d3uerrrmy6kcm" path="res://assets/sprites/player_ship.png" id="1_xdjxy"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_yv0xi"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://cmnxytjdtq36i" path="res://assets/audio/sfx/shoot.wav" id="3_l5qrk"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="5_8fr2p"]
 [ext_resource type="PackedScene" uid="uid://dk3qfnhyguxpu" path="res://scenes/fx/stars_fx.tscn" id="5_j1dpa"]
+[ext_resource type="PackedScene" uid="uid://ci1lhjwsc28hy" path="res://scenes/boss_weapons/boss_weapon_laser.tscn" id="7_3pcj2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m63fx"]
 radius = 12.0
@@ -98,33 +99,43 @@ shape = SubResource("CircleShape2D_m63fx")
 position = Vector2(0, -18)
 
 [node name="Spawner2" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(22, 9)
 
 [node name="Spawner3" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(-23, 9)
 
 [node name="Spawner4" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(-14, 0)
 
 [node name="Spawner5" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(13, 0)
 
 [node name="Spawner6" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(6, -10)
 
 [node name="Spawner7" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(-6, -10)
 
 [node name="Spawner8" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(-9, -3)
 
 [node name="Spawner9" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(9, -3)
 
 [node name="Spawner10" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(16, 5)
 
 [node name="Spawner11" type="Node2D" parent="BulletSpawners"]
+visible = false
 position = Vector2(-16, 5)
 
 [node name="FireDelayTimer" type="Timer" parent="."]
@@ -156,5 +167,7 @@ preprocess = 10.0
 libraries = {
 "": SubResource("AnimationLibrary_fx4y3")
 }
+
+[node name="BossWeaponTurret" parent="." instance=ExtResource("7_3pcj2")]
 
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

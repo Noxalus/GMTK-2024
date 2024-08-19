@@ -1,19 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://pkr3ksnu1qgh"]
+[gd_scene load_steps=5 format=3 uid="uid://pkr3ksnu1qgh"]
 
 [ext_resource type="PackedScene" uid="uid://55hgfllu4oyd" path="res://scenes/player.tscn" id="1_thu6u"]
 [ext_resource type="PackedScene" uid="uid://c07xp0rpn0hhn" path="res://scenes/hud/hud.tscn" id="3_0165h"]
 
-[sub_resource type="Environment" id="Environment_e34oq"]
+[sub_resource type="Environment" id="Environment_rekqa"]
 background_mode = 3
-background_color = Color(1, 0, 1, 1)
 glow_enabled = true
-glow_intensity = 1.0
-glow_bloom = 0.2
+glow_intensity = 8.0
+glow_hdr_threshold = 4.0
+glow_hdr_scale = 4.0
+glow_hdr_luminance_cap = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eejtx"]
+size = Vector2(732, 20)
 
 [node name="Game" type="Node"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_e34oq")
+environment = SubResource("Environment_rekqa")
 
 [node name="Player" parent="." instance=ExtResource("1_thu6u")]
 position = Vector2(0, 255)
@@ -27,3 +31,8 @@ position = Vector2(0, 255)
 
 [node name="BossSpawn" type="Node2D" parent="."]
 position = Vector2(0, -179)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_eejtx")
