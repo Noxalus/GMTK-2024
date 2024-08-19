@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3 uid="uid://deib7txwf5hwt"]
+
+[ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="1_0gn7e"]
+[ext_resource type="PackedScene" uid="uid://b6xjx4v88jng3" path="res://scenes/hud/upgrade_card.tscn" id="2_yw0a3"]
+
+[sub_resource type="Gradient" id="Gradient_54kjy"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d0yus"]
+gradient = SubResource("Gradient_54kjy")
+
+[sub_resource type="Theme" id="Theme_poo5i"]
+default_font = ExtResource("1_0gn7e")
+default_font_size = 50
+
+[node name="Upgrades" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_d0yus")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -363.0
+offset_top = -180.5
+offset_right = 363.0
+offset_bottom = 180.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="SelectUpgradeText" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_poo5i")
+theme_override_constants/outline_size = 20
+text = "PLEASE SELECT 1 UPGRADE"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="UpgradesContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.5
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="Upgrade" parent="VBoxContainer/UpgradesContainer" instance=ExtResource("2_yw0a3")]
+layout_mode = 2
+
+[node name="Upgrade2" parent="VBoxContainer/UpgradesContainer" instance=ExtResource("2_yw0a3")]
+layout_mode = 2

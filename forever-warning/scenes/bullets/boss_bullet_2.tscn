@@ -1,5 +1,5 @@
 [gd_scene load_steps=2 format=3 uid="uid://f5bwa26du4dw"]
 
-[ext_resource type="PackedScene" uid="uid://ciic2tyl3r01t" path="res://scenes/bullets/boss_bullet.tscn" id="1_1t5i5"]
+[ext_resource type="PackedScene" uid="uid://ciic2tyl3r01t" path="res://scenes/bullets/boss_bullet.tscn" id="1_t8k8r"]
 
-[node name="Bullet" instance=ExtResource("1_1t5i5")]
+[node name="Bullet" instance=ExtResource("1_t8k8r")]

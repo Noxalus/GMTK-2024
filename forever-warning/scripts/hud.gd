@@ -6,10 +6,10 @@ extends Control
 @onready var life_container := $LifeContainer
 @onready var game_over := $GameOver
 @onready var upgrades: Control = $Upgrades
-@onready var upgrades_container: HBoxContainer = $Upgrades/UpgradesContainer
+@onready var upgrades_container: HBoxContainer = $Upgrades/VBoxContainer/UpgradesContainer
 @onready var boss_life_container: HBoxContainer = $TopBar/BossLifeContainer
 
-const UPGRADE_CARD = preload("res://scenes/upgrade_card.tscn")
+const UPGRADE_CARD = preload("res://scenes/hud/upgrade_card.tscn")
 
 var life_icon := preload("res://scenes/hud/life_icon.tscn")
 
