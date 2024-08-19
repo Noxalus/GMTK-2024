@@ -11,7 +11,7 @@ var boss_parts = [
 	preload("res://scenes/boss_parts/boss_part_6.tscn"),
 ]
 var boss_weapons = [
-	#preload("res://scenes/boss_weapons/boss_weapon_turret.tscn"),
+	preload("res://scenes/boss_weapons/boss_weapon_turret.tscn"),
 	preload("res://scenes/boss_weapons/boss_weapon_shotgun.tscn")
 ]
 

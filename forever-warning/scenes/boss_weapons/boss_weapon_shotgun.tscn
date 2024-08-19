@@ -4,12 +4,12 @@
 [ext_resource type="Script" path="res://scripts/boss_weapon_shotgun.gd" id="2_1pi16"]
 [ext_resource type="Texture2D" uid="uid://cmfo3ihm141wb" path="res://assets/sprites/weapons/gun07.png" id="2_713vf"]
 
-[node name="BossWeaponTurret" instance=ExtResource("1_igdtr")]
+[node name="BossWeaponShotgun" instance=ExtResource("1_igdtr")]
 script = ExtResource("2_1pi16")
 
 [node name="TurretSprite" parent="." index="1"]
 texture = ExtResource("2_713vf")
-offset = Vector2(-7, -41)
+offset = Vector2(-7, -30)
 
 [node name="BulletSpawn" parent="." index="5"]
 position = Vector2(0, -26)

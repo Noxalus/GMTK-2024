@@ -123,4 +123,5 @@ visible = false
 layout_mode = 1
 
 [node name="Upgrades" parent="." instance=ExtResource("6_u2aao")]
+visible = false
 layout_mode = 1
