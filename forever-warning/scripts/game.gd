@@ -17,6 +17,13 @@ var boss_weapons = [
 	preload("res://scenes/boss_weapons/boss_weapon_missile.tscn")
 ]
 
+var boss_weapons_weights := PackedFloat32Array([
+	10, # Turret
+	2, # Shotgun
+	20000, # Gatling
+	1 # Missile
+])
+
 var bullet_nodes := [
 	preload("res://scenes/bullets/boss_bullet_1.tscn"),
 	preload("res://scenes/bullets/boss_bullet_2.tscn"),
@@ -135,7 +142,7 @@ func restart():
 	player.respawn()
 
 func clear_boss_bullets():
-		# clean all existing bullets
+	# clean all existing bullets
 	for bullet in bullets:
 		if bullet != null:
 			bullet.queue_free()
@@ -169,7 +176,7 @@ func get_random_boss_part():
 	return boss_parts[rng().randi_range(0, boss_parts.size() - 1)]
 	
 func get_random_boss_weapon():
-	return boss_weapons[rng().randi_range(0, boss_weapons.size() - 1)]
+	return boss_weapons[rng().rand_weighted(boss_weapons_weights)]
 	
 func instantiate_bullet(pos: Vector2, dir: Vector2, speed: float = 100, bullet_index: int = 0):
 	var bullet = bullet_nodes[bullet_index].instantiate()

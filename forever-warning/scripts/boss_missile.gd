@@ -34,6 +34,12 @@ func _process(delta: float) -> void:
 	if alive_timer.is_stopped():
 		kill()
 
+func set_speed(value: float):
+	speed = value
+
+func set_rotation_speed(value: float):
+	rotation_speed = value
+
 func damage(amount: int):
 	kill()
 	

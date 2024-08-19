@@ -4,7 +4,7 @@ class_name BossCore
 
 @export var base_life: int = 5
 @export var speed: float = 300
-@export var shoot_frequency: float = 1.0
+@export var shoot_frequency: float = 10.0
 @export var base_chance_to_fire: float = 0.5
 @export var boss_spawn_delay := 0.5
 
@@ -109,10 +109,10 @@ func true_kill():
 
 func shoot():
 	# TODO: Have multiple possible attacks
-	if game.rng().randf() > 0.5:
-		shoot_one_bullet_toward_player()
-	else:
-		shoot_bullets_in_circle(10)
+	#if game.rng().randf() > 0.5:
+		#shoot_one_bullet_toward_player()
+	#else:
+	shoot_bullets_in_circle(10)
 
 #region Generation
 
@@ -135,7 +135,7 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
 	
-	if parts_instances.size() == 0:
+	if game.wave_count == 1:
 		spawn_core_weapons()
 	else:
 		# reset all boss parts
@@ -257,8 +257,11 @@ func find_unoccupied_slots():
 func spawn_core_weapons():
 	var left_children = left_weapon_slots.get_children()
 	var right_children = right_weapon_slots.get_children()
+	var max_weapon = 2
+	var weapon_count = 0
 	for i in left_children.size():
-		if left_children[i].is_visible() and game.rng().randf() > 0.5:
+		if left_children[i].is_visible() and game.rng().randf() > 0.75:
+			weapon_count += 1
 			var random_weapon = game.get_random_boss_weapon()
 			var left_weapon = random_weapon.instantiate()
 			var right_weapon = random_weapon.instantiate()
@@ -266,6 +269,9 @@ func spawn_core_weapons():
 			right_children[i].affect_weapon(right_weapon)
 			weapon_instances.append(left_weapon)
 			weapon_instances.append(right_weapon)
+			
+			if weapon_count >= max_weapon:
+				break
 
 func spawn_new_weapons(left_part, right_part):
 	var unoccupied_slots = []
@@ -297,8 +303,9 @@ func shoot_one_bullet_toward_player():
 
 func shoot_bullets_in_circle(count: int):
 	var spd = game.rng().randi_range(100, 500)
+	var base_angle = game.rng().randfn() * 360.0
 	for i:float in count:
-		var angle = ((i / count) * 360) * (PI/180.0)
+		var angle = base_angle + ((i / count) * 360) * (PI/180.0)
 		var direction = Vector2(sin(angle), cos(angle))
 		game.instantiate_bullet(global_position, direction, spd, 1)
 		

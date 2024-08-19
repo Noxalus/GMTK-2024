@@ -1,5 +1,10 @@
 extends BossWeapon
 
+func _ready() -> void:
+	super._ready()
+	shoot_frequency_min = 1
+	shoot_frequency_max = 5
+
 func shoot():
 	var base_direction = direction
 	for i in range(0, 10):
