@@ -49,9 +49,12 @@ func _process(delta):
 	# TODO: Handle rotation here
 	#rotate(0.5 * delta)
 
-func damage(amount: int):
+func damage(amount: int, is_direct_hit: bool = true):
 	if is_invincible:
 		return
+		
+	if is_direct_hit:
+		animation.play("hit")
 		
 	life -= amount
 	game.hud.set_boss_life(life)
@@ -118,7 +121,7 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	
-	show_warnings = false
+	#show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
@@ -154,8 +157,6 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	
 	is_spawning = true
 	is_invincible = true
-	
-	#animation.play("spawn")
 	
 	self.visible = true
 	self.rotation = 0
@@ -301,6 +302,8 @@ func shoot_bullets_in_circle(count: int):
 #endregion
 
 func _on_area_entered(area):
+	if is_dead:
+		return
 	# kill player on contact
 	if area.is_in_group("player") and not area.is_dead:
 		area.damage(1)

@@ -80,7 +80,7 @@ func damage(amount: int):
 		return
 	
 	life -= amount
-	game.boss.damage(amount)
+	game.boss.damage(amount, false)
 	animation.play("hit")
 	if life < 0:
 		kill()
@@ -170,6 +170,8 @@ func find_unoccupied_weapon_slots():
 	return weapon_slots
 
 func _on_area_entered(area):
+	if is_dead:
+		return
 	# kill player on contact
 	if area.is_in_group("player") and not area.is_dead:
 		area.damage(1)
