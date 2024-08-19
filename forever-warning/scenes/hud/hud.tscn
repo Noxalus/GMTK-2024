@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dpjuvbjnqks5r" path="res://scenes/hud/life_icon.tscn" id="1_16ty7"]
 [ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="3_j6bfj"]
 [ext_resource type="PackedScene" uid="uid://drrmy673ho5yv" path="res://scenes/hud/game_over.tscn" id="4_m2csm"]
-[ext_resource type="PackedScene" uid="uid://br2aw5hawsfa" path="res://warning.tscn" id="4_o83tw"]
-[ext_resource type="PackedScene" uid="uid://b6xjx4v88jng3" path="res://scenes/upgrade_card.tscn" id="5_4yabr"]
+[ext_resource type="PackedScene" uid="uid://br2aw5hawsfa" path="res://scenes/hud/warning.tscn" id="4_o83tw"]
+[ext_resource type="PackedScene" uid="uid://b6xjx4v88jng3" path="res://scenes/hud/upgrade_card.tscn" id="5_4yabr"]
 
 [sub_resource type="Theme" id="Theme_wyq1t"]
 default_font = ExtResource("3_j6bfj")
