@@ -1,19 +1,37 @@
 extends Area2D
 
 var direction: Vector2 = Vector2.ONE
-var speed: float = 0.1
+var speed: float = 500
+var rotation_speed: float = 0.01
+var homing_time := 1.0
+var idle_time := 0.25
 var is_dead := false
+var target_direction := Vector2.ZERO
 
 @onready var alive_timer: Timer = $AliveTimer
+@onready var homing_timer: Timer = $HomingTimer
+@onready var idle_timer: Timer = $IdleTimer
+
+func _ready() -> void:
+	homing_timer.start(homing_time)
 
 func _process(delta: float) -> void:
-	if game.is_paused or game.player == null or game.player.is_dead:
+	if game.is_paused or game.player == null or game.boss == null:
 		return
-		
-	# follow player
-	direction = game.player.position - global_position
-	rotation = direction.angle() + PI / 2.0
+
+	if game.player.is_dead:# or game.boss.is_dead:
+		kill()
+	
+	# CHASING THE PLAYER
+	if not homing_timer.is_stopped():
+		print(homing_timer.time_left)
+		print("CHASING PLAYER")
+		target_direction = game.player.position - global_position
+		direction = lerp(direction, target_direction, rotation_speed * delta)
+		direction = direction.normalized()
+			
 	position += direction * speed * delta
+	rotation = direction.angle() + PI / 2.0
 	
 	if alive_timer.is_stopped():
 		kill()
@@ -35,3 +53,11 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player") and not area.is_dead:
 		area.damage(1)
 		queue_free()
+
+func _on_idle_timer_timeout() -> void:
+	print("START CHASING")
+	homing_timer.start(homing_time)
+
+func _on_homing_timer_timeout() -> void:
+	print("IDLE")
+	idle_timer.start(idle_time)

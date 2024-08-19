@@ -26,6 +26,10 @@ shape = SubResource("CapsuleShape2D_4t817")
 scale = Vector2(2, 4.1)
 
 [node name="HomingTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="AliveTimer" type="Timer" parent="."]
 wait_time = 30.0
@@ -34,3 +38,5 @@ autostart = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="HomingTimer" to="." method="_on_homing_timer_timeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
