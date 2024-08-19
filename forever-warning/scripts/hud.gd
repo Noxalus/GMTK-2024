@@ -1,8 +1,8 @@
 extends Control
 
-@onready var boss_life_gauge := $MarginContainer/BossLifeContainer/Control/BossLifeGauge
-@onready var boss_life_text := $MarginContainer/BossLifeContainer/Control/BossLifeLabel
-@onready var boss_label := $MarginContainer/BossLifeContainer/BossLabel
+@onready var boss_life_gauge := %BossLifeGauge
+@onready var boss_life_text := $TopBar/BossLifeContainer/Control/BossLifeLabel
+@onready var boss_label := $TopBar/BossLifeContainer/BossLabel
 @onready var life_container := $LifeContainer
 @onready var game_over := $GameOver
 @onready var upgrades: Control = $Upgrades
@@ -41,6 +41,9 @@ func show_game_over():
 func clear_upgrades():
 	for upgrade in upgrades_container.get_children():
 		upgrade.queue_free()
+
+func show_warning_animation():
+	$Warning/WarningAnimationPlayer.play("warning")
 
 func show_upgrades():
 	game.pause()

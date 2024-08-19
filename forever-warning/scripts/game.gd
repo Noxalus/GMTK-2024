@@ -134,7 +134,6 @@ func clear_boss_bullets():
 	bullets.clear()
 	
 func spawn_new_boss():
-	return
 	clear_boss_bullets()
 	wave_count += 1
 	
@@ -147,7 +146,7 @@ func spawn_new_boss():
 		get_tree().current_scene.add_child(boss)
 		boss.died_signal.connect(_on_boss_death)
 	else:
-		boss.setup()
+		boss.setup(1)
 		
 func _on_boss_death():
 	if player.is_dead and player_lives <= 0:

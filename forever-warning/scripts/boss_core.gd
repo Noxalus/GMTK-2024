@@ -34,7 +34,7 @@ var weapon_instances = []
 func _ready():
 	life = base_life;
 	chance_to_fire = base_chance_to_fire
-	setup()
+	setup(0)
 
 func _process(delta):
 	if is_dead or is_dying or game.player.is_dead or game.is_paused or is_spawning:
@@ -113,10 +113,16 @@ func shoot():
 
 #region Generation
 
-func setup():
+func setup(parts_count: int = 1):
 	# Wait a small amount of time before to respawn the boss
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
+	
+	game.hud.show_warning_animation()	
+	
+	# Wait for the warning animation
+	var warning_animation_timer := get_tree().create_timer(3.0)
+	await warning_animation_timer.timeout
 	
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
@@ -129,7 +135,7 @@ func setup():
 			part[0].setup()
 			part[1].setup()
 	
-	for i in range(0, 3):
+	for i in range(0, parts_count):
 		spawn_new_parts()
 
 	for weapon in weapon_instances:

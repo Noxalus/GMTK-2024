@@ -6,6 +6,7 @@ var tween: Tween
 func _ready() -> void:
 	tween = create_tween()
 	set_physics_process(false)
+	$Line2D.points[1] = Vector2.ZERO
 	
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("focus"):
