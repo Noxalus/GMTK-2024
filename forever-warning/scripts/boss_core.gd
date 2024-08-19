@@ -109,10 +109,10 @@ func true_kill():
 
 func shoot():
 	# TODO: Have multiple possible attacks
-	#if game.rng().randf() > 0.5:
-		#shoot_one_bullet_toward_player()
-	#else:
-	shoot_bullets_in_circle(10)
+	if game.rng().randf() < 0.9:
+		shoot_bullets_in_circle(10)
+	else:
+		shoot_multiple_bullets_in_circle(game.rng().randi_range(5, 20))
 
 #region Generation
 
@@ -308,7 +308,19 @@ func shoot_bullets_in_circle(count: int):
 		var angle = base_angle + ((i / count) * 360) * (PI/180.0)
 		var direction = Vector2(sin(angle), cos(angle))
 		game.instantiate_bullet(global_position, direction, spd, 1)
-		
+
+func shoot_multiple_bullets_in_circle(count: int):
+	var spd = game.rng().randi_range(100, 500)
+	var base_angle = game.rng().randfn() * 360.0
+	for i in range(game.rng().randi_range(3, 15)):
+		base_angle += PI / 3.0 # offset
+		for j:float in count:
+			var angle = base_angle + ((j / count) * 360) * (PI/180.0)
+			var direction = Vector2(sin(angle), cos(angle))
+			game.instantiate_bullet(global_position, direction, spd, 1)
+		# Wait between each bullets circle
+		var timer := get_tree().create_timer(0.1)
+		await timer.timeout
 #endregion
 
 func _on_area_entered(area):
