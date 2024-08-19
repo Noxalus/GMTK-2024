@@ -52,14 +52,7 @@ func _process(delta):
 			shoot()
 	
 	if move_timer.is_stopped() and ((move_tween != null and not move_tween.is_running()) or move_tween == null):
-		#target_position = get_random_position_around(100.0)
-		print("MOVE RANDOMLY")
 		move_randomly()
-	
-	#position = lerp(position, target_position, 0.5 * delta)
-	
-	# TODO: Handle rotation here
-	#rotate(0.5 * delta)
 
 func get_random_position_around(range: float):
 	return global_position + _random_inside_unit_circle() * range
@@ -140,7 +133,7 @@ func true_kill():
 
 func shoot():
 	# TODO: Have multiple possible attacks
-	if game.rng().randf() < 0.9:
+	if game.rng().randf() < 0.7:
 		shoot_bullets_in_circle(10)
 	else:
 		shoot_multiple_bullets_in_circle(game.rng().randi_range(5, 20))
@@ -307,12 +300,15 @@ func spawn_core_weapons():
 func spawn_new_weapons(left_part, right_part):
 	var unoccupied_slots = []
 	var left_slots = left_part.find_unoccupied_weapon_slots()
+	var max_weapons = 2
+	var weapons_count = 0
 	if left_slots.size() > 0:
 		# Get the same slots for the right part
 		var right_slots = right_part.find_unoccupied_weapon_slots()
 		for i in left_slots.size():
 			# Chance to spawn a weapon
 			if (game.rng().randf() > 0.5):
+				weapons_count += 1
 				var random_weapon = game.get_random_boss_weapon()
 				var left_weapon = random_weapon.instantiate()
 				var right_weapon = random_weapon.instantiate()
@@ -320,6 +316,9 @@ func spawn_new_weapons(left_part, right_part):
 				right_slots[i].affect_weapon(right_weapon)
 				left_part.add_weapon(left_weapon)
 				right_part.add_weapon(right_weapon)
+				
+				if weapons_count >= max_weapons:
+					break
 
 #endregion
 

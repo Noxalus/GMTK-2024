@@ -19,8 +19,8 @@ var boss_weapons = [
 
 var boss_weapons_weights := PackedFloat32Array([
 	10, # Turret
-	2, # Shotgun
-	20000, # Gatling
+	5, # Shotgun
+	2, # Gatling
 	1 # Missile
 ])
 
@@ -161,7 +161,7 @@ func spawn_new_boss():
 		get_tree().current_scene.add_child(boss)
 		boss.died_signal.connect(_on_boss_death)
 	else:
-		boss.setup(1)
+		boss.setup(rng().randi_range(1, 3))
 		
 func _on_boss_death():
 	if player.is_dead and player_lives <= 0:
@@ -211,6 +211,8 @@ func _on_player_died():
 	
 	player_lives -= 1
 	hud.set_lives(player_lives)
+	
+	clear_boss_bullets()
 	
 	if (player_lives <= 0):
 		hud.show_game_over()
