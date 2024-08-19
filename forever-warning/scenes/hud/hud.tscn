@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_0rcip"]
 [ext_resource type="PackedScene" uid="uid://dpjuvbjnqks5r" path="res://scenes/hud/life_icon.tscn" id="1_16ty7"]
 [ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="3_j6bfj"]
+[ext_resource type="AudioStream" uid="uid://b3cg4f5r5om7s" path="res://assets/audio/sfx/warning.wav" id="4_fb3wn"]
 [ext_resource type="PackedScene" uid="uid://drrmy673ho5yv" path="res://scenes/hud/game_over.tscn" id="4_m2csm"]
-[ext_resource type="AudioStream" uid="uid://cs15rguwbajum" path="res://assets/audio/sfx/warning.mp3" id="4_xfeyr"]
 [ext_resource type="PackedScene" uid="uid://b6xjx4v88jng3" path="res://scenes/upgrade_card.tscn" id="5_4yabr"]
 
 [sub_resource type="Theme" id="Theme_wyq1t"]
@@ -542,7 +542,7 @@ libraries = {
 }
 
 [node name="WarningSound" type="AudioStreamPlayer" parent="Warning"]
-stream = ExtResource("4_xfeyr")
+stream = ExtResource("4_fb3wn")
 
 [node name="GameOver" parent="." instance=ExtResource("4_m2csm")]
 visible = false
