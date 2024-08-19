@@ -121,7 +121,7 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	
-	#show_warnings = false
+	show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
@@ -290,14 +290,15 @@ func shoot_one_bullet_toward_player():
 	# Shoot bullet toward player
 	if game.player != null:
 		var direction = (game.player.global_position - global_position).normalized()
-		game.instantiate_bullet(global_position, direction)
+		game.instantiate_bullet(global_position, direction, 100, 1)
 	pass
 
 func shoot_bullets_in_circle(count: int):
+	var spd = game.rng().randi_range(100, 500)
 	for i:float in count:
 		var angle = ((i / count) * 360) * (PI/180.0)
 		var direction = Vector2(sin(angle), cos(angle))
-		game.instantiate_bullet(global_position, direction)
+		game.instantiate_bullet(global_position, direction, spd, 1)
 		
 #endregion
 

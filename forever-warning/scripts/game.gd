@@ -14,7 +14,11 @@ var boss_weapons = [
 	preload("res://scenes/boss_weapons/boss_weapon_turret.tscn")
 ]
 
-var bullet_node := preload("res://scenes/bullets/boss_bullet.tscn")
+var bullet_nodes := [
+	preload("res://scenes/bullets/boss_bullet_1.tscn"),
+	preload("res://scenes/bullets/boss_bullet_2.tscn")
+]
+
 var explosion := preload("res://scenes/fx/explosion.tscn")
 var player_explosion := preload("res://scenes/fx/player_explosion.tscn")
 
@@ -163,8 +167,8 @@ func get_random_boss_part():
 func get_random_boss_weapon():
 	return boss_weapons[rng().randi_range(0, boss_weapons.size() - 1)]
 	
-func instantiate_bullet(pos: Vector2, dir: Vector2, speed: float = 100):
-	var bullet = bullet_node.instantiate()
+func instantiate_bullet(pos: Vector2, dir: Vector2, speed: float = 100, bullet_index: int = 0):
+	var bullet = bullet_nodes[bullet_index].instantiate()
 	bullet.global_position = pos
 	bullet.set_direction(dir)
 	bullet.set_speed(speed)
