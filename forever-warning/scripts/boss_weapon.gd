@@ -16,6 +16,7 @@ var life
 
 var speed: float
 var is_dead = false # dead by default
+var direction: Vector2
 
 func _ready():
 	speed = base_bullet_speed
@@ -33,6 +34,7 @@ func _process(delta):
 	if game.player != null:
 		look_at(game.player.position)
 		rotation += PI / 2.0
+		direction = Vector2.from_angle(rotation - PI / 2.0)
 	
 	if shoot_timer != null and shoot_timer.is_stopped():
 		shoot_timer.start(shoot_frequency)

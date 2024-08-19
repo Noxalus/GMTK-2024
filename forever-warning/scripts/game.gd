@@ -12,12 +12,15 @@ var boss_parts = [
 ]
 var boss_weapons = [
 	preload("res://scenes/boss_weapons/boss_weapon_turret.tscn"),
-	preload("res://scenes/boss_weapons/boss_weapon_shotgun.tscn")
+	preload("res://scenes/boss_weapons/boss_weapon_shotgun.tscn"),
+	preload("res://scenes/boss_weapons/boss_weapon_gatling.tscn"),
+	preload("res://scenes/boss_weapons/boss_weapon_missile.tscn")
 ]
 
 var bullet_nodes := [
 	preload("res://scenes/bullets/boss_bullet_1.tscn"),
-	preload("res://scenes/bullets/boss_bullet_2.tscn")
+	preload("res://scenes/bullets/boss_bullet_2.tscn"),
+	preload("res://scenes/bullets/boss_bullet_3.tscn")
 ]
 
 var explosion := preload("res://scenes/fx/explosion.tscn")

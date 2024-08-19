@@ -8,7 +8,6 @@ var shake_amount := 0.0
 
 func _init():
 	base_position = position
-	print(base_position)
 	
 func _ready():
 	game.camera = self

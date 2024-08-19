@@ -24,8 +24,6 @@ func _process(delta: float) -> void:
 	
 	# CHASING THE PLAYER
 	if not homing_timer.is_stopped():
-		print(homing_timer.time_left)
-		print("CHASING PLAYER")
 		target_direction = game.player.position - global_position
 		direction = lerp(direction, target_direction, rotation_speed * delta)
 		direction = direction.normalized()
@@ -55,9 +53,7 @@ func _on_area_entered(area: Area2D) -> void:
 		queue_free()
 
 func _on_idle_timer_timeout() -> void:
-	print("START CHASING")
 	homing_timer.start(homing_time)
 
 func _on_homing_timer_timeout() -> void:
-	print("IDLE")
 	idle_timer.start(idle_time)

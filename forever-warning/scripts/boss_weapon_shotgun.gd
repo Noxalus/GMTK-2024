@@ -1,7 +1,7 @@
 extends BossWeapon
 
 func shoot():
-	var base_direction = Vector2.from_angle(rotation - PI / 2.0)
+	var base_direction = direction
 	for i in range(0, 10):
 		# spread
 		var base_angle = base_direction.angle()

@@ -117,7 +117,7 @@ func shoot():
 #region Generation
 
 func setup(parts_count: int = 1, show_warnings: bool = true):
-	return
+	#return
 	
 	# Wait a small amount of time before to respawn the boss
 	var timer := get_tree().create_timer(boss_spawn_delay)

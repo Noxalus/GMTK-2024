@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://pkr3ksnu1qgh"]
+[gd_scene load_steps=5 format=3 uid="uid://pkr3ksnu1qgh"]
 
 [ext_resource type="PackedScene" uid="uid://55hgfllu4oyd" path="res://scenes/player.tscn" id="1_thu6u"]
 [ext_resource type="PackedScene" uid="uid://c07xp0rpn0hhn" path="res://scenes/hud/hud.tscn" id="3_0165h"]
-[ext_resource type="PackedScene" uid="uid://dkww1ee8cdx2q" path="res://scenes/bullets/boss_missile.tscn" id="4_mrqcg"]
 
 [sub_resource type="Environment" id="Environment_rekqa"]
 background_mode = 3
@@ -38,7 +37,3 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_eejtx")
-
-[node name="BossMissile" parent="." instance=ExtResource("4_mrqcg")]
-position = Vector2(0, -241)
-rotation = -3.14159

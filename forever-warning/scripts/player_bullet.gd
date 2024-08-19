@@ -25,9 +25,6 @@ func _on_area_entered(area):
 			instance.emitting = true
 			get_tree().current_scene.add_child(instance)
 			if area is BossCore:
-				print("DAMAGING THE CORE")
-				print("SHOOT DAMAGE %s" % game.player.shoot_damage)
-				print("CORE DAMAGE FACTOR %s" % game.core_damage_factor)
 				area.damage(game.player.shoot_damage * game.core_damage_factor)
 			else:
 				area.damage(game.player.shoot_damage)
