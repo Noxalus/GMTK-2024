@@ -106,7 +106,7 @@ var wave_count: int = 0
 var bullets = []
 var is_paused = false
 var core_damage_factor: float
-var seed = generate_random_seed('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+var seed = generate_random_seed()
 
 func _ready():
 	reset()
@@ -122,6 +122,9 @@ func _process(delta):
 		restart()
 	if Input.is_action_just_pressed("choose_upgrade"):
 		hud.show_upgrades()
+	if Input.is_action_just_pressed("game_over"):
+		hud.show_game_over()
+		player.kill()
 
 func reset() -> void:
 	# reset gameplay values
@@ -145,11 +148,12 @@ func restart():
 	spawn_new_boss()
 	player.respawn()
 
-func generate_random_seed(chars):
+func generate_random_seed():
+	var characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 	var word: String
-	var n_char = len(chars)
+	var n_char = len(characters)
 	for i in range(0, 6):
-		word += chars[randi()% n_char]
+		word += characters[randi()% n_char]
 	return word
 
 func boss_gen_rng(source: String):
