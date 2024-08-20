@@ -21,6 +21,7 @@ var speed: float
 var is_dead = false # dead by default
 var direction: Vector2
 var rotation_speed: float = 0.1
+var is_flipped = false
 
 func _ready():
 	speed = base_bullet_speed
@@ -41,8 +42,10 @@ func _process(delta):
 		var target_direction = (game.player.global_position - global_position).normalized()
 		direction = lerp(direction, target_direction, rotation_speed * delta)
 		direction = direction.normalized()
-		rotation = direction.angle()
-		rotation += PI / 2.0
+		var angle_offset = PI / 2.0
+		if is_flipped:
+			angle_offset += PI
+		set_global_rotation(direction.angle() + angle_offset)
 	
 	if shoot_timer != null and shoot_timer.is_stopped():
 		set_new_random_shoot_delay()

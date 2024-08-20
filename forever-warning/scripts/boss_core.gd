@@ -51,8 +51,8 @@ func _process(delta):
 		if rand <= chance_to_fire:
 			shoot()
 	
-	if move_timer.is_stopped() and ((move_tween != null and not move_tween.is_running()) or move_tween == null):
-		move_randomly()
+	#if move_timer.is_stopped() and ((move_tween != null and not move_tween.is_running()) or move_tween == null):
+		#move_randomly()
 
 func get_random_position_around(range: float):
 	return global_position + _random_inside_unit_circle() * range
@@ -143,15 +143,18 @@ func shoot():
 
 func setup(parts_count: int = 1, show_warnings: bool = true):
 	#return
+	var testing = false
 	
 	is_spawning = true
 	is_invincible = true
 	
-	# Wait a small amount of time before to respawn the boss
-	var timer := get_tree().create_timer(boss_spawn_delay)
-	await timer.timeout
+	if not testing:
+		# Wait a small amount of time before to respawn the boss
+		var timer := get_tree().create_timer(boss_spawn_delay)
+		await timer.timeout
 	
-	#show_warnings = false
+	if testing:
+		show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
@@ -190,7 +193,8 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 
 	visible = true
 
-	play_spawn_animation()
+	if not testing:
+		play_spawn_animation()
 	
 	target_position = position
 	is_spawning = false
@@ -319,6 +323,7 @@ func spawn_new_weapons(left_part, right_part):
 				weapons_count += 1
 				var random_weapon = game.get_random_boss_weapon()
 				var left_weapon = random_weapon.instantiate()
+				left_weapon.is_flipped = true
 				var right_weapon = random_weapon.instantiate()
 				left_slots[i].affect_weapon(left_weapon)
 				right_slots[i].affect_weapon(right_weapon)
