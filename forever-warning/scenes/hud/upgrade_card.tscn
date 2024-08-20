@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://b6xjx4v88jng3"]
+
+[ext_resource type="Script" path="res://scripts/upgrade_card.gd" id="1_x3hcw"]
+[ext_resource type="Texture2D" uid="uid://cjsn7gvovxq25" path="res://assets/sprites/upgrades/increase_turret.png" id="2_gvbd6"]
+[ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="2_y12s1"]
+
+[sub_resource type="Gradient" id="Gradient_yp75w"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0.470434, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iucuw"]
+gradient = SubResource("Gradient_yp75w")
+
+[sub_resource type="Theme" id="Theme_y4cyv"]
+default_font = ExtResource("2_y12s1")
+default_font_size = 25
+
+[node name="Upgrade" type="Button"]
+custom_minimum_size = Vector2(200, 300)
+offset_right = 200.0
+offset_bottom = 300.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_x3hcw")
+
+[node name="Background" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_iucuw")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Content" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/Content"]
+layout_mode = 2
+texture = ExtResource("2_gvbd6")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/Content"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme = SubResource("Theme_y4cyv")
+theme_override_constants/outline_size = 10
+text = "LIFE + 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

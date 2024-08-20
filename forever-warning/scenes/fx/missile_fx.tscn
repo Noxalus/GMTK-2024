@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://dcomhpv0gnxrr"]
+
+[ext_resource type="Texture2D" uid="uid://dvqv3rlfr45em" path="res://assets/sprites/fx/smoke_atlas.png" id="1_gdmu7"]
+[ext_resource type="Script" path="res://scripts/particle.gd" id="2_0k8l7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iknc4"]
+particles_animation = true
+particles_anim_h_frames = 6
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_u2gj6"]
+offsets = PackedFloat32Array(0, 0.564142, 1)
+colors = PackedColorArray(1, 0.699167, 0.05, 1, 1, 0.28, 0.28, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mck1h"]
+gradient = SubResource("Gradient_u2gj6")
+
+[sub_resource type="Curve" id="Curve_aso07"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_io1w1"]
+curve = SubResource("Curve_aso07")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j7qil"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_max = 100.0
+angular_velocity_min = 90.0
+angular_velocity_max = 270.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.08
+scale_max = 0.15
+scale_curve = SubResource("CurveTexture_io1w1")
+color_ramp = SubResource("GradientTexture1D_mck1h")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+anim_offset_max = 1.0
+turbulence_noise_strength = 0.0
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+z_index = 10
+material = SubResource("CanvasItemMaterial_iknc4")
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_j7qil")
+texture = ExtResource("1_gdmu7")
+lifetime = 0.5
+script = ExtResource("2_0k8l7")

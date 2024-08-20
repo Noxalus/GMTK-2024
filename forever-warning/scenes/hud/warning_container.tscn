@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://dujjny21hwvjs"]
+
+[ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="1_iq2qn"]
+
+[sub_resource type="Theme" id="Theme_4okq1"]
+default_font = ExtResource("1_iq2qn")
+default_font_size = 50
+
+[node name="WarningContainer" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_left = -13.5226
+anchor_top = -8.65741
+anchor_right = -13.5226
+anchor_bottom = -8.65741
+offset_left = 1866.0
+offset_top = 376.001
+offset_right = 3018.0
+offset_bottom = 376.001
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_4okq1")
+theme_override_constants/outline_size = 20
+text = "WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING : WARNING"
+clip_text = true
+
+[node name="ColorRect" type="ColorRect" parent="Label"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Label"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 0

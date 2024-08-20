@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://ci1lhjwsc28hy"]
+
+[ext_resource type="PackedScene" uid="uid://b35kjkdimjibe" path="res://scenes/boss_weapons/base_boss_weapon.tscn" id="1_s0lqp"]
+[ext_resource type="Texture2D" uid="uid://6gy2r8vkcnqh" path="res://assets/sprites/weapons/spaceParts_093.png" id="2_po61e"]
+[ext_resource type="Script" path="res://scripts/laser.gd" id="3_unmxb"]
+[ext_resource type="Texture2D" uid="uid://bjqm6o35v8n5t" path="res://assets/sprites/fx/glowing_circle.png" id="4_vvktd"]
+
+[sub_resource type="Gradient" id="Gradient_5ffr8"]
+offsets = PackedFloat32Array(0, 0.828358, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.746269, 0.746269, 0.746269, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jx8hs"]
+gradient = SubResource("Gradient_5ffr8")
+
+[sub_resource type="Curve" id="Curve_lhgn7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.62013, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dwbvd"]
+curve = SubResource("Curve_lhgn7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n8mdc"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.01
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_dwbvd")
+color_ramp = SubResource("GradientTexture1D_jx8hs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s3iej"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 250.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.01
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_dwbvd")
+color_ramp = SubResource("GradientTexture1D_jx8hs")
+
+[node name="BossWeaponTurret" instance=ExtResource("1_s0lqp")]
+
+[node name="TurretSprite" parent="." index="1"]
+texture = ExtResource("2_po61e")
+offset = Vector2(-14, -62)
+
+[node name="Laser" type="RayCast2D" parent="." index="5"]
+position = Vector2(0, -18)
+rotation = -3.14159
+scale = Vector2(0.5, 0.5)
+target_position = Vector2(0, 10000)
+script = ExtResource("3_unmxb")
+
+[node name="Line2D" type="Line2D" parent="Laser" index="0"]
+points = PackedVector2Array(0, 2, 0, 10000)
+default_color = Color(10, 0, 0, 0.5)
+
+[node name="BeamParticle" type="GPUParticles2D" parent="Laser" index="1"]
+position = Vector2(1.01407e-05, 4)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_n8mdc")
+texture = ExtResource("4_vvktd")
+lifetime = 0.3
+
+[node name="CastingParticle" type="GPUParticles2D" parent="Laser" index="2"]
+position = Vector2(1.01407e-05, 4)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_s3iej")
+texture = ExtResource("4_vvktd")
+lifetime = 0.3

@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://1ejqhx8c1a18"]
+
+[ext_resource type="Shader" path="res://shaders/blink.gdshader" id="1_ufsaa"]
+
+[resource]
+shader = ExtResource("1_ufsaa")
+shader_parameter/hit_opacity = 1.0

@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://b35kjkdimjibe"]
+
+[ext_resource type="Script" path="res://scripts/boss_weapon_turret.gd" id="1_nk8hd"]
+[ext_resource type="Texture2D" uid="uid://xafi1bdlq6de" path="res://assets/sprites/weapons/turretBase_small.png" id="2_y5ws7"]
+[ext_resource type="Texture2D" uid="uid://boq7k3u800f6u" path="res://assets/sprites/weapons/spaceParts_091.png" id="3_di6ja"]
+[ext_resource type="AudioStream" uid="uid://cmnxytjdtq36i" path="res://assets/audio/sfx/shoot.wav" id="4_3pnjs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7m3vi"]
+radius = 7.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v7ueq"]
+streams_count = 1
+stream_0/stream = ExtResource("4_3pnjs")
+
+[node name="BasseBossWeapon" type="Area2D"]
+script = ExtResource("1_nk8hd")
+
+[node name="BaseSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_y5ws7")
+
+[node name="TurretSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_di6ja")
+centered = false
+offset = Vector2(-10.5, -52)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_7m3vi")
+
+[node name="ShootTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_v7ueq")
+volume_db = -20.0
+
+[node name="BulletSpawn" type="Node2D" parent="."]
+position = Vector2(0, -38)

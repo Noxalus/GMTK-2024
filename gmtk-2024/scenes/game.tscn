@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjt55c7sgn67g"]
+
+[ext_resource type="PackedScene" uid="uid://sbsot8p2cmtn" path="res://scenes/platform.tscn" id="2_77nf4"]
+[ext_resource type="PackedScene" uid="uid://br1b8yk2rk0cj" path="res://scenes/player.tscn" id="2_yvolx"]
+[ext_resource type="PackedScene" uid="uid://dlon0hrmttwve" path="res://scenes/wall.tscn" id="3_nds4q"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4kvpq"]
+
+[sub_resource type="Sky" id="Sky_ihyc3"]
+sky_material = SubResource("ProceduralSkyMaterial_4kvpq")
+
+[sub_resource type="Environment" id="Environment_v2uxm"]
+background_mode = 2
+sky = SubResource("Sky_ihyc3")
+ambient_light_source = 3
+reflected_light_source = 2
+
+[node name="Game" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("2_yvolx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0331, -4.10988)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v2uxm")
+
+[node name="Ground" type="Node3D" parent="."]
+
+[node name="Platform" parent="." instance=ExtResource("2_77nf4")]
+
+[node name="Wall" parent="." instance=ExtResource("3_nds4q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.11099)

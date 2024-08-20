@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqtgiev6sy0gp"]
+
+[ext_resource type="PackedScene" uid="uid://b35kjkdimjibe" path="res://scenes/boss_weapons/base_boss_weapon.tscn" id="1_x3u3r"]
+
+[node name="BossWeaponTurret" instance=ExtResource("1_x3u3r")]

@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://dwknxx7agxdqk"]
+
+[ext_resource type="PackedScene" uid="uid://00bkmvppa4wt" path="res://scenes/boss_parts/base_boss_part.tscn" id="1_s05m3"]
+[ext_resource type="Texture2D" uid="uid://bpbcphouok0j2" path="res://assets/sprites/parts/wingGreen_1.png" id="2_0e8e6"]
+[ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_c88jg"]
+[ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_wocny"]
+
+[sub_resource type="Shader" id="Shader_i2fx5"]
+code = "shader_type canvas_item;
+
+uniform float hit_opacity = 0;
+
+void fragment() {
+	COLOR.rgb = texture(TEXTURE, UV).rgb * (1.0 - hit_opacity) + vec3(1,1,1) * hit_opacity;
+	COLOR.a = texture(TEXTURE, UV).a;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7cyk"]
+resource_local_to_scene = true
+shader = SubResource("Shader_i2fx5")
+shader_parameter/hit_opacity = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ht1qg"]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hexds"]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ti0h"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nb037"]
+radius = 5.0
+
+[node name="BaseBossPart" instance=ExtResource("1_s05m3")]
+
+[node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_w7cyk")
+texture = ExtResource("2_0e8e6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(14, 19)
+shape = SubResource("CircleShape2D_ht1qg")
+
+[node name="CollisionShape2D_2" type="CollisionShape2D" parent="." index="2"]
+position = Vector2(23, 39)
+shape = SubResource("CircleShape2D_hexds")
+
+[node name="CollisionShape2D_3" type="CollisionShape2D" parent="." index="3"]
+position = Vector2(14, 55)
+shape = SubResource("CircleShape2D_4ti0h")
+
+[node name="CollisionShape2D_4" type="CollisionShape2D" parent="." index="4"]
+position = Vector2(7, 65)
+shape = SubResource("CircleShape2D_nb037")
+
+[node name="BossPartSlot1" type="Node2D" parent="BossPartSlots" index="0"]
+position = Vector2(12, 43)
+script = ExtResource("3_c88jg")
+base_random_angle_min = -2.0944
+base_random_angle_max = 1.309
+
+[node name="BossPartSlot2" type="Node2D" parent="BossPartSlots" index="1"]
+visible = false
+position = Vector2(27, 21)
+script = ExtResource("3_c88jg")
+base_random_angle_min = -2.00713
+base_random_angle_max = -0.349066
+
+[node name="BossWeaponSlot1" type="Node2D" parent="BossWeaponSlots" index="0"]
+position = Vector2(32, 41)
+script = ExtResource("4_wocny")
+
+[node name="BossWeaponSlot2" type="Node2D" parent="BossWeaponSlots" index="1"]
+position = Vector2(16, 6)
+script = ExtResource("4_wocny")
+
+[node name="BossWeaponSlot3" type="Node2D" parent="BossWeaponSlots" index="2"]
+position = Vector2(5, 67)
+script = ExtResource("4_wocny")

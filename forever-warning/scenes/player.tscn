@@ -1,0 +1,170 @@
+[gd_scene load_steps=13 format=3 uid="uid://55hgfllu4oyd"]
+
+[ext_resource type="Texture2D" uid="uid://d3uerrrmy6kcm" path="res://assets/sprites/player_ship.png" id="1_xdjxy"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_yv0xi"]
+[ext_resource type="AudioStream" uid="uid://5u2pveb441c1" path="res://assets/audio/sfx/hit.wav" id="3_061m7"]
+[ext_resource type="AudioStream" uid="uid://cmnxytjdtq36i" path="res://assets/audio/sfx/shoot.wav" id="3_l5qrk"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="5_8fr2p"]
+[ext_resource type="PackedScene" uid="uid://dk3qfnhyguxpu" path="res://scenes/fx/stars_fx.tscn" id="5_j1dpa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m63fx"]
+radius = 12.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1cym8"]
+streams_count = 1
+stream_0/stream = ExtResource("3_061m7")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pb35m"]
+streams_count = 1
+stream_0/stream = ExtResource("3_l5qrk")
+
+[sub_resource type="Animation" id="Animation_rvf3x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_v0y0s"]
+resource_name = "invincible"
+length = 0.25
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.423529)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fx4y3"]
+_data = {
+"RESET": SubResource("Animation_rvf3x"),
+"invincible": SubResource("Animation_v0y0s")
+}
+
+[node name="Player" type="Area2D" groups=["player"]]
+script = ExtResource("1_yv0xi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_xdjxy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_m63fx")
+
+[node name="BulletSpawners" type="Node2D" parent="."]
+
+[node name="Spawner1" type="Node2D" parent="BulletSpawners"]
+position = Vector2(0, -18)
+
+[node name="Spawner2" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(22, 9)
+
+[node name="Spawner3" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(-23, 9)
+
+[node name="Spawner4" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(-14, 0)
+
+[node name="Spawner5" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(13, 0)
+
+[node name="Spawner6" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(6, -10)
+
+[node name="Spawner7" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(-6, -10)
+
+[node name="Spawner8" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(-9, -3)
+
+[node name="Spawner9" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(9, -3)
+
+[node name="Spawner10" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(16, 5)
+
+[node name="Spawner11" type="Node2D" parent="BulletSpawners"]
+visible = false
+position = Vector2(-16, 5)
+
+[node name="FireDelayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_1cym8")
+volume_db = -20.0
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_pb35m")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -256)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+rotation_smoothing_enabled = true
+script = ExtResource("5_8fr2p")
+
+[node name="GPUParticles2D" parent="Camera2D" instance=ExtResource("5_j1dpa")]
+self_modulate = Color(1, 1, 1, 0.376471)
+lifetime = 10.0
+preprocess = 10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fx4y3")
+}
+
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

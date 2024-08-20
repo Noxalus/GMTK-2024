@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkww1ee8cdx2q"]
+
+[ext_resource type="Texture2D" uid="uid://evrqhhulhmpp" path="res://assets/sprites/weapons/spaceMissiles_007.png" id="1_jqjlk"]
+[ext_resource type="Script" path="res://scripts/boss_missile.gd" id="1_tk6og"]
+[ext_resource type="PackedScene" uid="uid://dcomhpv0gnxrr" path="res://scenes/fx/missile_fx.tscn" id="2_8mfxa"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4t817"]
+height = 66.0
+
+[node name="BossMissile" type="Area2D" groups=["damageable"]]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_tk6og")
+
+[node name="GPUParticles2D" parent="." instance=ExtResource("2_8mfxa")]
+z_index = 8
+position = Vector2(0, 38)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 9
+texture = ExtResource("1_jqjlk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_4t817")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(2, 4.1)
+
+[node name="HomingTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AliveTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="HomingTimer" to="." method="_on_homing_timer_timeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]

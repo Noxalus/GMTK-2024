@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b58brul7lf5q7"]
+
+[ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="1_87tkd"]
+
+[resource]
+default_font = ExtResource("1_87tkd")
+default_font_size = 7

@@ -1,0 +1,127 @@
+[gd_scene load_steps=11 format=3 uid="uid://c07xp0rpn0hhn"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_0rcip"]
+[ext_resource type="PackedScene" uid="uid://dpjuvbjnqks5r" path="res://scenes/hud/life_icon.tscn" id="1_16ty7"]
+[ext_resource type="FontFile" uid="uid://cqg2241i3mcs8" path="res://assets/fonts/kenvector_future_thin.ttf" id="3_j6bfj"]
+[ext_resource type="PackedScene" uid="uid://drrmy673ho5yv" path="res://scenes/hud/game_over.tscn" id="4_m2csm"]
+[ext_resource type="PackedScene" uid="uid://br2aw5hawsfa" path="res://scenes/hud/warning.tscn" id="4_o83tw"]
+[ext_resource type="PackedScene" uid="uid://deib7txwf5hwt" path="res://scenes/hud/upgrades.tscn" id="6_u2aao"]
+
+[sub_resource type="Theme" id="Theme_wyq1t"]
+default_font = ExtResource("3_j6bfj")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npls4"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(1, 0.964706, 0.176471, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b40b7"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.528, 0.99, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_twhq7"]
+default_font = ExtResource("3_j6bfj")
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0rcip")
+
+[node name="LifeContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 131.0
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="LifeIcon" parent="LifeContainer" instance=ExtResource("1_16ty7")]
+layout_mode = 2
+
+[node name="LifeIcon2" parent="LifeContainer" instance=ExtResource("1_16ty7")]
+layout_mode = 2
+
+[node name="LifeIcon3" parent="LifeContainer" instance=ExtResource("1_16ty7")]
+layout_mode = 2
+
+[node name="TopBar" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="BossLifeContainer" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BossLabel" type="Label" parent="TopBar/BossLifeContainer"]
+layout_mode = 2
+theme = SubResource("Theme_wyq1t")
+theme_override_constants/outline_size = 10
+text = "BOSS 
+#9999"
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Control" type="Control" parent="TopBar/BossLifeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BossLifeGauge" type="ProgressBar" parent="TopBar/BossLifeContainer/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_npls4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b40b7")
+value = 50.0
+show_percentage = false
+
+[node name="BossLifeLabel" type="Label" parent="TopBar/BossLifeContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_twhq7")
+theme_override_constants/outline_size = 10
+text = "0000/0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Warning" parent="." instance=ExtResource("4_o83tw")]
+layout_mode = 1
+
+[node name="GameOver" parent="." instance=ExtResource("4_m2csm")]
+visible = false
+layout_mode = 1
+
+[node name="Upgrades" parent="." instance=ExtResource("6_u2aao")]
+visible = false
+layout_mode = 1

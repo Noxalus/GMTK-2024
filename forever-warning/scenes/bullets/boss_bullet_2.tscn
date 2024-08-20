@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://f5bwa26du4dw"]
+
+[ext_resource type="PackedScene" uid="uid://ciic2tyl3r01t" path="res://scenes/bullets/boss_bullet_1.tscn" id="1_t8k8r"]
+[ext_resource type="Texture2D" uid="uid://bfbuuu28dxcfn" path="res://assets/sprites/bullets/bullet_02.png" id="2_qj0fp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_glj8m"]
+radius = 5.09902
+
+[node name="Bullet2" instance=ExtResource("1_t8k8r")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_qj0fp")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("CircleShape2D_glj8m")
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="2"]
+scale = Vector2(0.7, 0.7)
