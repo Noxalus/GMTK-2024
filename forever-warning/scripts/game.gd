@@ -92,6 +92,7 @@ func increase_core_damage():
 	print("CORE DAMAGE AFTER UPDATE %s" % core_damage_factor)
 
 var local_rng = RandomNumberGenerator.new()
+var local_boss_gen_rng = RandomNumberGenerator.new()
 
 const base_player_lives := 3
 const base_core_damage_factor := 1.0
@@ -105,6 +106,7 @@ var wave_count: int = 0
 var bullets = []
 var is_paused = false
 var core_damage_factor: float
+var seed = "COUCOU"
 
 func _ready():
 	reset()
@@ -127,6 +129,8 @@ func reset() -> void:
 	player_lives = base_player_lives
 	core_damage_factor = base_core_damage_factor
 	is_paused = false
+	print("Set seed %s (hash %s)" % [seed, seed.hash()])
+	local_boss_gen_rng.seed = seed.hash()
 
 func restart():
 	reset()
@@ -141,6 +145,10 @@ func restart():
 	spawn_new_boss()
 	player.respawn()
 
+func boss_gen_rng(source: String):
+	print("%s => %s" % [source, local_boss_gen_rng.state])
+	return local_boss_gen_rng
+
 func clear_boss_bullets():
 	# clean all existing bullets
 	for bullet in bullets:
@@ -149,6 +157,9 @@ func clear_boss_bullets():
 	bullets.clear()
 	
 func spawn_new_boss():
+	if boss != null and boss.is_spawning:
+		return
+	
 	clear_boss_bullets()
 	wave_count += 1
 	
@@ -161,7 +172,7 @@ func spawn_new_boss():
 		get_tree().current_scene.add_child(boss)
 		boss.died_signal.connect(_on_boss_death)
 	else:
-		boss.setup(rng().randi_range(1, 3))
+		boss.setup(boss_gen_rng("new_part_count").randi_range(1, 3))
 		
 func _on_boss_death():
 	if player.is_dead and player_lives <= 0:
@@ -173,10 +184,10 @@ func _on_boss_death():
 		spawn_new_boss()
 
 func get_random_boss_part():
-	return boss_parts[rng().randi_range(0, boss_parts.size() - 1)]
+	return boss_parts[boss_gen_rng("get_random_boss_part").randi_range(0, boss_parts.size() - 1)]
 	
 func get_random_boss_weapon():
-	return boss_weapons[rng().rand_weighted(boss_weapons_weights)]
+	return boss_weapons[boss_gen_rng("get_random_boss_weapon").rand_weighted(boss_weapons_weights)]
 	
 func instantiate_bullet(pos: Vector2, dir: Vector2, speed: float = 100, bullet_index: int = 0):
 	var bullet = bullet_nodes[bullet_index].instantiate()
@@ -254,7 +265,7 @@ func get_random_upgrades(count: int):
 	var random_upgrades = []
 	
 	for i in count:
-		var random_index = rng().randi_range(0, available_upgrades.size() - 1)
+		var random_index = boss_gen_rng("get_random_upgrade").randi_range(0, available_upgrades.size() - 1)
 		random_upgrades.append(available_upgrades[random_index])
 		available_upgrades.remove_at(random_index)
 	

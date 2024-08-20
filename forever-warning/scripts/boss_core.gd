@@ -144,19 +144,25 @@ func shoot():
 func setup(parts_count: int = 1, show_warnings: bool = true):
 	#return
 	
+	is_spawning = true
+	is_invincible = true
+	
 	# Wait a small amount of time before to respawn the boss
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	
-	#show_warnings = false
+	show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
+		#$BossSpawn/BossSpawnAnimationPlayer.play("spawn_area")
 		
 		# Wait for the warning animation
 		var warning_animation_timer := get_tree().create_timer(4.5 / 1.5)
 		await warning_animation_timer.timeout
-	
+		
+		#$BossSpawn/BossSpawnAnimationPlayer.play("RESET")
+		
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
 	
@@ -181,9 +187,7 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	compute_life()
 	life = total_life
 	refresh_hud_boss_life()
-	
-	is_spawning = true
-	is_invincible = true
+
 	
 	visible = true
 	scale = Vector2.ZERO
@@ -217,7 +221,7 @@ func spawn_new_parts():
 	if unoccupied_slots.size() == 0:
 		return
 	
-	var random_slot = unoccupied_slots[game.rng().randi_range(0, unoccupied_slots.size() - 1)]
+	var random_slot = unoccupied_slots[game.boss_gen_rng("get_random_part_slot").randi_range(0, unoccupied_slots.size() - 1)]
 	
 	var random_boss_part = game.get_random_boss_part()
 	var boss_part_right = random_boss_part.instantiate()
@@ -235,10 +239,10 @@ func spawn_new_parts():
 		random_slot_right_parent.add_sub_part(boss_part_right)
 	
 	# apply a random rotation on the new part
-	var random_rotation = game.rng().randf_range(random_slot[0].base_random_angle_min, random_slot[0].base_random_angle_max)
-	var random_rotation_speed = game.rng().randf_range(0.01, 0.05)
+	var random_rotation = game.boss_gen_rng("get_random_boss_part_rotation").randf_range(random_slot[0].base_random_angle_min, random_slot[0].base_random_angle_max)
+	var random_rotation_speed = game.boss_gen_rng("get_random_boss_part_rotation_speed").randf_range(0.01, 0.05)
 	# TODO: should depends on the slot instead
-	var random_angle_amplitude = game.rng().randf_range(0.0, random_slot[0].angle_amplitude)
+	var random_angle_amplitude = game.boss_gen_rng("get_random_boss_part_rotation_amplitude").randf_range(0.0, random_slot[0].angle_amplitude)
 	boss_part_left.set_base_angle(random_rotation)
 	boss_part_right.set_base_angle(random_rotation)
 	boss_part_left.set_rotation_speed(random_rotation_speed)
@@ -285,7 +289,7 @@ func spawn_core_weapons():
 	var max_weapon = 2
 	var weapon_count = 0
 	for i in left_children.size():
-		if left_children[i].is_visible() and game.rng().randf() > 0.75:
+		if left_children[i].is_visible() and game.boss_gen_rng("should_spawn_weapon_on_core").randf() > 0.75:
 			weapon_count += 1
 			var random_weapon = game.get_random_boss_weapon()
 			var left_weapon = random_weapon.instantiate()
@@ -308,7 +312,7 @@ func spawn_new_weapons(left_part, right_part):
 		var right_slots = right_part.find_unoccupied_weapon_slots()
 		for i in left_slots.size():
 			# Chance to spawn a weapon
-			if (game.rng().randf() > 0.5):
+			if (game.boss_gen_rng("should_spawn_weapon_on_part").randf() > 0.5):
 				weapons_count += 1
 				var random_weapon = game.get_random_boss_weapon()
 				var left_weapon = random_weapon.instantiate()
