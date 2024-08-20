@@ -1,9 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://dsiqiacv36lu7"]
+[gd_scene load_steps=11 format=3 uid="uid://dsiqiacv36lu7"]
 
 [ext_resource type="PackedScene" uid="uid://00bkmvppa4wt" path="res://scenes/boss_parts/base_boss_part.tscn" id="1_cgidg"]
 [ext_resource type="Texture2D" uid="uid://bgksqm7de5jie" path="res://assets/sprites/parts/wingGreen_2.png" id="2_d51io"]
 [ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_vndtd"]
 [ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_xjcho"]
+
+[sub_resource type="Shader" id="Shader_i2fx5"]
+code = "shader_type canvas_item;
+
+uniform float hit_opacity = 0;
+
+void fragment() {
+	COLOR.rgb = texture(TEXTURE, UV).rgb * (1.0 - hit_opacity) + vec3(1,1,1) * hit_opacity;
+	COLOR.a = texture(TEXTURE, UV).a;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7v0am"]
+resource_local_to_scene = true
+shader = SubResource("Shader_i2fx5")
+shader_parameter/hit_opacity = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h1q5s"]
 radius = 6.0
@@ -19,6 +35,7 @@ radius = 7.0
 [node name="BaseBossPart" instance=ExtResource("1_cgidg")]
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_7v0am")
 texture = ExtResource("2_d51io")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]

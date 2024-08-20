@@ -1,9 +1,25 @@
-[gd_scene load_steps=10 format=3 uid="uid://qiwt6bsfw3c"]
+[gd_scene load_steps=12 format=3 uid="uid://qiwt6bsfw3c"]
 
 [ext_resource type="PackedScene" uid="uid://00bkmvppa4wt" path="res://scenes/boss_parts/base_boss_part.tscn" id="1_cji85"]
 [ext_resource type="Texture2D" uid="uid://bws8eim3nguyx" path="res://assets/sprites/parts/wingGreen_4.png" id="2_jc8nt"]
 [ext_resource type="Script" path="res://scripts/boss_part_slot.gd" id="3_1fpxh"]
 [ext_resource type="Script" path="res://scripts/boss_weapon_slot.gd" id="4_imnj8"]
+
+[sub_resource type="Shader" id="Shader_i2fx5"]
+code = "shader_type canvas_item;
+
+uniform float hit_opacity = 0;
+
+void fragment() {
+	COLOR.rgb = texture(TEXTURE, UV).rgb * (1.0 - hit_opacity) + vec3(1,1,1) * hit_opacity;
+	COLOR.a = texture(TEXTURE, UV).a;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bjdcr"]
+resource_local_to_scene = true
+shader = SubResource("Shader_i2fx5")
+shader_parameter/hit_opacity = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v7f7p"]
 radius = 8.0
@@ -23,6 +39,7 @@ radius = 7.0
 [node name="BaseBossPart" instance=ExtResource("1_cji85")]
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_bjdcr")
 position = Vector2(-6, 0)
 texture = ExtResource("2_jc8nt")
 
