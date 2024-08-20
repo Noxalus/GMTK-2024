@@ -54,10 +54,10 @@ func _process(delta):
 			shoot()
 
 func set_new_random_shoot_delay():
-	var shoot_frequency_factor = game.wave_count
+	var shoot_frequency_factor = pow(game.wave_count, 0.25)
 	var random_shoot_frequency = game.rng().randi_range(shoot_frequency_min, shoot_frequency_max) * shoot_frequency_factor
-	print("delay factor: %s" % shoot_frequency_factor)
-	print("delay: %s" % random_shoot_frequency)
+	#print("delay factor: %s" % shoot_frequency_factor)
+	#print("delay: %s" % random_shoot_frequency)
 	shoot_timer.start(random_shoot_frequency * shoot_frequency_factor)
 
 func damage(amount: int):
