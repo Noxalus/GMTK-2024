@@ -95,7 +95,7 @@ var local_rng = RandomNumberGenerator.new()
 var local_boss_gen_rng = RandomNumberGenerator.new()
 
 const base_player_lives := 3
-const base_core_damage_factor := 1.0
+const base_core_damage_factor : int = 2
 
 var player_lives = base_player_lives
 var camera = null
@@ -119,6 +119,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("kill_boss") and boss != null:
 		boss.damage(999999)
 	if Input.is_action_just_pressed("restart") and boss != null:
+		seed = generate_random_seed()
 		restart()
 	if Input.is_action_just_pressed("choose_upgrade"):
 		hud.show_upgrades()
@@ -181,7 +182,11 @@ func spawn_new_boss():
 		boss.died_signal.connect(_on_boss_death)
 	else:
 		boss.setup(boss_gen_rng("new_part_count").randi_range(1, 3))
-		
+	
+	#if player != null:
+		#player.recenter()
+	
+	
 func _on_boss_death():
 	if player.is_dead and player_lives <= 0:
 		return

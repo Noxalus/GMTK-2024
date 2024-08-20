@@ -116,6 +116,9 @@ func respawn():
 	sprite.visible = true
 	is_dead = false
 	set_invincibility(3.0)
+	recenter()
+	
+func recenter():
 	global_position = player_spawn.global_position
 	global_rotation = player_spawn.global_rotation
 	

@@ -2,7 +2,7 @@ extends Area2D
 
 class_name BossCore
 
-@export var base_life: int = 5
+@export var base_life: int = 10
 @export var speed: float = 50.0
 @export var shoot_frequency: float = 10.0
 @export var base_chance_to_fire: float = 0.5
@@ -151,7 +151,7 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	var timer := get_tree().create_timer(boss_spawn_delay)
 	await timer.timeout
 	
-	show_warnings = false
+	#show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
@@ -188,8 +188,15 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	life = total_life
 	refresh_hud_boss_life()
 
-	
 	visible = true
+
+	play_spawn_animation()
+	
+	target_position = position
+	is_spawning = false
+	is_invincible = false
+
+func play_spawn_animation():
 	scale = Vector2.ZERO
 	
 	var spawn_time = 1
@@ -199,10 +206,6 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	# wait for the spawn animation
 	var spawn_timer := get_tree().create_timer(spawn_time)
 	await spawn_timer.timeout
-	
-	target_position = position
-	is_spawning = false
-	is_invincible = false
 
 # boss core life depends of all its members
 func compute_life():

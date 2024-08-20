@@ -96,7 +96,7 @@ func kill():
 		if weapon.is_visible(): 
 			weapon.kill()
 
-	game.boss.damage(life)
+	game.boss.damage(life, false)
 	game.spawn_explosion(global_position)
 
 	# to delay destruction
