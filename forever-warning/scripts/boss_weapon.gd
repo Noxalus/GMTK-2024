@@ -72,5 +72,5 @@ func kill():
 	game.spawn_explosion(global_position)
 
 func shoot():
-	game.instantiate_bullet(bullet_spawn.global_position, Vector2.from_angle(rotation - PI / 2.0), speed)
+	game.instantiate_bullet(bullet_spawn.global_position, direction, speed)
 	$ShootSound.play()
