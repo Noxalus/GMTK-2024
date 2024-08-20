@@ -146,7 +146,7 @@ func restart():
 	player.respawn()
 
 func boss_gen_rng(source: String):
-	print("%s => %s" % [source, local_boss_gen_rng.state])
+	#print("%s => %s" % [source, local_boss_gen_rng.state])
 	return local_boss_gen_rng
 
 func clear_boss_bullets():
