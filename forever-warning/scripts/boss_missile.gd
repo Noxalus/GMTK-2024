@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 	if game.is_paused or game.player == null or game.boss == null:
 		return
 
-	if game.player.is_dead:# or game.boss.is_dead:
+	if game.player.is_dead or game.boss.is_dead:
 		kill()
 	
 	# CHASING THE PLAYER

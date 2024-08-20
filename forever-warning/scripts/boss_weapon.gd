@@ -2,8 +2,8 @@ extends Area2D
 
 class_name BossWeapon
 
-@export var shoot_frequency_min: float = 1.0
-@export var shoot_frequency_max: float = 1.0
+@export var shoot_frequency_min: float = 0.1
+@export var shoot_frequency_max: float = 1.75
 @export var base_chance_to_fire: float = 0.5
 @export var rotation_speed_min: float = 0.5
 @export var rotation_speed_max: float = 7.5
@@ -21,11 +21,12 @@ var speed: float
 var is_dead = false # dead by default
 var direction: Vector2
 var rotation_speed: float = 0.1
+var is_flipped = false
 
 func _ready():
 	speed = base_bullet_speed
 	life = base_life
-	shoot_timer.start(game.rng().randi_range(shoot_frequency_min, shoot_frequency_max))
+	set_new_random_shoot_delay()
 	rotation_speed = game.rng().randf_range(rotation_speed_min, rotation_speed_max)
 
 func setup():
@@ -41,14 +42,23 @@ func _process(delta):
 		var target_direction = (game.player.global_position - global_position).normalized()
 		direction = lerp(direction, target_direction, rotation_speed * delta)
 		direction = direction.normalized()
-		rotation = direction.angle()
-		rotation += PI / 2.0
+		var angle_offset = PI / 2.0
+		if is_flipped:
+			angle_offset += PI
+		set_global_rotation(direction.angle() + angle_offset)
 	
 	if shoot_timer != null and shoot_timer.is_stopped():
-		shoot_timer.start(game.rng().randi_range(shoot_frequency_min, shoot_frequency_max))
+		set_new_random_shoot_delay()
 		var rand = game.rng().randf()
 		if rand <= base_chance_to_fire:
 			shoot()
+
+func set_new_random_shoot_delay():
+	var shoot_frequency_factor = game.wave_count
+	var random_shoot_frequency = game.rng().randi_range(shoot_frequency_min, shoot_frequency_max) * shoot_frequency_factor
+	print("delay factor: %s" % shoot_frequency_factor)
+	print("delay: %s" % random_shoot_frequency)
+	shoot_timer.start(random_shoot_frequency * shoot_frequency_factor)
 
 func damage(amount: int):
 	life -= amount

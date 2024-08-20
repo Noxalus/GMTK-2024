@@ -2,7 +2,7 @@ extends Area2D
 
 class_name BossCore
 
-@export var base_life: int = 5
+@export var base_life: int = 10
 @export var speed: float = 50.0
 @export var shoot_frequency: float = 10.0
 @export var base_chance_to_fire: float = 0.5
@@ -51,8 +51,8 @@ func _process(delta):
 		if rand <= chance_to_fire:
 			shoot()
 	
-	if move_timer.is_stopped() and ((move_tween != null and not move_tween.is_running()) or move_tween == null):
-		move_randomly()
+	#if move_timer.is_stopped() and ((move_tween != null and not move_tween.is_running()) or move_tween == null):
+		#move_randomly()
 
 func get_random_position_around(range: float):
 	return global_position + _random_inside_unit_circle() * range
@@ -143,20 +143,29 @@ func shoot():
 
 func setup(parts_count: int = 1, show_warnings: bool = true):
 	#return
+	var testing = false
 	
-	# Wait a small amount of time before to respawn the boss
-	var timer := get_tree().create_timer(boss_spawn_delay)
-	await timer.timeout
+	is_spawning = true
+	is_invincible = true
 	
-	#show_warnings = false
+	if not testing:
+		# Wait a small amount of time before to respawn the boss
+		var timer := get_tree().create_timer(boss_spawn_delay)
+		await timer.timeout
+	
+	if testing:
+		show_warnings = false
 	
 	if show_warnings:
 		game.hud.show_warning_animation()	
+		#$BossSpawn/BossSpawnAnimationPlayer.play("spawn_area")
 		
 		# Wait for the warning animation
 		var warning_animation_timer := get_tree().create_timer(4.5 / 1.5)
 		await warning_animation_timer.timeout
-	
+		
+		#$BossSpawn/BossSpawnAnimationPlayer.play("RESET")
+		
 	global_position = boss_spawn.global_position
 	global_rotation = boss_spawn.global_rotation
 	
@@ -181,11 +190,17 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	compute_life()
 	life = total_life
 	refresh_hud_boss_life()
-	
-	is_spawning = true
-	is_invincible = true
-	
+
 	visible = true
+
+	if not testing:
+		play_spawn_animation()
+	
+	target_position = position
+	is_spawning = false
+	is_invincible = false
+
+func play_spawn_animation():
 	scale = Vector2.ZERO
 	
 	var spawn_time = 1
@@ -195,10 +210,6 @@ func setup(parts_count: int = 1, show_warnings: bool = true):
 	# wait for the spawn animation
 	var spawn_timer := get_tree().create_timer(spawn_time)
 	await spawn_timer.timeout
-	
-	target_position = position
-	is_spawning = false
-	is_invincible = false
 
 # boss core life depends of all its members
 func compute_life():
@@ -217,7 +228,7 @@ func spawn_new_parts():
 	if unoccupied_slots.size() == 0:
 		return
 	
-	var random_slot = unoccupied_slots[game.rng().randi_range(0, unoccupied_slots.size() - 1)]
+	var random_slot = unoccupied_slots[game.boss_gen_rng("get_random_part_slot").randi_range(0, unoccupied_slots.size() - 1)]
 	
 	var random_boss_part = game.get_random_boss_part()
 	var boss_part_right = random_boss_part.instantiate()
@@ -235,10 +246,10 @@ func spawn_new_parts():
 		random_slot_right_parent.add_sub_part(boss_part_right)
 	
 	# apply a random rotation on the new part
-	var random_rotation = game.rng().randf_range(random_slot[0].base_random_angle_min, random_slot[0].base_random_angle_max)
-	var random_rotation_speed = game.rng().randf_range(0.01, 0.05)
+	var random_rotation = game.boss_gen_rng("get_random_boss_part_rotation").randf_range(random_slot[0].base_random_angle_min, random_slot[0].base_random_angle_max)
+	var random_rotation_speed = game.boss_gen_rng("get_random_boss_part_rotation_speed").randf_range(0.01, 0.05)
 	# TODO: should depends on the slot instead
-	var random_angle_amplitude = game.rng().randf_range(0.0, random_slot[0].angle_amplitude)
+	var random_angle_amplitude = game.boss_gen_rng("get_random_boss_part_rotation_amplitude").randf_range(0.0, random_slot[0].angle_amplitude)
 	boss_part_left.set_base_angle(random_rotation)
 	boss_part_right.set_base_angle(random_rotation)
 	boss_part_left.set_rotation_speed(random_rotation_speed)
@@ -285,7 +296,7 @@ func spawn_core_weapons():
 	var max_weapon = 2
 	var weapon_count = 0
 	for i in left_children.size():
-		if left_children[i].is_visible() and game.rng().randf() > 0.75:
+		if left_children[i].is_visible() and game.boss_gen_rng("should_spawn_weapon_on_core").randf() > 0.75:
 			weapon_count += 1
 			var random_weapon = game.get_random_boss_weapon()
 			var left_weapon = random_weapon.instantiate()
@@ -308,10 +319,11 @@ func spawn_new_weapons(left_part, right_part):
 		var right_slots = right_part.find_unoccupied_weapon_slots()
 		for i in left_slots.size():
 			# Chance to spawn a weapon
-			if (game.rng().randf() > 0.5):
+			if (game.boss_gen_rng("should_spawn_weapon_on_part").randf() > 0.5):
 				weapons_count += 1
 				var random_weapon = game.get_random_boss_weapon()
 				var left_weapon = random_weapon.instantiate()
+				left_weapon.is_flipped = true
 				var right_weapon = random_weapon.instantiate()
 				left_slots[i].affect_weapon(left_weapon)
 				right_slots[i].affect_weapon(right_weapon)

@@ -9,6 +9,7 @@ radius = 2.0
 [node name="Bullet3" instance=ExtResource("1_ylwgu")]
 
 [node name="Sprite2D" parent="." index="0"]
+z_index = 7
 texture = ExtResource("2_hed0h")
 
 [node name="CollisionShape2D" parent="." index="1"]

@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func shoot():
 	for i in range(0, 5):	
-		game.instantiate_bullet(bullet_spawn.global_position, direction, speed, 0)
+		game.instantiate_bullet(bullet_spawn.global_position, direction, speed, 2)
 		$ShootSound.play()
 		# Wait between each bullet
 		var timer := get_tree().create_timer(bullet_delay)
