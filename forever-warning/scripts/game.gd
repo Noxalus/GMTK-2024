@@ -106,7 +106,7 @@ var wave_count: int = 0
 var bullets = []
 var is_paused = false
 var core_damage_factor: float
-var seed = "COUCOU"
+var seed = generate_random_seed('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
 
 func _ready():
 	reset()
@@ -144,6 +144,13 @@ func restart():
 	boss = null
 	spawn_new_boss()
 	player.respawn()
+
+func generate_random_seed(chars):
+	var word: String
+	var n_char = len(chars)
+	for i in range(0, 6):
+		word += chars[randi()% n_char]
+	return word
 
 func boss_gen_rng(source: String):
 	#print("%s => %s" % [source, local_boss_gen_rng.state])
