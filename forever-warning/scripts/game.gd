@@ -122,9 +122,6 @@ func _process(delta):
 		restart()
 	if Input.is_action_just_pressed("choose_upgrade"):
 		hud.show_upgrades()
-	if Input.is_action_just_pressed("game_over"):
-		hud.show_game_over()
-		player.kill()
 
 func reset() -> void:
 	# reset gameplay values

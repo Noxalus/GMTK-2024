@@ -3,7 +3,7 @@ extends Area2D
 class_name BossWeapon
 
 @export var shoot_frequency_min: float = 1.0
-@export var shoot_frequency_max: float = 1.0
+@export var shoot_frequency_max: float = 10.0
 @export var base_chance_to_fire: float = 0.5
 @export var rotation_speed_min: float = 0.5
 @export var rotation_speed_max: float = 7.5
@@ -25,7 +25,7 @@ var rotation_speed: float = 0.1
 func _ready():
 	speed = base_bullet_speed
 	life = base_life
-	shoot_timer.start(game.rng().randi_range(shoot_frequency_min, shoot_frequency_max))
+	shoot_timer.start(game.rng().randi_range(shoot_frequency_min, shoot_frequency_max) * game.wave_count)
 	rotation_speed = game.rng().randf_range(rotation_speed_min, rotation_speed_max)
 
 func setup():
